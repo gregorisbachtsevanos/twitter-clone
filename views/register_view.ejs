@@ -1,0 +1,106 @@
+<%- layout('layout/template_view') %>
+<script>const PAGE = 'REGISTER';</script>
+<form
+    class="row g-3 needs-validation w-50 m-auto"
+    novalidate
+    method="POST"
+    action="register"
+>
+    <div class="col-md-4">
+        <label class="form-label">First name</label>
+        <input
+            type="text"
+            class="form-control"
+            name="firstname"
+            required
+        />
+        <div class="valid-feedback">Looks good!</div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Last name</label>
+        <input
+            type="text"
+            class="form-control"
+            name="surname"
+            required
+        />
+        <div class="valid-feedback">Looks good!</div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Username</label>
+        <div class="input-group has-validation">
+            <input
+                type="text"
+                class="form-control"
+                name="username"
+                required
+            />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Email</label>
+        <div class="input-group has-validation">
+            <input
+                type="email"
+                class="form-control"
+                name="email"
+                required
+            />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Gender</label>
+        <select name="gender" id="gender" class="form-control" required>
+            <option value="" selected disabled>-</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-4">
+                <label class="form-label">Year</label>
+                <select name="year_of_birth" id="year_of_birth" class="form-control" required>
+                    <option value="" selected disabled>-</option>
+                        <% for(i = 2013; i >= 1950; i--){ %>
+                            <option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                </select>
+            </div>
+            <div class="col-4">
+                <label class="form-label">Month</label>
+                <select name="month_of_birth" id="month_of_birth" class="form-control" required
+                >
+                    <option value="" selected disabled>-</option>
+                        <% for(i = 1; i <= 12; i++){ %> <% i<10 ? i = `0${i}` : void(0) %>
+                            <option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                </select>
+            </div>
+            <div class="col-4">
+                <label class="form-label">Day</label>
+                <select name="day_of_birth" id="day_of_birth" class="form-control" required>
+                    <option value="" selected disabled>-</option>
+                        <% for(i = 1; i <= 31; i++){ %> <% i<10 ? i = `0${i}` : void(0) %>
+                            <option option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Password</label>
+        <div class="input-group has-validation">
+            <input type="password" class="form-control" name="password"required/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Repeat Password</label>
+        <div class="input-group has-validation">
+            <input type="password" class="form-control" name="repeat_password" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
