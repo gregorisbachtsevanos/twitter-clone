@@ -5,7 +5,7 @@ module.exports.loadPosts = async (req, res) => {
     const posts = await Post.find().populate("userId");
     res.send({
         msg: "success",
-        posts,
+        posts:posts. reverse(),
     });
 };
 
@@ -20,3 +20,7 @@ module.exports.createPost = async (req, res) => {
         post.save();
         res.redirect(res.locals.appUrl);
 };
+
+module.exports.likePost = async(req, res) => {
+    console.log('Like post')
+}

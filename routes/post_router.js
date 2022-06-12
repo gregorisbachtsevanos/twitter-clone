@@ -23,4 +23,8 @@ router.get("/load-posts", postController.loadPosts);
 
 router.post("/new-post", isloggedIn, validatePost, catchAsync(postController.createPost));
 
+router.post("/like-post/:postId", isloggedIn, validatePost, catchAsync(postController.likePost));
+
+router.post("/comment-post/:postId", isloggedIn, validatePost, catchAsync(postController.commentPost));
+
 module.exports = router;

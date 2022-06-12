@@ -11,13 +11,17 @@ const renderPosts = (data) => {
                         ? /*html*/
                         `x`
                         : /*html*/
-                        `${void(0)}`
+                        ``
                     }
                     </small>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">${post.post}</p>
+                </div>
+                <div class="card-text">
+                    <span class="like">like</span>
+                    <span class="comment">comment</span>
                 </div>
                 <div class="card-footer text-center text-muted">
                     ${new Date(post.createdAt).toDateString()}
@@ -29,7 +33,7 @@ const renderPosts = (data) => {
 };
 
 const getPosts = () => {
-    fetch(`${APP_URL}/load-posts`, {
+    fetch(`${APP_URL}load-posts`, {
         type: "GET",
     })
     .then((res) => res.json())
