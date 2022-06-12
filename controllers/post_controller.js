@@ -22,5 +22,5 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.likePost = async(req, res) => {
-    console.log('Like post')
+    console.log(req.params.postId)
 }

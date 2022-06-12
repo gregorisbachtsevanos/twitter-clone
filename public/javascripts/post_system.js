@@ -2,7 +2,7 @@ const renderPosts = (data) => {
     let load = "";
     for (let post of data.posts) {
         load += /*html*/ `
-            <div class="card m-3">
+            <div class="card m-3" data-id="${post._id}">
                 <div class="card-header">
                     ${post.userId.firstname} ${post.userId.surname}
                     <small>@${post.userId.username}</small>
@@ -20,8 +20,8 @@ const renderPosts = (data) => {
                     <p class="card-text">${post.post}</p>
                 </div>
                 <div class="card-text">
-                    <span class="like">like</span>
-                    <span class="comment">comment</span>
+                    <span class="like-post">like</span>
+                    <span class="comment-post">comment</span>
                 </div>
                 <div class="card-footer text-center text-muted">
                     ${new Date(post.createdAt).toDateString()}
