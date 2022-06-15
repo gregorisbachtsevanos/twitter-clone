@@ -19,7 +19,7 @@ const validatePost = (req, res, next) => {
 
 router.get("/", isloggedIn, postController.renderIndex);
 
-router.get("/load-posts", postController.loadPosts);
+router.get("/load-posts", isloggedIn, catchAsync(postController.loadPosts));
 
 router.post("/new-post", isloggedIn, validatePost, catchAsync(postController.createPost));
 

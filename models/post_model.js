@@ -23,6 +23,10 @@ const postSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        color: {
+            type: String,
+            trim: true,
+        },
         comments: {
             type: Number,
             default: 0,

@@ -10,18 +10,18 @@ const likePost = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 post.find(".like-counter").html(data.like);
-                post.find(".like-container").css({'color':data.color,'transform': 'scale(1.1)',
-                'font-weight': '700'});
+                post.find(".like-container").css({
+                    color: data.color,
+                    transform: "scale(1.1)",
+                    "font-weight": "700",
+                });
                 setTimeout(() => {
-                    post.find(".like-container")
-                        .css({
-                            'transform': 'scale(1)',
-                            'font-weight': '350'
-                        });
-                }, 70)
-                
+                    post.find(".like-container").css({
+                        transform: "scale(1)",
+                        "font-weight": "350",
+                    });
+                }, 70);
             })
             .catch((err) => console.log(err));
     });

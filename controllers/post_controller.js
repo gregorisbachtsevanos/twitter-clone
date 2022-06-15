@@ -3,9 +3,17 @@ const User = require("../models/user_model");
 
 module.exports.loadPosts = async (req, res) => {
     const posts = await Post.find().populate("onwer");
+    for(post of posts) {
+        post.color = post.likeUsers.includes(res.locals.currentUser.id)
+            ? "red"
+            : "black";
+        }
+        post.save()
+        console.log(posts)
     res.send({
         msg: "success",
         posts: posts.reverse(),
+        // color
     });
 };
 
@@ -27,6 +35,7 @@ module.exports.likePost = async (req, res) => {
         ? (post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id), color = "black")
         : (post.likeUsers.push(res.locals.currentUser.id), color = "red");
     post.likes = post.likeUsers.length;
+    post.color = color
     post.save();
     res.send({ like: post.likes, color })
 };
