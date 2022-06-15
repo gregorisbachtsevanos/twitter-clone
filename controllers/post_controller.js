@@ -24,9 +24,9 @@ module.exports.createPost = async (req, res) => {
 module.exports.likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     post.likeUsers.includes(res.locals.currentUser.id)
-        ? post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id)
-        : post.likeUsers.push(res.locals.currentUser.id);
+        ? (post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id), color = "black")
+        : (post.likeUsers.push(res.locals.currentUser.id), color = "red");
     post.likes = post.likeUsers.length;
     post.save();
-    res.send({ like: post.likes })
+    res.send({ like: post.likes, color })
 };

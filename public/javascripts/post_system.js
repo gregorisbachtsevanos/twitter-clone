@@ -20,8 +20,8 @@ const renderPosts = (data) => {
                     <p class="card-text">${post.post}</p>
                 </div>
                 <div class="card-text">
-                    <span class="like-post">like ${post.likes} </span>
-                    <span class="comment-post">comment</span>
+                    <span class="like-container">like <small class="like-counter">${post.likes}</small></span>
+                    <span class="comment-container">comment</span>
                 </div>
                 <div class="card-footer text-center text-muted">
                     ${new Date(post.createdAt).toDateString()}

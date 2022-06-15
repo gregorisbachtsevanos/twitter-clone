@@ -1,7 +1,6 @@
 const likePost = () => {
-    $("body").on("click", ".like-post", function () {
+    $("body").on("click", ".like-container", function () {
         const post = $(this).closest(".card");
-        // console.log(post.data('id'))
         fetch(`${APP_URL}like-post/${post.data("id")}`, {
             method: "POST",
             headers: {
@@ -9,9 +8,22 @@ const likePost = () => {
                 "Content-Type": "application/json",
             },
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                post.find(".like-counter").html(data.like);
+                post.find(".like-container").css({'color':data.color,'transform': 'scale(1.1)',
+                'font-weight': '700'});
+                setTimeout(() => {
+                    post.find(".like-container")
+                        .css({
+                            'transform': 'scale(1)',
+                            'font-weight': '350'
+                        });
+                }, 70)
+                
+            })
+            .catch((err) => console.log(err));
     });
 };
 
