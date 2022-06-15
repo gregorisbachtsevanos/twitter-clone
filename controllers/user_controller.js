@@ -1,11 +1,10 @@
 const User = require("../models/user_model");
-const UserExtraInfo = require("../models/user-extra-info_model");
 
 module.exports.register = (req, res) => {
-    if(!req.user){
-        res.render("register_view");
+    if (!req.user) {
+        return res.render("register_view");
     }
-    console.log('123')
+    console.log("123");
 };
 
 module.exports.registerLogic = async (req, res, next) => {
@@ -23,19 +22,16 @@ module.exports.registerLogic = async (req, res, next) => {
             repeat_password,
         } = req.body;
         if (password == repeat_password) {
-            const extraInfo = await new UserExtraInfo({
-                year_of_birth,
-                month_of_birth,
-                day_of_birth,
-                gender,
-            }).save();
             const user = await new User({
-                userInfoId: extraInfo._id,
                 firstname,
                 surname,
                 username,
                 email,
             });
+            user.extra_info.year_of_birth = year_of_birth,
+            user.extra_info.month_of_birth = month_of_birth,
+            user.extra_info.day_of_birth = day_of_birth,
+            user.extra_info.gender = gender
             const newUser = await User.register(user, password);
             req.login(newUser, (err) => {
                 if (err) return next(err);
@@ -64,8 +60,8 @@ module.exports.profilePage = async (req, res) => {
 
 module.exports.profileEdit = async (req, res) => {
     const user = await getUser(req.params.username);
-    res.render('profile-edit_view', { user })
-}
+    res.render("profile-edit_view", { user });
+};
 
 module.exports.logout = (req, res) => {
     req.logout((err) => {
@@ -79,8 +75,5 @@ module.exports.logout = (req, res) => {
     });
 };
 async function getUser(username) {
-    return await User.findOne({ username }).populate(
-        "userInfoId"
-    );
+    return await User.findOne({ username }).populate("userInfoId");
 }
-

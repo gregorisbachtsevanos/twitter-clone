@@ -4,10 +4,10 @@ const renderPosts = (data) => {
         load += /*html*/ `
             <div class="card m-3" data-id="${post._id}">
                 <div class="card-header">
-                    ${post.userId.firstname} ${post.userId.surname}
-                    <small>@${post.userId.username}</small>
+                    ${post.onwer.firstname} ${post.onwer.surname}
+                    <small>@${post.onwer.username}</small>
                     <small>
-                    ${ (USER == post.userId._id)
+                    ${ (USER == post.onwer._id)
                         ? /*html*/
                         `x`
                         : /*html*/
@@ -20,7 +20,7 @@ const renderPosts = (data) => {
                     <p class="card-text">${post.post}</p>
                 </div>
                 <div class="card-text">
-                    <span class="like-post">like</span>
+                    <span class="like-post">like ${post.likes} </span>
                     <span class="comment-post">comment</span>
                 </div>
                 <div class="card-footer text-center text-muted">

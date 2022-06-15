@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
     {
-        userId: {
+        onwer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
@@ -15,8 +15,18 @@ const postSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        likes:Number,
-        comments:Number,
+        likeUsers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        }],
+        likes: {
+            type: Number,
+            default: 0,
+        },
+        comments: {
+            type: Number,
+            default: 0,
+        },
     },
     {
         timestamps: true,
