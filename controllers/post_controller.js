@@ -2,7 +2,7 @@ const Post = require("../models/post_model");
 const User = require("../models/user_model");
 
 module.exports.loadPosts = async (req, res) => {
-    const posts = await Post.find().populate("onwer");
+    const posts = await Post.find().populate("onwer").populate('repost');
     for(post of posts) {
         post.color = post.likeUsers.includes(res.locals.currentUser.id) ? "red" : "black";
     }
@@ -20,6 +20,7 @@ module.exports.renderIndex = (req, res) => {
 module.exports.createPost = async (req, res) => {
     // const user = await User.findById(req.user.id);
     const post = new Post(req.body);
+    // console.log(post)
     post.onwer = res.locals.currentUser.id
     post.save();
     res.redirect(res.locals.appUrl);
@@ -35,6 +36,21 @@ module.exports.likePost = async (req, res) => {
     post.save();
     res.send({ like: post.likes, color })
 };
+
+module.exports.editPost = async(req, res) => {
+    const post = await Post.findById(req.params.postId);
+    res.render('post-edit_view', { post })
+}
+
+module.exports.editPostLogic = async(req, res) => {
+    await Post.findByIdAndUpdate(req.params.postId, req.body).save()
+    res.redirect('/')
+}
+
+module.exports.repost = async(req, res) => {
+    const post = await Post.findById(req.params.postId)
+    res.render('repost_view', { post })
+}
 
 module.exports.deletePost = async (req, res) => {
     await Post.findByIdAndDelete(req.params.postId)

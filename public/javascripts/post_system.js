@@ -7,18 +7,19 @@ const renderPosts = (data) => {
                     <div>
                         ${post.onwer.firstname} ${post.onwer.surname}
                         <small>@${post.onwer.username}</small>
+                        <p class="fs-6 fw-light">${post.repost ? `posted by ${post.repost.username}`:'' }</p>
                     </div>
                    <div class="dropdown">
                         <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             ${USER == post.onwer._id 
-                                ? /*html*/`
-                                    <li><button class="dropdown-item" id="edit-post">Edit</button></li>
-                                    <li><button class="dropdown-item" id="visability-post">Hide</button></li>
-                                    <li><button class="dropdown-item" id="delete-post">Delete</button></li>`
+                                ? /*html*/ `
+                                    <li><a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a></li>
+                                    <li><a class="dropdown-item" id="visability-post" href="#">Hide</a></li>
+                                    <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
                                 : /*html*/ `
-                                    <li><button class="dropdown-item" id="repost">Re-post</button></li>
-                                    <li><button class="dropdown-item" id="save-post">Save</button></li>`
+                                    <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
+                                    <li><a class="dropdown-item" id="save-post" href="#">Save</a></li>`
                             }
                         </ul>
                     </div>
@@ -28,7 +29,7 @@ const renderPosts = (data) => {
                     <p class="card-text">${post.post}</p>
                 </div>
                 <div class="card-text">
-                    <span class="like-container" style="color:${post.color}">like <small class="like-counter">${post.likes}</small></span>
+                    <span id="like-container" style="color:${post.color}">like <small class="like-counter">${post.likes}</small></span>
                     <span class="comment-container">comment <small class="comment-counter">${post.comments}</small></span>
                 </div>
                 <div class="card-footer text-center text-muted">
@@ -45,28 +46,52 @@ const getPosts = () => {
         type: "GET",
     })
         .then((res) => res.json())
-        .then((data) => {
-            renderPosts(data);
-        });
+        .then((data) => renderPosts(data))
+        .catch((er) => console.log(er));
 };
 
+const ajaxCall = (path, post, action) => {
+    fetch(`${APP_URL}${path}/${post.data('id')}`, {
+        method: action,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+        .then(response => response.json())
+        .then((data) => { console.log(data); })
+        .catch((er) => console.log(er));
+}
+
+// save post (not for the currentUser)
+$('body').on('click', '#save-post', function () {
+    const post = $(this).closest('.card')
+    ajaxCall('save-post', post, 'GET');
+})
+
+// repost (not for the currentUser)
+// $('body').on('click', '#repost', function (e) {
+//     e.preventDefault()
+//     const post = $(this).closest('.card')
+//         ajaxCall('repost', post, 'POST');
+// })
+
+// change visability (for the currentUser)
+$('body').on('click', '#visability-post', function () {
+    const post = $(this).closest('.card')
+    ajaxCall('edit-post', post, 'GET');
+})
+
+// delete post (for the currentUser)
 $('body').on('click', '#delete-post', function (e) {
-    e.preventDefault();
+    e.preventDefault()
     const post = $(this).closest('.card')
     if(confirm('Are you sure, you want to delete this post?')) {
         post.remove();
-        fetch(`${APP_URL}delete-post/${post.data('id')}`, {
-            method: "DELETE",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => response.json())
-        .then((data) => {console.log(data)})
-        .catch((er) => console.log(er))
+        ajaxCall('delete-post', post, 'DELETE');
     }
-
 })
 
 export { getPosts };
+
+

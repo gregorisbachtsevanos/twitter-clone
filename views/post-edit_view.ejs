@@ -1,16 +1,14 @@
 <%- layout('layout/template_view') %>
-<script>const PAGE = 'INDEX';</script>
-<form method="POST" action="/new-post" class="form-floating w-50 offset-4">
+<script>const PAGE = 'Edit Post';</script>
+<form method="POST" action="/edit-post/<%= post._id %>?_method=PATCH" class="form-floating w-50 offset-4">
+    <h1>EDIT</h1>
     <textarea
         class="form-control"
         placeholder="Leave a comment here"
         id="floatingTextarea"
         name="post"
-    ></textarea>
+    ><%= post.post %> </textarea>
     <label for="floatingTextarea">Post</label>
+    <a class="btn btn-sm btn-white" href="<%= appUrl %>">Cancel</a>
     <button class="btn btn-sm btn-primary">Post</button>
 </form>
-
-<div class="posts-container w-50 offset-4 mt-5">
-
-</div>

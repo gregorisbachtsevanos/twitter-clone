@@ -1,0 +1,17 @@
+<%- layout('layout/template_view') %>
+<script>const PAGE = 'Repost';</script>
+<div class="w-50 offset-4">
+    <h5><%= currentUser.username%> re-post from <%= post.onwer.username %> </h5>
+    <form method="POST" action="/new-post" class="form-floating">
+        <textarea
+        class="form-control"
+        placeholder="Leave a comment here"
+        id="floatingTextarea"
+        name="post"
+        ><%= post.post %> </textarea>
+        <input type="hidden" id="hiddenInput" name="repost" value="<%=post.onwer._id%>" />
+        <label for="floatingTextarea">Post</label>
+        <a class="btn btn-sm btn-white" href="<%= appUrl %>">Cancel</a>
+        <button class="btn btn-sm btn-primary">Re-post</button>
+    </form>
+</div>

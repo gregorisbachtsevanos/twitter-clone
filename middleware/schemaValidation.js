@@ -15,6 +15,7 @@ const userSchema = Joi.object({
 
 const postSchema = Joi.object({
     post: Joi.string().required(),
+    repost: Joi.any(),
 })
 
 module.exports = { userSchema, postSchema }

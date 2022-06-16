@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        repost: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
         likeUsers: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",

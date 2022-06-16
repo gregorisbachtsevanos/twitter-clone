@@ -21,6 +21,12 @@ router.get("/", isloggedIn, postController.renderIndex);
 
 router.get("/load-posts", isloggedIn, catchAsync(postController.loadPosts));
 
+router.route("/edit-post/:postId([0-9a-f]{24})")
+    .get(isloggedIn, postController.editPost)
+    .patch(isloggedIn, postController.editPostLogic)
+
+router.get("/repost/:postId", isloggedIn, catchAsync(postController.repost));
+
 router.post("/new-post", isloggedIn, validatePost, catchAsync(postController.createPost));
 
 router.post("/like-post/:postId", isloggedIn, catchAsync(postController.likePost));
