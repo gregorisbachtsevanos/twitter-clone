@@ -4,7 +4,7 @@ module.exports.register = (req, res) => {
     if (!req.user) {
         return res.render("register_view");
     }
-    console.log("123");
+    console.log("Error: User has not been provided");
 };
 
 module.exports.registerLogic = async (req, res, next) => {

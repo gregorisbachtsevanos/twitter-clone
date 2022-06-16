@@ -4,16 +4,12 @@ const User = require("../models/user_model");
 module.exports.loadPosts = async (req, res) => {
     const posts = await Post.find().populate("onwer");
     for(post of posts) {
-        post.color = post.likeUsers.includes(res.locals.currentUser.id)
-            ? "red"
-            : "black";
-        }
-        post.save()
-        console.log(posts)
+        post.color = post.likeUsers.includes(res.locals.currentUser.id) ? "red" : "black";
+    }
+    post.save()
     res.send({
         msg: "success",
         posts: posts.reverse(),
-        // color
     });
 };
 
@@ -22,9 +18,9 @@ module.exports.renderIndex = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-    const user = await User.findById(req.user.id);
+    // const user = await User.findById(req.user.id);
     const post = new Post(req.body);
-    post.onwer = user.id;
+    post.onwer = res.locals.currentUser.id
     post.save();
     res.redirect(res.locals.appUrl);
 };
@@ -39,3 +35,7 @@ module.exports.likePost = async (req, res) => {
     post.save();
     res.send({ like: post.likes, color })
 };
+
+module.exports.deletePost = async (req, res) => {
+    await Post.findByIdAndDelete(req.params.postId)
+}
