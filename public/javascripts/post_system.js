@@ -1,4 +1,4 @@
-const renderPosts = (data) => {
+const renderPosts = (data, where) => {
     let load = "";
     for (let post of data.posts) {
         load += /*html*/ `
@@ -6,7 +6,7 @@ const renderPosts = (data) => {
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div>
                         ${post.onwer.firstname} ${post.onwer.surname}
-                        <small>@${post.onwer.username}</small>
+                        <a href="${post.onwer.username}" class="link-dark" >@${post.onwer.username}</a>
                         <p class="fs-6 fw-light">${post.repost ? `posted by ${post.repost.username}`:'' }</p>
                     </div>
                    <div class="dropdown">
@@ -38,7 +38,7 @@ const renderPosts = (data) => {
             </div>
         `;
     }
-    $(".posts-container").append(load);
+    $(where).append(load);
 };
 
 const getPosts = () => {
@@ -46,8 +46,18 @@ const getPosts = () => {
         type: "GET",
     })
         .then((res) => res.json())
-        .then((data) => renderPosts(data))
+        .then((data) => renderPosts(data, ".posts-container"))
         .catch((er) => console.log(er));
+};
+
+const getUserPosts = (USER) => {
+    fetch(`${APP_URL}load-posts?user=${USER}`, {
+        type: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => renderPosts(data, ".actions-container"))
+        .catch((er) => console.log(er));
+    console.log(USER)
 };
 
 const ajaxCall = (path, post, action) => {
@@ -92,6 +102,4 @@ $('body').on('click', '#delete-post', function (e) {
     }
 })
 
-export { getPosts };
-
-
+export { getPosts, getUserPosts };

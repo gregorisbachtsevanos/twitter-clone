@@ -2,7 +2,11 @@ const Post = require("../models/post_model");
 const User = require("../models/user_model");
 
 module.exports.loadPosts = async (req, res) => {
-    const posts = await Post.find().populate("onwer").populate('repost');
+    let posts = await Post.find().populate("onwer").populate('repost')
+    if (req.query.user) {
+       posts = posts.filter((post) => post.onwer.id == req.query.user)
+    }
+    console.log(posts)   
     for(post of posts) {
         post.color = post.likeUsers.includes(res.locals.currentUser.id) ? "red" : "black";
     }

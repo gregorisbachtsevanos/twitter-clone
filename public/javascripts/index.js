@@ -1,4 +1,4 @@
-import { getPosts } from './post_system.js'
+import { getPosts, getUserPosts } from './post_system.js'
 import { likePost } from './like_system.js'
 
 if(typeof PAGE != 'undefined'){
@@ -6,6 +6,6 @@ if(typeof PAGE != 'undefined'){
         getPosts()
         likePost()
     }else if(PAGE == 'PROFILE'){
-
+        getUserPosts(USER)
     }
 }

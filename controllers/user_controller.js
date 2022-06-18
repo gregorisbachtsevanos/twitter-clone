@@ -1,4 +1,5 @@
 const User = require("../models/user_model");
+const Post = require("../models/post_model");
 
 module.exports.register = (req, res) => {
     if (!req.user) {
@@ -55,7 +56,8 @@ module.exports.loginLogic = async (req, res) => {
 
 module.exports.profilePage = async (req, res) => {
     const user = await getUser(req.params.username);
-    res.render("profile_view", { user });
+    const posts = await Post.find({onwer:user._id})
+    res.render("profile_view", { user, posts});
 };
 
 module.exports.profileEdit = async (req, res) => {
@@ -75,5 +77,5 @@ module.exports.logout = (req, res) => {
     });
 };
 async function getUser(username) {
-    return await User.findOne({ username }).populate("userInfoId");
+    return await User.findOne({ username });
 }
