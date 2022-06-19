@@ -9,12 +9,12 @@ const ExpressError = require("../utils/ExpressError");
 // check for form errors before take action
 const validatePost = (req, res, next) => {
     const { error } = postSchema.validate(req.body)
-    if(error){
+    if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
-    }else{
-		next()
-	}
+    } else {
+        next()
+    }
 }
 
 router.get("/", isloggedIn, postController.renderIndex);
