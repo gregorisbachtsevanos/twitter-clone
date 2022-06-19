@@ -5,7 +5,7 @@
         class="row g-3 w-50 m-auto"
         novalidate
         method="POST"
-        action="/edit-profile"
+        action="/<%= user.username %>/edit-profile?_method=PATCH"
     >
         <div class="col-6">
             <label class="form-label">Username</label>
@@ -14,6 +14,7 @@
                     type="text"
                     class="form-control"
                     name="username"
+                    value="<%= user.username %>"
                 />
             </div>
         </div>
@@ -24,55 +25,56 @@
                     type="email"
                     class="form-control"
                     name="email"
+                    value="<%= user.email %>"
                 />
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Facebook</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="facebook" />
+                <input type="text" class="form-control" name="facebook" value="<%= user.extra_info.facebook %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Instagram</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="instagram" />
+                <input type="text" class="form-control" name="instagram" value="<%= user.extra_info.instagram %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Twitter</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="twitter" />
+                <input type="text" class="form-control" name="twitter" value="<%= user.extra_info.twitter %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Linkedin</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="linkedin" />
+                <input type="text" class="form-control" name="linkedin" value="<%= user.extra_info.linkedin %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Website</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="website" />
+                <input type="text" class="form-control" name="website" value="<%= user.extra_info.website %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Youtube</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="youtube" />
+                <input type="text" class="form-control" name="youtube" value="<%= user.extra_info.youtube %>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Github</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="github" />
+                <input type="text" class="form-control" name="github" value="<%= user.extra_info.github%>"/>
             </div>
         </div>
         <div class="col-6">
             <label class="form-label">Upwork</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="upwork" />
+                <input type="text" class="form-control" name="upwork" value="<%= user.extra_info.upwork %>"/>
             </div>
         </div>
         <div class="col-6">

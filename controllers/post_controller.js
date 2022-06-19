@@ -6,7 +6,6 @@ module.exports.loadPosts = async (req, res) => {
     if (req.query.user) {
        posts = posts.filter((post) => post.onwer.id == req.query.user)
     }
-    console.log(posts)   
     for(post of posts) {
         post.color = post.likeUsers.includes(res.locals.currentUser.id) ? "red" : "black";
     }

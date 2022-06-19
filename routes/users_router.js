@@ -31,7 +31,7 @@ router.route('/:username')
 
 router.route('/:username/edit-profile')
 	.get(isloggedIn, userController.profileEdit)
-
+	.patch(isloggedIn, userController.profileEditLogic)
     
 router.delete('/logout', userController.logout)
 

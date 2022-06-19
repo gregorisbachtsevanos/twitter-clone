@@ -56,14 +56,23 @@ module.exports.loginLogic = async (req, res) => {
 
 module.exports.profilePage = async (req, res) => {
     const user = await getUser(req.params.username);
-    const posts = await Post.find({onwer:user._id})
-    res.render("profile_view", { user, posts});
+    const posts = await Post.find({onwer:user.id})
+    res.render("profile_view", { user});
 };
 
 module.exports.profileEdit = async (req, res) => {
     const user = await getUser(req.params.username);
     res.render("profile-edit_view", { user });
 };
+
+module.exports.profileEditLogic = async (req, res) => {
+    // var body = {}
+    // if(req.body.email != '') body.email = req.body.email
+    // if(req.body.username != '') body.username = req.body.username
+    const user = await User.findByIdAndUpdate(res.locals.currentUser.id, req.body)
+    user.save()
+    res.redirect(`/${user.username}`)
+}
 
 module.exports.logout = (req, res) => {
     req.logout((err) => {
