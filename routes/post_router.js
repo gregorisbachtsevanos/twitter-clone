@@ -35,4 +35,6 @@ router.post("/comment-post/:postId", isloggedIn, catchAsync(postController.comme
 
 router.delete("/delete-post/:postId", isloggedIn, catchAsync(postController.deletePost))
 
+router.delete("/delete-comment/:commentId", isloggedIn, catchAsync(postController.deleteComment))
+
 module.exports = router;

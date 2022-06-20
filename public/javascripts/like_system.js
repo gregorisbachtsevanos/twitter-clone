@@ -10,6 +10,7 @@ const likePost = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                // console.log(data)
                 post.find(".like-counter").html(data.like);
                 post.find("#like-container").css({
                     color: data.color,

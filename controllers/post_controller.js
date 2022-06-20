@@ -1,14 +1,16 @@
 const Post = require("../models/post_model");
 const User = require("../models/user_model");
+const Comment = require("../models/comment_model");
 
 module.exports.loadPosts = async (req, res) => {
-    let posts = await Post.find().populate("onwer").populate('repost')
+    let posts = await Post.find().populate("onwer").populate('repost').populate({path: 'commentId', populate: 'userId'})
     if (req.query.user) {
         posts = posts.filter((post) => post.onwer.id == req.query.user)
     }
     for (post of posts) {
         post.color = post.likeUsers.includes(res.locals.currentUser.id) ? "red" : "black";
     }
+    // console.log(posts)
     post.save()
     res.send({
         msg: "success",
@@ -42,8 +44,15 @@ module.exports.likePost = async (req, res) => {
 
 module.exports.commentPost = async (req, res) => {
     const post = await Post.findById(req.params.postId)
-    console.log(post)
-    res.send(req.body)
+    const comment = new Comment(req.body)
+    comment.userId = res.locals.currentUser.id
+    comment.postId = post.id
+    post.commentId.push(comment._id)
+    post.comments = post.commentId.length
+    await comment.save()
+    await post.save()
+    const data = await Comment.findById(comment._id).populate('userId')
+    res.send({ body: data, comments: post.comments })
 }
 
 module.exports.editPost = async (req, res) => {
@@ -59,6 +68,15 @@ module.exports.editPostLogic = async (req, res) => {
 module.exports.repost = async (req, res) => {
     const post = await Post.findById(req.params.postId)
     res.render('repost_view', { post })
+}
+
+module.exports.deleteComment = async (req, res) => {
+    const comment = await Comment.findByIdAndDelete(req.params.commentId)
+    let post = await Post.findById(comment.postId)
+    post.commentId = post.commentId.filter(commentId => commentId != comment.id)
+    post.comments = post.commentId.length
+    post.save()
+    res.send({comments:post.comments})
 }
 
 module.exports.deletePost = async (req, res) => {
