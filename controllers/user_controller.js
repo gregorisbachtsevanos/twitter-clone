@@ -56,7 +56,8 @@ module.exports.loginLogic = async (req, res) => {
 
 module.exports.profilePage = async (req, res) => {
     const user = await getUser(req.params.username);
-    const posts = await Post.find({onwer:user.id})
+    if(user) 
+        var posts = await Post.find({onwer:user.id})
     res.render("profile_view", { user});
 };
 

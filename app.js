@@ -1,5 +1,5 @@
 process.env.NODE_ENV !== "production" ? require("dotenv").config() : void 0;
-
+// puTREvNTYFhH4Apw
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -68,7 +68,7 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render("partials/error_view");
+    res.render("partials/error_view", { err });
 });
 
 module.exports = app;

@@ -7,7 +7,17 @@ const loadComment = (data) => {
                     ${data.body.userId.firstname} ${data.body.userId.surname}
                     <a href="${data.body.userId.username}" class="link-dark" >@${data.body.userId.username}</a>
                 </div>
-                
+                <div class="dropdown">
+                    ${
+                    USER == data.body.userId._id
+                        ? /*html*/ `
+                            <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" id="delete-comment" href="#">Delete</a></li>
+                            </ul>`
+                        : /*html*/ ``
+                    }
+                </div>
             </div>
             <div class="card-body">
                 <h5 class="card-title"></h5>

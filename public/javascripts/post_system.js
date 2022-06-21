@@ -117,7 +117,7 @@ const ajaxCall = (path, post, action) => {
         .then((data) => {
             if(path == 'delete-comment'){
                 console.log(post)
-                post.closest(".card-container").find(".comment-counter").html(4)
+                
             }
         })
         .catch((er) => console.log(er));
@@ -149,12 +149,12 @@ $("body").on("click", "#delete-post", function (e) {
 $("body").on("click", "#delete-comment", function (e) {
     e.preventDefault();
     const comment = $(this).closest(".card")
-    // console.log(comment.closest(".card-container").find(".comment-counter").html(4));
-    console.log(comment)
+    const total_comment = comment.closest(".card-container").find(".comment-counter")
     if (confirm("Are you sure, you want to delete this post?")) {
+        total_comment.html(total_comment.html() - 1)
         comment.remove();
         ajaxCall("delete-comment", comment, "DELETE");
     }
 });
 
-export {getPosts, getUserPosts };
+export { getPosts, getUserPosts };
