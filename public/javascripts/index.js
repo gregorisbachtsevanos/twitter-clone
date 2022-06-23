@@ -5,16 +5,19 @@ import { follow, unfollow } from './follow_system.js'
 
 if (typeof PAGE != 'undefined') {
 
-    if (PAGE == 'INDEX') {
-        getPosts()
-        likePost()
-        commentPost()
-    } else if (PAGE == 'PROFILE') {
-        let userUrl = window.location.href.split('/')
-        userUrl = userUrl[userUrl.length - 1]
-        getUserPosts(userUrl)
-        follow()
-        unfollow()
+    switch(PAGE){
+        case 'INDEX':
+            getPosts()
+            likePost()
+            commentPost()
+            break;
+        case 'PROFILE':
+            let userUrl = window.location.href.split('/')
+            userUrl = userUrl[userUrl.length - 1]
+            getUserPosts(userUrl)
+            follow()
+            unfollow()
+            break;
     }
     
 }
