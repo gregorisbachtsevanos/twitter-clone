@@ -9,7 +9,7 @@
             <% if (currentUser.id == user.id) { %>
                 <a href="<%= currentUser.username %>/edit-profile" class="btn btn-primary">Edit</a>
             <% } else { %>
-                    <a href="#" data-username="<%= user.username %>" class="btn btn-warning follow-btn"><%= btn %> </a>
+                    <a href="#" data-username="<%= user.username %>" class="btn btn-warning <%= btn %>-btn"><%= btn %> </a>
                     <a href="" class="btn btn-warning">Message</a>
             <% } %> 
         </div>

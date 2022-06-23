@@ -36,7 +36,7 @@ router.route('/:username/edit-profile')
 
 router.post('/:username/follow', isloggedIn, userController.followSystem)
 
-router.post('/:username/unfollow', isloggedIn, userController.followSystem)
+router.post('/:username/unfollow', isloggedIn, userController.unfollowSystem)
     
 router.delete('/logout', userController.logout)
 

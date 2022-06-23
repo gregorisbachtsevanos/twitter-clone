@@ -94,6 +94,16 @@ module.exports.followSystem = async (req, res) => {
     res.redirect(`/${user.username}`);
 };
 
+module.exports.unfollowSystem = async (req, res) => {
+    const currentUser = await getUser(res.locals.currentUser.username);
+    const user = await getUser(req.params.username);
+    currentUser.following = await currentUser.following.filter(id => id != user.id);
+    user.followers = await user.followers.filter(id => id != currentUser.id);
+    currentUser.save()
+    user.save()
+    res.redirect(`/${user.username}`)
+}
+
 module.exports.logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
