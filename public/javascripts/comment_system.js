@@ -32,9 +32,7 @@ const loadComment = (data) => {
 }
 
 // toggle comments
-$('body').on('click', '#comment-container', function () {
-    $('.add-comment-container').slideToggle();
-})
+$('body').on('click', '#comment-container', (e) => $(e.target).closest('.comment-section').find('.add-comment-container').slideToggle());
 
 // add comments
 const commentPost = () => {
