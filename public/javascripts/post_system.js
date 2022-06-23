@@ -1,3 +1,5 @@
+import { ajaxCall } from './functions.js'
+
 const renderPosts = (data, where) => {
     let load = "";
     for (let post of data.posts) {
@@ -88,52 +90,36 @@ const renderComments = (post) => {
     return loadComment;
 };
 
+// get all posts
 const getPosts = () => {
     fetch(`${APP_URL}load-posts`, {
         type: "GET",
     })
         .then((res) => res.json())
-        .then((data) => renderPosts(data, ".posts-container"))
+        .then((data) => data.posts.length > 0 ? renderPosts(data, ".posts-container") : $('.posts-container').html(data.posts))
         .catch((er) => console.log(er));
 };
 
-const getUserPosts = (USER) => {
-    fetch(`${APP_URL}load-posts?user=${USER}`, {
+// get uses's post
+const getUserPosts = (userUrl) => {
+    fetch(`${APP_URL}load-posts?user=${userUrl}`, {
         type: "GET",
     })
         .then((res) => res.json())
-        .then((data) => renderPosts(data, ".actions-container"))
-        .catch((er) => console.log(er));
-};
-
-const ajaxCall = (path, post, action) => {
-    fetch(`${APP_URL}${path}/${post.data("id")}`, {
-        method: action,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if(path == 'delete-comment'){
-                console.log(post)
-                
-            }
-        })
+        .then((data) => data.posts.length > 0 ? renderPosts(data, ".actions-container") : $('.actions-container').html(data.posts))
         .catch((er) => console.log(er));
 };
 
 // save post (not for the currentUser)
 $("body").on("click", "#save-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall("save-post", post, "GET");
+    ajaxCall("save-post", post.data("id"), "GET");
 });
 
 // change visability (for the currentUser)
 $("body").on("click", "#visability-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall("edit-post", post, "GET");
+    ajaxCall("edit-post", post.data("id"), "GET");
 });
 
 // delete post (for the currentUser)
@@ -142,20 +128,8 @@ $("body").on("click", "#delete-post", function (e) {
     const post = $(this).closest(".card");
     if (confirm("Are you sure, you want to delete this post?")) {
         post.remove();
-        ajaxCall("delete-post", post, "DELETE");
+        ajaxCall("delete-post", post.data("id"), "DELETE");
     }
 });
 
-// delete comment (for the currentUser)
-$("body").on("click", "#delete-comment", function (e) {
-    e.preventDefault();
-    const comment = $(this).closest(".card")
-    const total_comment = comment.closest(".card-container").find(".comment-counter")
-    if (confirm("Are you sure, you want to delete this post?")) {
-        total_comment.html(total_comment.html() - 1)
-        comment.remove();
-        ajaxCall("delete-comment", comment, "DELETE");
-    }
-});
-
-export { getPosts, getUserPosts };
+export { getPosts, getUserPosts, ajaxCall };

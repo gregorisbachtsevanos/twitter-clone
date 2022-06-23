@@ -6,6 +6,7 @@ const { userSchema } = require("../middleware/schemaValidation")
 const passport = require("passport");
 const catchAsync = require("../utils/catchAsync")
 const { isloggedIn } = require("../middleware/isLoggedIn")
+const { isAuth } = require("../middleware/isAuth")
 
 // check for form errors before take action
 const validateUser = (req, res, next) => {
@@ -27,11 +28,15 @@ router.route('/login')
 	.post(passport.authenticate('local', { failureRedirect: '/login' }), catchAsync(userController.loginLogic))
 
 router.route('/:username')
-	.get(isloggedIn, userController.profilePage)
+	.get(isloggedIn, catchAsync(userController.profilePage))
 
 router.route('/:username/edit-profile')
-	.get(isloggedIn, userController.profileEdit)
-	.patch(isloggedIn, userController.profileEditLogic)
+	.get(isloggedIn, isAuth, userController.profileEdit)
+	.patch(isloggedIn, isAuth, userController.profileEditLogic)
+
+router.post('/:username/follow', isloggedIn, userController.followSystem)
+
+router.post('/:username/unfollow', isloggedIn, userController.followSystem)
     
 router.delete('/logout', userController.logout)
 

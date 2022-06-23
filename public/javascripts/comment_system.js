@@ -1,3 +1,5 @@
+import { ajaxCall } from './functions.js'
+
 const loadComment = (data) => {
     let load = '';
     load += /*html*/ `
@@ -53,6 +55,16 @@ const commentPost = () => {
     })
 }
 
-// delete comments
+// delete comment (for the currentUser)
+$("body").on("click", "#delete-comment", function (e) {
+    e.preventDefault();
+    const comment = $(this).closest(".card")
+    const total_comment = comment.closest(".card-container").find(".comment-counter")
+    if (confirm("Are you sure, you want to delete this post?")) {
+        total_comment.html(total_comment.html() - 1)
+        comment.remove();
+        ajaxCall("delete-comment", comment.data("id"), "DELETE");
+    }
+});
 
 export { commentPost }
