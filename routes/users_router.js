@@ -27,6 +27,10 @@ router.route('/login')
 	.get(userController.login)
 	.post(passport.authenticate('local', { failureRedirect: '/login' }), catchAsync(userController.loginLogic))
 
+router.route('/trending')
+	.get(isloggedIn, catchAsync(userController.trending))
+	// .post(isloggedIn, userController.trendingLogic)
+
 router.route('/:username')
 	.get(isloggedIn, catchAsync(userController.profilePage))
 

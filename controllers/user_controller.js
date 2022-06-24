@@ -76,11 +76,9 @@ module.exports.profileEditLogic = async (req, res) => {
     var body = {}
     var extra_info = {}
     updateUser(req, body, extra_info);
-    if (Object.keys(extra_info).length > 0)
-        body.extra_info = extra_info
+    if (Object.keys(extra_info).length > 0) body.extra_info = extra_info
     const user =  await User.findByIdAndUpdate(res.locals.currentUser.id, body)
     user.save()
-    console.log(body);
     res.redirect(`/${user.username}`);
 };
 
@@ -104,6 +102,26 @@ module.exports.unfollowSystem = async (req, res) => {
     res.redirect(`/${user.username}`)
 }
 
+module.exports.trending = async (req, res) => {
+    const numberOfDaysToLookBack = req.query.days ? req.query.days : 7;
+    const posts = await Post.find({
+        createdAt: {
+            $gte: new Date(
+                new Date().getTime() -
+                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+            ),
+        },
+    })
+        .sort({ likes: "asc" });
+        // .lean() returns a JavaScript object instead of a Mongoose document.
+        // .exec();
+        res.send({
+            msg: "success",
+            posts: posts,
+        })
+    // res.render('trending_view')
+}
+
 module.exports.logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
@@ -121,34 +139,20 @@ function updateUser(req, body, extra_info) {
     extra_info.month_of_birth = req.body.month_of_birth;
     extra_info.day_of_birth = req.body.day_of_birth;
     extra_info.gender = req.body.gender;
-    if (req.body.firstname != '')
-        body.firstname = req.body.firstname;
-    if (req.body.surname != '')
-        body.surname = req.body.surname;
-    if (req.body.username != '')
-        body.username = req.body.username;
-    if (req.body.email != '')
-        body.email = req.body.email;
-    if (req.body.phone != '')
-        body.extra_info.phone = req.body.phone;
-    if (req.body.bio != '')
-        body.extra_info.bio = req.body.bio;
-    if (req.body.facebook != '')
-        extra_info.facebook = req.body.facebook;
-    if (req.body.instagram != '')
-        extra_info.instagram = req.body.instagram;
-    if (req.body.twitter != '')
-        extra_info.twitter = req.body.twitter;
-    if (req.body.linkedin != '')
-        extra_info.linkedin = req.body.linkedin;
-    if (req.body.website != '')
-        extra_info.website = req.body.website;
-    if (req.body.youtube != '')
-        extra_info.youtube = req.body.youtube;
-    if (req.body.github != '')
-        extra_info.github = req.body.github;
-    if (req.body.upwork != '')
-        extra_info.upwork = req.body.upwork;
+    if (req.body.firstname != '') body.firstname = req.body.firstname;
+    if (req.body.surname != '') body.surname = req.body.surname;
+    if (req.body.username != '') body.username = req.body.username;
+    if (req.body.email != '') body.email = req.body.email;
+    if (req.body.phone != '') body.extra_info.phone = req.body.phone;
+    if (req.body.bio != '') body.extra_info.bio = req.body.bio;
+    if (req.body.facebook != '') extra_info.facebook = req.body.facebook;
+    if (req.body.instagram != '') extra_info.instagram = req.body.instagram;
+    if (req.body.twitter != '') extra_info.twitter = req.body.twitter;
+    if (req.body.linkedin != '') extra_info.linkedin = req.body.linkedin;
+    if (req.body.website != '') extra_info.website = req.body.website;
+    if (req.body.youtube != '') extra_info.youtube = req.body.youtube;
+    if (req.body.github != '') extra_info.github = req.body.github;
+    if (req.body.upwork != '') extra_info.upwork = req.body.upwork;
 }
 
 async function getUser(username) {
