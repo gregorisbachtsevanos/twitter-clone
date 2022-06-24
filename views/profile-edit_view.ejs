@@ -7,6 +7,32 @@
         method="POST"
         action="/<%= user.username %>/edit-profile?_method=PATCH"
     >
+    <input type="hidden" name="year_of_birth" value="<%= user.extra_info.year_of_birth %>" >
+    <input type="hidden" name="month_of_birth" value="<%= user.extra_info.month_of_birth %>">
+    <input type="hidden" name="day_of_birth" value="<%= user.extra_info.day_of_birth %>">
+    <input type="hidden" name="gender" value="<%= user.extra_info.gender %>">
+        <div class="col-6">
+            <label class="form-label">Firstname</label>
+            <div class="input-group has-validation">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="firstname"
+                    value="<%= user.firstname %>"
+                />
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="form-label">Lastname</label>
+            <div class="input-group has-validation">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="surname"
+                    value="<%= user.surname %>"
+                />
+            </div>
+        </div>
         <div class="col-6">
             <label class="form-label">Username</label>
             <div class="input-group has-validation">
@@ -27,6 +53,18 @@
                     name="email"
                     value="<%= user.email %>"
                 />
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="form-label">Phone</label>
+            <div class="input-group has-validation">
+                <input type="number" class="form-control" name="phone" value="<%= user.extra_info.phone %>"/>
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="form-label">Bio</label>
+            <div class="input-group has-validation">
+                <textarea type="text" class="form-control" name="bio" value="<%= user.extra_info. bio %>"></textarea>
             </div>
         </div>
         <div class="col-6">

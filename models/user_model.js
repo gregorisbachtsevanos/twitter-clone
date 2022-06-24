@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
             ref: 'User'
         }],
         extra_info: {
+            avatar: {
+                type: String,
+                trim: true,
+            },
             phone:{
                 type: Number,
                 trim: true,
