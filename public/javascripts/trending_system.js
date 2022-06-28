@@ -59,7 +59,6 @@ const getTrandingPosts = () => {
         type: "GET"
     })
     .then((res) => res.json())
-    // .then((data) => {console.log(data.posts)})
     .then((data) => data.posts.length > 0 ? renderTrending(data, ".trending-container") : $('.trending-container').html(data.posts))
     .catch((er) => console.log(er));
 }

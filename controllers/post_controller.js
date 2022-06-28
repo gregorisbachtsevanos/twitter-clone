@@ -44,7 +44,7 @@ module.exports.loadTrending = async (req, res) => {
             ),
         },
     })
-        // .sort({ likes: "asc" })
+        .sort({ likes: "asc" })
         // .lean() //returns a JavaScript object instead of a Mongoose document.
         // .exec();
     if (posts.length > 0) {
