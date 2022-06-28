@@ -3,7 +3,7 @@ const User = require("../models/user_model");
 const Comment = require("../models/comment_model");
 
 module.exports.loadPosts = async (req, res) => {
-    let posts = await Post.find()
+    let posts = await Post.find().limit(1)
         .populate("onwer")
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" });
@@ -44,6 +44,9 @@ module.exports.loadTrending = async (req, res) => {
             ),
         },
     })
+        .populate("onwer")
+        .populate("repost")
+        .populate({ path: "commentId", populate: "userId" })
         .sort({ likes: "asc" })
         // .lean() //returns a JavaScript object instead of a Mongoose document.
         // .exec();

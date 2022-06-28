@@ -43,6 +43,7 @@ const renderTrending = (data, where) => {
                     </div>
                     <div class="add-comment-container" style="display: none;">
                         <div class="comments">
+                            ${renderComments(post)}
                         </div>
                         <input type='text' class="form-control comment-input" name="comment" placeholder="comment" required>
                         <input type='submit' class="btn btn-sm" id="add-comment">
@@ -52,6 +53,39 @@ const renderTrending = (data, where) => {
         `;
         $(where).append(load);
     }
+};
+
+const renderComments = (post) => {
+    let loadComment = "";
+    for (const comment of post.commentId) {
+        loadComment += /*html*/ `
+        <div class="card w-100" style="font-size: .8rem" data-id="${comment._id}">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div>
+                    ${comment.userId.firstname} ${comment.userId.surname}
+                    <a href="${comment.userId.username}" class="link-dark" >@${comment.userId.username}</a>
+                </div>
+                <div class="dropdown">
+                    ${
+                    USER == comment.userId._id
+                        ? /*html*/ `
+                            <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" id="delete-comment" href="#">Delete</a></li>
+                            </ul>`
+                        : /*html*/ ``
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">${comment.body}</p>
+            </div>
+            <div class="card-footer text-center text-muted">
+                ${new Date(comment.userId.createdAt).toDateString()}
+            </div>
+        </div>`;
+    }
+    return loadComment;
 };
 
 const getTrandingPosts = () => {
