@@ -1,7 +1,7 @@
-const renderTrending = () => {
+const renderTrending = (data, where) => {
     let load = "";
     for (let post of data.posts) {
-        load += /*html*/`
+        load = /*html*/`
         <div class="card card-container m-3 w-100" data-id="${post._id}">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div>
@@ -48,17 +48,19 @@ const renderTrending = () => {
                         <input type='submit' class="btn btn-sm" id="add-comment">
                     </div>
                 </div>
-            </div>`
+            </div>
+        `;
+        $(where).append(load);
     }
-}
+};
 
 const getTrandingPosts = () => {
-    fetch(`${APP_URL}trending`, {
-    type: "GET",
-})
-    // .then((res) => res.json())
-    // .then((data) => data.posts.length > 0 ? renderTrending(data, ".trending-container") : $('.trending-container').html(data.posts))
-    .then((data) => console.log(data))
+    fetch(`${APP_URL}load-trending`, {
+        type: "GET"
+    })
+    .then((res) => res.json())
+    // .then((data) => {console.log(data.posts)})
+    .then((data) => data.posts.length > 0 ? renderTrending(data, ".trending-container") : $('.trending-container').html(data.posts))
     .catch((er) => console.log(er));
 }
 

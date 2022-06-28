@@ -18,17 +18,51 @@ module.exports.loadPosts = async (req, res) => {
                 : "black";
         }
         post.save();
-        res.send({
-            msg: "success",
-            posts: posts.reverse(),
-        });
+        res.send(
+            JSON.stringify({ // in case of load error delete
+                msg: "success",
+                posts: posts.reverse(),
+            })
+        );
     } else {
-        res.send({
-            msg: "success",
-            posts: "No posts",
-        });
+        res.send(
+            JSON.stringify({ // in case of load error delete
+                msg: "success",
+                posts: "No posts",
+            })
+        );
     }
 };
+
+module.exports.loadTrending = async (req, res) => {
+    const numberOfDaysToLookBack = req.query.days ? req.query.days : 7;
+    const posts = await Post.find({
+        createdAt: {
+            $gte: new Date(
+                new Date().getTime() -
+                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+            ),
+        },
+    })
+        // .sort({ likes: "asc" })
+        // .lean() //returns a JavaScript object instead of a Mongoose document.
+        // .exec();
+    if (posts.length > 0) {
+        res.send(JSON.stringify({ // in case of load error delete
+                msg: "success",
+                posts: posts.reverse(),
+            }
+        ));
+    } else {
+        res.send(
+            JSON.stringify({ // in case of load error delete
+                msg: "success",
+                posts: "No posts",
+            })
+        );
+    }
+    // res.render('trending_view')
+}
 
 module.exports.renderIndex = (req, res) => {
     res.render("index_view");

@@ -102,24 +102,8 @@ module.exports.unfollowSystem = async (req, res) => {
     res.redirect(`/${user.username}`)
 }
 
-module.exports.trending = async (req, res) => {
-    const numberOfDaysToLookBack = req.query.days ? req.query.days : 7;
-    const posts = await Post.find({
-        createdAt: {
-            $gte: new Date(
-                new Date().getTime() -
-                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
-            ),
-        },
-    })
-        .sort({ likes: "asc" });
-        // .lean() returns a JavaScript object instead of a Mongoose document.
-        // .exec();
-        res.send({
-            msg: "success",
-            posts: posts,
-        })
-    // res.render('trending_view')
+module.exports.trending = (req, res) => {
+    res.render("trending_view");
 }
 
 module.exports.logout = (req, res) => {
