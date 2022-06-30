@@ -21,6 +21,7 @@ if (typeof PAGE != 'undefined') {
             break;
         case 'TRENDING':
             getTrandingPosts()
+            commentPost()
             break;
     }
     
