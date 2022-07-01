@@ -22,13 +22,17 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<%= currentUser.username %> ">
                         <% if (currentUser.extra_info.avatar){ %> 
-                        <img src="/images/avatarImage.png" alt="avatar" height="100%" width="100%"></a>
+                            <img src="/images/avatars/avatarImage.png" alt="avatar" height="100%" width="100%">
                         <% } else { %>
                             <p class="h1 text-dark"><%= currentUser.username.charAt(0).toUpperCase() %></p> 
-                        <% } %> 
+                        <% } %>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<%= appUrl %>">Homepage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Search</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">Chat</a>

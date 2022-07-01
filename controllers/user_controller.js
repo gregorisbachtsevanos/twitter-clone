@@ -36,7 +36,7 @@ module.exports.registerLogic = async (req, res, next) => {
             const newUser = await User.register(user, password);
             req.login(newUser, (err) => {
                 if (err) return next(err);
-                res.redirect(res.locals.appUrl);
+            res.redirect(res.locals.appUrl);
             });
         } else {
             res.redirect("/register", { error: "Passwords not match" });

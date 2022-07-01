@@ -88,8 +88,8 @@ const renderComments = (post) => {
     return loadComment;
 };
 
-const getTrandingPosts = () => {
-    fetch(`${APP_URL}load-trending`, {
+const getTrandingPosts = async () => {
+    await fetch(`${APP_URL}load-trending`, {
         type: "GET"
     })
     .then((res) => res.json())
