@@ -6,7 +6,8 @@ const { userSchema } = require("../middleware/schemaValidation")
 const passport = require("passport");
 const catchAsync = require("../utils/catchAsync")
 const { isloggedIn } = require("../middleware/isLoggedIn")
-const { isAuth } = require("../middleware/isAuth")
+const { isAuth } = require("../middleware/isAuth");
+const { Router } = require("express");
 
 // check for form errors before take action
 const validateUser = (req, res, next) => {
@@ -39,6 +40,8 @@ router.route('/:username/edit-profile')
 router.post('/:username/follow', isloggedIn, userController.followSystem)
 
 router.post('/:username/unfollow', isloggedIn, userController.unfollowSystem)
+
+router.post('/search', isloggedIn, userController.search)
     
 router.delete('/logout', userController.logout)
 
