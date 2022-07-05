@@ -17,4 +17,4 @@ const ajaxCall = (param1, param2, action) => {
         .catch((er) => console.log(er));
 };
 
-export { ajaxCall }
+export { ajaxCall };

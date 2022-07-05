@@ -1,5 +1,6 @@
 const User = require("../models/user_model");
 const Post = require("../models/post_model");
+const { userSchema } = require("../middleware/schemaValidation");
 
 module.exports.register = (req, res) => {
     if (!req.user) {
@@ -112,6 +113,12 @@ module.exports.trending = (req, res) => {
     res.render("trending_view");
 }
 
+module.exports.search = async (req, res) => {
+    let { search } = req.body
+    const users = await User.find({ 'username': { $regex: '^' + search, $options: 'i' } });
+    res.send({users});
+}
+
 module.exports.logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
@@ -123,6 +130,7 @@ module.exports.logout = (req, res) => {
         });
     });
 };
+
 
 function updateUser(req, body, extra_info) {
     extra_info.year_of_birth = req.body.year_of_birth;
@@ -145,6 +153,6 @@ function updateUser(req, body, extra_info) {
     if (req.body.upwork != '') extra_info.upwork = req.body.upwork;
 }
 
-async function getUser(username) {
+function getUser(username) {
     return User.findOne({ username });
 }
