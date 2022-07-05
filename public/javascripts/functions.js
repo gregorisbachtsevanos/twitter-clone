@@ -1,3 +1,5 @@
+import { postModal } from "./post_system.js";
+
 const ajaxCall = (param1, param2, action) => {
     fetch(`${APP_URL}${param1}/${param2}`, {
         method: action,
@@ -7,7 +9,11 @@ const ajaxCall = (param1, param2, action) => {
         },
     })
         .then((response) => response.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+            if(param1 == 'post'){
+                postModal(data)
+            }
+        })
         .catch((er) => console.log(er));
 };
 

@@ -92,6 +92,12 @@ module.exports.followSystem = async (req, res) => {
     res.redirect(`/${user.username}`);
 };
 
+module.exports.showPost = async (req, res) => {
+    const post = await Post.findById(req.params.id).populate('onwer')
+    console.log(post)
+    res.send(post)
+}
+
 module.exports.unfollowSystem = async (req, res) => {
     const currentUser = await getUser(res.locals.currentUser.username);
     const user = await getUser(req.params.username);
