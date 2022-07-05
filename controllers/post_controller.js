@@ -1,6 +1,7 @@
 const Post = require("../models/post_model");
 const User = require("../models/user_model");
 const Comment = require("../models/comment_model");
+const getUser = require("./user_controller");
 
 module.exports.loadPosts = async (req, res) => {
     let posts = await Post.find()
@@ -121,6 +122,13 @@ module.exports.repost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     res.render("repost_view", { post });
 };
+
+module.exports.savePost = async (req, res) => {
+    const post = await Post.findById(req.params.postId)
+    const user = await User.findById(res.locals.currentUser.id)
+    user.savedPost.push(post.id)
+    user.save()
+}
 
 module.exports.deleteComment = async (req, res) => {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
