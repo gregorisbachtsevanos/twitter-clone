@@ -31,7 +31,7 @@ const renderPosts = (data, where) => {
                                 <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
                                     : /*html*/ `
                                 <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
-                                <li><a class="dropdown-item" id="save-post" href="#">Save</a></li>`
+                                <li><a class="dropdown-item" id="${post.isSaved ?  'unsave-post' : 'save-post'}" href="#">${post.isSaved ? 'Unsave' : 'Save'}</a></li>`
                             }
                         </ul>
                     </div>
@@ -135,7 +135,7 @@ const postModal = (data) => {
                         <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
                             : /*html*/ `
                         <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${data._id}">Re-post</a></li>
-                        <li><a class="dropdown-item" id="save-post" href="#">Save</a></li>`
+                        <li><a class="dropdown-item" id="${post.isSaved ?  'unsave-post' : 'save-post'}" href="#">${post.isSaved ? 'Unsave' : 'Save'}</a></li>`
                     }
                     </ul>
                 </div>
@@ -193,11 +193,25 @@ const getUserPosts = (userUrl) => {
         .catch((er) => console.log(er));
 };
 
-// save post (not for the currentUser)
+// save- unsave post (not for the currentUser)
+$("body").on("click", "#save-post", function () {
+    $(this).closest(".dropdown-menu").find("#save-post").attr('id', 'unsave-post').html('Unsave');
+})
+
 $("body").on("click", "#save-post", function () {
     const post = $(this).closest(".card");
     ajaxCall("save-post", post.data("id"), "GET");
-});
+})
+
+$("body").on("click", "#unsave-post", function () {
+    $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
+})
+
+$("body").on("click", "#unsave-post", function () {
+    const post = $(this).closest(".card");
+    // ajaxCall("Save-Post", post.data("id"), "GET");
+    ajaxCall("unsave-post", post.data("id"), "GET");
+})
 
 // change visability (for the currentUser)
 $("body").on("click", "#visability-post", function () {

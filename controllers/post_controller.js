@@ -8,6 +8,7 @@ module.exports.loadPosts = async (req, res) => {
         .populate("onwer")
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" });
+        const user = await User.findById(res.locals.currentUser.id)
     if (posts.length > 0) {
         if (req.query.user) {
             const user = await User.findOne({ username: req.query.user });
@@ -17,8 +18,9 @@ module.exports.loadPosts = async (req, res) => {
             post.color = post.likeUsers.includes(res.locals.currentUser.id)
                 ? "red"
                 : "black";
+            post.isSaved = user.savedPost.includes(post.id) ? true : false;
+            post.save();
         }
-        post.save();
         res.send(
             JSON.stringify({ // in case of load error delete
                 msg: "success",
@@ -36,7 +38,7 @@ module.exports.loadPosts = async (req, res) => {
 };
 
 module.exports.loadTrending = async (req, res) => {
-    const numberOfDaysToLookBack = req.query.days ? req.query.days : 7;
+    const numberOfDaysToLookBack = req.query.days ? req.query.days : 7; // check for custom days filter
     const posts = await Post.find({
         createdAt: {
             $gte: new Date(
@@ -124,10 +126,17 @@ module.exports.repost = async (req, res) => {
 };
 
 module.exports.savePost = async (req, res) => {
-    const post = await Post.findById(req.params.postId)
+    const savePost = await Post.findById(req.params.postId)
     const user = await User.findById(res.locals.currentUser.id)
-    user.savedPost.push(post.id)
+    user.savedPost.push(savePost.id)
     user.save()
+}
+
+module.exports.unsavePost = async (req, res) => {
+    const unsavePost = await Post.findById(req.params.postId)
+    const user = await User.findById(res.locals.currentUser.id)
+    user.savedPost = user.savedPost.filter(post => post != unsavePost.id)
+    await user.save()
 }
 
 module.exports.deleteComment = async (req, res) => {
