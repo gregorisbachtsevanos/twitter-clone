@@ -4,6 +4,7 @@ import { commentPost } from "./comment_system.js";
 import { follow, unfollow } from "./follow_system.js";
 import { getTrandingPosts } from "./trending_system.js";
 import { searchForm } from "./search_system.js";
+import { renderSavedPosts } from "./saved-posts_system.js";
 
 if (typeof PAGE != "undefined") {
     switch (PAGE) {
@@ -20,6 +21,7 @@ if (typeof PAGE != "undefined") {
             getUserPosts(userUrl);
             follow();
             unfollow();
+            // renderSavedPosts();
             break;
         case "TRENDING":
             searchForm();

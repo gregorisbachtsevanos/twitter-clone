@@ -135,7 +135,7 @@ const postModal = (data) => {
                         <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
                             : /*html*/ `
                         <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${data._id}">Re-post</a></li>
-                        <li><a class="dropdown-item" id="${post.isSaved ?  'unsave-post' : 'save-post'}" href="#">${post.isSaved ? 'Unsave' : 'Save'}</a></li>`
+                        <li><a class="dropdown-item" id="${data.isSaved ?  'unsave-post' : 'save-post'}" href="#">${data.isSaved ? 'Unsave' : 'Save'}</a></li>`
                     }
                     </ul>
                 </div>
@@ -200,7 +200,7 @@ $("body").on("click", "#save-post", function () {
 
 $("body").on("click", "#save-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall("save-post", post.data("id"), "GET");
+    ajaxCall(`save-post/${post.data("id")}`, "GET");
 })
 
 $("body").on("click", "#unsave-post", function () {
@@ -210,19 +210,19 @@ $("body").on("click", "#unsave-post", function () {
 $("body").on("click", "#unsave-post", function () {
     const post = $(this).closest(".card");
     // ajaxCall("Save-Post", post.data("id"), "GET");
-    ajaxCall("unsave-post", post.data("id"), "GET");
+    ajaxCall(`unsave-post/${post.data("id")}`, "GET");
 })
 
 // change visability (for the currentUser)
 $("body").on("click", "#visability-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall("edit-post", post.data("id"), "GET");
+    ajaxCall(`edit-post/${post.data("id")}`, "GET");
 });
 
 // show post
 $("body").on("click", "#show-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall("post", post.data("id"), "GET");
+    ajaxCall(`post/${post.data("id")}`, "GET");
 });
 
 // delete post (for the currentUser)

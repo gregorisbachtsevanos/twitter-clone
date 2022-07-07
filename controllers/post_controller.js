@@ -139,6 +139,24 @@ module.exports.unsavePost = async (req, res) => {
     await user.save()
 }
 
+module.exports.renderSavedPost = async (req, res) => {
+    const user = await User.findById(res.locals.currentUser.id)
+    var savedPosts = []
+    for (postId of user.savedPost){
+        // const post = await Post.findById(postId)
+        // if(post)
+        //     savedPosts.push(post)
+            savedPosts.push(await Post.findById(postId).populate('onwer'))
+    }
+    console.log(savedPosts)
+    res.send(
+        JSON.stringify({ // in case of load error delete
+            msg: "success",
+            posts: savedPosts.reverse(),
+        })
+    )
+}
+
 module.exports.deleteComment = async (req, res) => {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
     let post = await Post.findById(comment.postId);

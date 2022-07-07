@@ -63,7 +63,7 @@ $("body").on("click", "#delete-comment", function (e) {
     if (confirm("Are you sure, you want to delete this post?")) {
         total_comment.html(total_comment.html() - 1)
         comment.remove();
-        ajaxCall("delete-comment", comment.data("id"), "DELETE");
+        ajaxCall(`delete-comment/${comment.data("id")}`, "DELETE");
     }
 });
 

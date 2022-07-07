@@ -1,7 +1,8 @@
 import { postModal } from "./post_system.js";
+import { renderSavedPosts } from "./saved-posts_system.js";
 
-const ajaxCall = (param1, param2, action) => {
-    fetch(`${APP_URL}${param1}/${param2}`, {
+const ajaxCall = (param, action) => {
+    fetch(`${APP_URL}${param}`, {
         method: action,
         headers: {
             Accept: "application/json",
@@ -10,8 +11,11 @@ const ajaxCall = (param1, param2, action) => {
     })
         .then((response) => response.json())
         .then((data) => {
-            if(param1 == 'post'){
+            if(PAGE == 'INDEX'){
                 postModal(data)
+                // console.log(data)
+            }else if(PAGE == 'PROFILE'){
+                renderSavedPosts(data, $('.actions-container'))
             }
         })
         .catch((er) => console.log(er));
