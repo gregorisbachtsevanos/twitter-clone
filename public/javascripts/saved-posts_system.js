@@ -23,22 +23,8 @@ const renderSavedPosts = (data, where) => {
                    <div class="dropdown">
                         <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            ${
-                                USER == post.onwer._id
-                                    ? /*html*/ `
-                                <li><a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a></li>
-                                <li><a class="dropdown-item" id="visability-post" href="#">Hide</a></li>
-                                <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
-                                    : /*html*/ `
-                                <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${
-                                          post._id
-                                      }">Re-post</a></li>
-                                <li><a class="dropdown-item" id="${
-                                    post.isSaved ? "unsave-post" : "save-post"
-                                }" href="#">${
-                                          post.isSaved ? "Unsave" : "Save"
-                                      }</a></li>`
-                            }
+                            <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
+                            <li><a class="dropdown-item" id="unsave-post" href="#">Unsave</a></li>
                         </ul>
                     </div>
                 </div>
@@ -116,5 +102,16 @@ $("body").on("click", "#save_posts", function () {
     ($(".actions-container").empty())
     ajaxCall("saved-posts", "GET");
 });
+
+$("body").on("click", "#unsave-post", function () {
+    ($(".actions-container").empty())
+    $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
+})
+
+$("body").on("click", "#unsave-post", function () {
+    const post = $(this).closest(".card");
+    // ajaxCall("Save-Post", post.data("id"), "GET");
+    ajaxCall(`unsave-post/${post.data("id")}`, "GET");
+})
 
 export { renderSavedPosts };
