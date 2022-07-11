@@ -113,6 +113,7 @@ const renderComments = (post) => {
 };
 
 $("body").on("click", "#save_posts", function () {
+    ($(".actions-container").empty())
     ajaxCall("saved-posts", "GET");
 });
 

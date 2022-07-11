@@ -22,14 +22,14 @@ module.exports.loadPosts = async (req, res) => {
             post.save();
         }
         res.send(
-            JSON.stringify({ // in case of load error delete
+            JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
             })
         );
     } else {
         res.send(
-            JSON.stringify({ // in case of load error delete
+            JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: "No posts",
             })
@@ -55,14 +55,14 @@ module.exports.loadTrending = async (req, res) => {
         // .lean() //returns a JavaScript object instead of a Mongoose document.
         // .exec();
     if (posts.length > 0) {
-        res.send(JSON.stringify({ // in case of load error delete
+        res.send(JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
-            }
-        ));
+            })
+        );
     } else {
         res.send(
-            JSON.stringify({ // in case of load error delete
+            JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: "No posts",
             })
@@ -148,9 +148,8 @@ module.exports.renderSavedPost = async (req, res) => {
         //     savedPosts.push(post)
             savedPosts.push(await Post.findById(postId).populate('onwer'))
     }
-    console.log(savedPosts)
     res.send(
-        JSON.stringify({ // in case of load error delete
+        JSON.stringify({ // in case of load error delete JSON
             msg: "success",
             posts: savedPosts.reverse(),
         })

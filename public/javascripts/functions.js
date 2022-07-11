@@ -13,7 +13,6 @@ const ajaxCall = (param, action) => {
         .then((data) => {
             if(PAGE == 'INDEX'){
                 postModal(data)
-                // console.log(data)
             }else if(PAGE == 'PROFILE'){
                 renderSavedPosts(data, $('.actions-container'))
             }

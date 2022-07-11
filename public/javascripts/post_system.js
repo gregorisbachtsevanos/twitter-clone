@@ -174,7 +174,7 @@ const getPosts = () => {
         .then((data) =>
             data.posts.length > 0
                 ? renderPosts(data, ".posts-container")
-                : $(".posts-container").html(data.posts)
+                : (($(".posts-container").empty())($(".posts-container").html(data.posts)))
         )
         .catch((er) => console.log(er));
 };
@@ -188,7 +188,7 @@ const getUserPosts = (userUrl) => {
         .then((data) =>
             data.posts.length > 0
                 ? renderPosts(data, ".actions-container")
-                : $(".actions-container").html(data.posts)
+                : ((($(".actions-container").empty()))($(".actions-container").html(data.posts)))
         )
         .catch((er) => console.log(er));
 };
