@@ -20,6 +20,7 @@ const postSchema = new mongoose.Schema(
             ref: "User",
         },
         isSaved: Boolean,
+        isHidden: Boolean,
         likeUsers: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",

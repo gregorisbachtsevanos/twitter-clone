@@ -37,6 +37,8 @@ router.get("/save-post/:postId", isloggedIn, catchAsync(postController.savePost)
 
 router.get("/unsave-post/:postId", isloggedIn, catchAsync(postController.unsavePost));
 
+router.get("/visability-post/:postId", isloggedIn, catchAsync(postController.visabilityPost));
+
 router.post("/new-post", isloggedIn, validatePost, catchAsync(postController.createPost));
 
 router.post("/like-post/:postId", isloggedIn, catchAsync(postController.likePost));

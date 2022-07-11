@@ -19,11 +19,11 @@ if (typeof PAGE != "undefined") {
             userUrl = userUrl[userUrl.length - 1];
             searchForm();
             // getUserPosts(userUrl);
+            // renderSavedPosts();
             likePost();
             commentPost();
             follow();
             unfollow();
-            // renderSavedPosts();
             break;
         case "TRENDING":
             searchForm();

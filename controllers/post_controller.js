@@ -139,6 +139,16 @@ module.exports.unsavePost = async (req, res) => {
     await user.save()
 }
 
+module.exports.visabilityPost = async (req, res) => {
+    const post = await Post.findById(req.params.postId)
+    if(post.isHidden){
+        post.isHidden = !post.isHidden
+    }else{
+        post.isHidden = true
+    }
+    await post.save()
+}
+
 module.exports.renderSavedPost = async (req, res) => {
     const user = await User.findById(res.locals.currentUser.id)
     var savedPosts = []
