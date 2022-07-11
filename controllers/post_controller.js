@@ -8,7 +8,7 @@ module.exports.loadPosts = async (req, res) => {
         .populate("onwer")
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" });
-        const user = await User.findById(res.locals.currentUser.id)
+    const user = await User.findById(res.locals.currentUser.id)
     if (posts.length > 0) {
         if (req.query.user) {
             const user = await User.findOne({ username: req.query.user });
@@ -43,7 +43,7 @@ module.exports.loadTrending = async (req, res) => {
         createdAt: {
             $gte: new Date(
                 new Date().getTime() -
-                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+                numberOfDaysToLookBack * 24 * 60 * 60 * 1000
             ),
         },
     })
@@ -51,15 +51,23 @@ module.exports.loadTrending = async (req, res) => {
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" })
         .sort({ likes: "DESC" })
-        .limit(1)
-        // .lean() //returns a JavaScript object instead of a Mongoose document.
-        // .exec();
+        .limit(5)
+    // .lean() //returns a JavaScript object instead of a Mongoose document.
+    // .exec();
     if (posts.length > 0) {
+<<<<<<< HEAD
         res.send(JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
             })
         );
+=======
+        res.send(JSON.stringify({ // in case of load error delete
+            msg: "success",
+            posts: posts.reverse(),
+        }
+        ));
+>>>>>>> 2aa90c9e5c9bcd6d33e23125b0c5c27605215a73
     } else {
         res.send(
             JSON.stringify({ // in case of load error delete JSON
@@ -87,9 +95,9 @@ module.exports.likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     post.likeUsers.includes(res.locals.currentUser.id)
         ? ((post.likeUsers = post.likeUsers.filter(
-              (likeUser) => likeUser != res.locals.currentUser.id
-          )),
-          (color = "black"))
+            (likeUser) => likeUser != res.locals.currentUser.id
+        )),
+            (color = "black"))
         : (post.likeUsers.push(res.locals.currentUser.id), (color = "red"));
     post.likes = post.likeUsers.length;
     post.color = color;
@@ -142,11 +150,11 @@ module.exports.unsavePost = async (req, res) => {
 module.exports.renderSavedPost = async (req, res) => {
     const user = await User.findById(res.locals.currentUser.id)
     var savedPosts = []
-    for (postId of user.savedPost){
+    for (postId of user.savedPost) {
         // const post = await Post.findById(postId)
         // if(post)
         //     savedPosts.push(post)
-            savedPosts.push(await Post.findById(postId).populate('onwer'))
+        savedPosts.push(await Post.findById(postId).populate('onwer'))
     }
     res.send(
         JSON.stringify({ // in case of load error delete JSON
