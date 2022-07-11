@@ -1,7 +1,7 @@
 const Post = require("../models/post_model");
 const User = require("../models/user_model");
 const Comment = require("../models/comment_model");
-const getUser = require("./user_controller");
+// const { getUser } = require("./user_controller");
 
 module.exports.loadPosts = async (req, res) => {
     let posts = await Post.find()
@@ -55,19 +55,11 @@ module.exports.loadTrending = async (req, res) => {
     // .lean() //returns a JavaScript object instead of a Mongoose document.
     // .exec();
     if (posts.length > 0) {
-<<<<<<< HEAD
         res.send(JSON.stringify({ // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
             })
         );
-=======
-        res.send(JSON.stringify({ // in case of load error delete
-            msg: "success",
-            posts: posts.reverse(),
-        }
-        ));
->>>>>>> 2aa90c9e5c9bcd6d33e23125b0c5c27605215a73
     } else {
         res.send(
             JSON.stringify({ // in case of load error delete JSON
@@ -164,6 +156,18 @@ module.exports.renderSavedPost = async (req, res) => {
     )
 }
 
+module.exports.renderUserPosts = async (req, res) => {
+    const user = await getUser(req.params.username)
+    const posts = await Post.find({ onwer: user.id}).populate('onwer').populate('commentId').populate({ path: "commentId", populate: "userId" });
+    // console.log(posts)
+    res.send(
+        JSON.stringify({ // in case of load error delete JSON
+            msg: "success",
+            posts: posts.reverse(),
+        })
+    )
+}
+
 module.exports.deleteComment = async (req, res) => {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
     let post = await Post.findById(comment.postId);
@@ -178,3 +182,6 @@ module.exports.deleteComment = async (req, res) => {
 module.exports.deletePost = async (req, res) => {
     await Post.findByIdAndDelete(req.params.postId);
 };
+function getUser(username) {
+    return User.findOne({ username });
+}

@@ -18,7 +18,7 @@ if (typeof PAGE != "undefined") {
             let userUrl = window.location.href.split("/");
             userUrl = userUrl[userUrl.length - 1];
             searchForm();
-            getUserPosts(userUrl);
+            // getUserPosts(userUrl);
             likePost();
             commentPost();
             follow();

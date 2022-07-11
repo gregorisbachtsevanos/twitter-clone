@@ -171,16 +171,16 @@ const getPosts = () => {
 
 // get uses's post
 const getUserPosts = (userUrl) => {
-    fetch(`${APP_URL}load-posts?user=${userUrl}`, {
-        type: "GET",
-    })
-        .then((res) => res.json())
-        .then((data) =>
-            data.posts.length > 0
-                ? renderPosts(data, ".actions-container")
-                : ((($(".actions-container").empty()))($(".actions-container").html(data.posts)))
-        )
-        .catch((er) => console.log(er));
+    // fetch(`${APP_URL}load-posts?user=${userUrl}`, {
+    //     type: "GET",
+    // })
+    //     .then((res) => res.json())
+    //     .then((data) =>
+    //         data.posts.length > 0
+    //             ? renderPosts(data, ".actions-container")
+    //             : ((($(".actions-container").empty()))($(".actions-container").html(data.posts)))
+    //     )
+    //     .catch((er) => console.log(er));
 };
 
 // save - unsave post (not for the currentUser)
@@ -209,7 +209,7 @@ $("body").on("click", "#visability-post", function () {
     ajaxCall(`edit-post/${post.data("id")}`, "GET");
 });
 
-// show post
+// show post modal
 $("body").on("click", "#show-post", function () {
     const post = $(this).closest(".card");
     ajaxCall(`post/${post.data("id")}`, "GET");

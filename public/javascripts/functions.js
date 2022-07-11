@@ -1,7 +1,9 @@
 import { postModal } from "./post_system.js";
 import { renderSavedPosts } from "./saved-posts_system.js";
+import { renderUserPosts } from "./user-posts_system.js";
 
 const ajaxCall = (param, action) => {
+    // console.log(param);
     fetch(`${APP_URL}${param}`, {
         method: action,
         headers: {
@@ -14,7 +16,11 @@ const ajaxCall = (param, action) => {
             if(PAGE == 'INDEX'){
                 postModal(data)
             }else if(PAGE == 'PROFILE'){
-                renderSavedPosts(data, $('.actions-container'))
+                if(param.includes('saved-posts')){
+                    renderSavedPosts(data, $('.actions-container'))
+                }else if (param.includes('user-posts')){
+                    renderUserPosts(data, $('.actions-container'))
+                }
             }
         })
         .catch((er) => console.log(er));

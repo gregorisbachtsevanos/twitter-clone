@@ -26,12 +26,17 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item p-1 mx-1 border rounded" id="save_posts">
-                            Save Posts
+                        <li class="nav-item p-1 mx-1 border rounded" id="user_posts">
+                            Posts
                         </li>
-                        <li class="nav-item p-1 mx-1 border rounded" id="#">
-                            Hidden Posts
-                        </li>
+                        <% if (currentUser.id==user.id) { %>
+                            <li class="nav-item p-1 mx-1 border rounded" id="save_posts">
+                                Save Posts
+                            </li>
+                            <li class="nav-item p-1 mx-1 border rounded" id="hidden_posts">
+                                Hidden Posts
+                            </li>
+                        <% } %> 
                     </ul>
                 </div>
             </nav>
