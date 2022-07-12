@@ -24,7 +24,7 @@ const renderPosts = (data, where) => {
                             ${USER == post.onwer._id
                 ? /*html*/ `
                                 <li><a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a></li>
-                                <li><p class="dropdown-item" id="visability-post" data-value="${(post.isHidden == true)  ? true : false }">${(post.isHidden == true)  ? 'Private' : 'Public' }</p></li>
+                                <li><p class="dropdown-item" id="${post.isHidden ? 'public-post' : 'private-post'}">${post.isHidden ? 'Public' : 'Private' }</p></li>
                                 <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
                 : /*html*/ `
                                 <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
@@ -206,19 +206,40 @@ $("body").on("click", "#unsave-post", function () {
 // change visability (for the currentUser)
 $("body").on("click", "#visability-post", function () {
     console.log($(this).data('value'))
-        if($(this).data('value') == false){
-            $(this).attr('data-value', true)
+        if($(this).data('value') == 'public'){
+            $(this).removeAttr('data-value')
+            $(this).attr('data-value', 'private')
             $(this).html('Private')
         }else{
-            $(this).attr('data-value', false)
+            $(this).removeAttr('data-value')
+            $(this).attr('data-value', 'public')
             $(this).html('Public')
         }
     // $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
 })
+
 $("body").on("click", "#visability-post", function () {
     const post = $(this).closest(".card");
     ajaxCall(`visability-post/${post.data("id")}`, "GET");
 });
+
+$("body").on("click", "#public-post", function () {
+    $(this).closest(".dropdown-menu").find("#public-post").attr('id', 'private-post').html('Private');
+})
+
+$("body").on("click", "#public-post", function () {
+    const post = $(this).closest(".card");
+    ajaxCall(`visability-post/${post.data("id")}`, "GET");
+})
+
+$("body").on("click", "#private-post", function () {
+    $(this).closest(".dropdown-menu").find("#private-post").attr('id', 'public-post').html('Public');
+})
+
+$("body").on("click", "#private-post", function () {
+    const post = $(this).closest(".card");
+    ajaxCall(`visability-post/${post.data("id")}`, "GET");
+})
 
 // show post modal
 $("body").on("click", "#show-post", function () {
