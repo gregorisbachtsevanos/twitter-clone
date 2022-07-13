@@ -8,7 +8,7 @@ module.exports.loadPosts = async (req, res) => {
         .populate("onwer")
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" });
-    const user = await User.findById(res.locals.currentUser.id)
+    const user = await User.findById(res.locals.currentUser.id);
     if (posts.length > 0) {
         if (req.query.user) {
             const user = await User.findOne({ username: req.query.user });
@@ -22,14 +22,16 @@ module.exports.loadPosts = async (req, res) => {
             post.save();
         }
         res.send(
-            JSON.stringify({ // in case of load error delete JSON
+            JSON.stringify({
+                // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
             })
         );
     } else {
         res.send(
-            JSON.stringify({ // in case of load error delete JSON
+            JSON.stringify({
+                // in case of load error delete JSON
                 msg: "success",
                 posts: "No posts",
             })
@@ -43,7 +45,7 @@ module.exports.loadTrending = async (req, res) => {
         createdAt: {
             $gte: new Date(
                 new Date().getTime() -
-                numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
             ),
         },
     })
@@ -51,25 +53,28 @@ module.exports.loadTrending = async (req, res) => {
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" })
         .sort({ likes: "DESC" })
-        .limit(5)
+        .limit(5);
     // .lean() //returns a JavaScript object instead of a Mongoose document.
     // .exec();
     if (posts.length > 0) {
-        res.send(JSON.stringify({ // in case of load error delete JSON
+        res.send(
+            JSON.stringify({
+                // in case of load error delete JSON
                 msg: "success",
                 posts: posts.reverse(),
             })
         );
     } else {
         res.send(
-            JSON.stringify({ // in case of load error delete JSON
+            JSON.stringify({
+                // in case of load error delete JSON
                 msg: "success",
                 posts: "No posts",
             })
         );
     }
     // res.render('trending_view')
-}
+};
 
 module.exports.renderIndex = (req, res) => {
     res.render("index_view");
@@ -87,9 +92,9 @@ module.exports.likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     post.likeUsers.includes(res.locals.currentUser.id)
         ? ((post.likeUsers = post.likeUsers.filter(
-            (likeUser) => likeUser != res.locals.currentUser.id
-        )),
-            (color = "black"))
+              (likeUser) => likeUser != res.locals.currentUser.id
+          )),
+          (color = "black"))
         : (post.likeUsers.push(res.locals.currentUser.id), (color = "red"));
     post.likes = post.likeUsers.length;
     post.color = color;
@@ -126,57 +131,81 @@ module.exports.repost = async (req, res) => {
 };
 
 module.exports.savePost = async (req, res) => {
-    const savePost = await Post.findById(req.params.postId)
-    const user = await User.findById(res.locals.currentUser.id)
-    user.savedPost.push(savePost.id)
-    user.save()
-}
+    const savePost = await Post.findById(req.params.postId);
+    const user = await User.findById(res.locals.currentUser.id);
+    user.savedPost.push(savePost.id);
+    user.save();
+};
 
 module.exports.unsavePost = async (req, res) => {
-    const unsavePost = await Post.findById(req.params.postId)
-    const user = await User.findById(res.locals.currentUser.id)
-    user.savedPost = user.savedPost.filter(post => post != unsavePost.id)
-    await user.save()
-}
+    const unsavePost = await Post.findById(req.params.postId);
+    const user = await User.findById(res.locals.currentUser.id);
+    user.savedPost = user.savedPost.filter((post) => post != unsavePost.id);
+    await user.save();
+};
 
 module.exports.visabilityPost = async (req, res) => {
-    const post = await Post.findById(req.params.postId)
-    if(post.isHidden){
-        post.isHidden = !post.isHidden
-    }else{
-        post.isHidden = true
+    const post = await Post.findById(req.params.postId);
+    if (post.isHidden) {
+        post.isHidden = !post.isHidden;
+    } else {
+        post.isHidden = true;
     }
-    await post.save()
-}
+    await post.save();
+};
+
+module.exports.renderHiddenPost = async (req, res) => {
+    const posts = await Post.find({
+        $and: [{ onwer: res.locals.currentUser.id }, { isHidden: true }],
+    })
+        .populate("onwer")
+        .populate("commentId")
+        .populate({ path: "commentId", populate: "userId" });
+    res.send(
+        JSON.stringify({
+            // in case of load error delete JSON
+            msg: "success",
+            posts: posts.reverse(),
+        })
+    );
+};
 
 module.exports.renderSavedPost = async (req, res) => {
-    const user = await User.findById(res.locals.currentUser.id)
-    var savedPosts = []
+    const user = await User.findById(res.locals.currentUser.id);
+    var savedPosts = [];
     for (postId of user.savedPost) {
         // const post = await Post.findById(postId)
         // if(post)
         //     savedPosts.push(post)
-        savedPosts.push(await Post.findById(postId).populate('onwer'))
+        savedPosts.push(
+            (await Post.findById(postId)
+                .populate("onwer")
+                .populate("commentId"))
+        )
     }
     res.send(
         JSON.stringify({ // in case of load error delete JSON
             msg: "success",
             posts: savedPosts.reverse(),
         })
-    )
-}
+    );
+};
 
 module.exports.renderUserPosts = async (req, res) => {
-    const user = await getUser(req.params.username)
-    const posts = await Post.find({ onwer: user.id}).populate('onwer').populate('commentId').populate({ path: "commentId", populate: "userId" });
+    const user = await getUser(req.params.username);
+    const posts = await Post.find({ onwer: user.id })
+        .populate("onwer")
+        .populate("commentId")
+        .populate({ path: "commentId", populate: "userId" });
     // console.log(posts)
     res.send(
-        JSON.stringify({ // in case of load error delete JSON
+        JSON.stringify({
+            // in case of load error delete JSON
             msg: "success",
             posts: posts.reverse(),
         })
-    )
-}
+    );
+};
 
 module.exports.deleteComment = async (req, res) => {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
