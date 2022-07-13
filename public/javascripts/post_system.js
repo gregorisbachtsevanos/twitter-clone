@@ -229,7 +229,14 @@ $("body").on("click", "#public-post", function () {
 
 $("body").on("click", "#public-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall(`visability-post/${post.data("id")}`, "GET");
+    ajaxCall(`visability-post/${post.data("id")}`, "POST");
+    // // fetch(`${APP_URL}visability-post/${post.data("id")}`, {
+    // //     method: "POST",
+    // //     headers: {
+    // //         Accept: "application/json",
+    // //         "Content-Type": "application/json",
+    // //     },
+    // })
 })
 
 $("body").on("click", "#private-post", function () {
@@ -238,7 +245,14 @@ $("body").on("click", "#private-post", function () {
 
 $("body").on("click", "#private-post", function () {
     const post = $(this).closest(".card");
-    ajaxCall(`visability-post/${post.data("id")}`, "GET");
+    ajaxCall(`visability-post/${post.data("id")}`, "POST");
+    // fetch(`${APP_URL}visability-post/${post.data("id")}`, {
+    //     method: "POST",
+    //     headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json",
+    //     },
+    // })
 })
 
 // show post modal

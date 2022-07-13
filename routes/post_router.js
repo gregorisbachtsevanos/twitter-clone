@@ -25,6 +25,8 @@ router.get("/load-trending", isloggedIn, catchAsync(postController.loadTrending)
 
 router.get("/saved-posts", isloggedIn, catchAsync(postController.renderSavedPost))
 
+router.get("/hidden-posts", isloggedIn, catchAsync(postController.renderHiddenPost))
+
 router.get("/user-posts/:username", isloggedIn, catchAsync(postController.renderUserPosts))
 
 router.route("/edit-post/:postId([0-9a-f]{24})")
@@ -37,7 +39,7 @@ router.get("/save-post/:postId", isloggedIn, catchAsync(postController.savePost)
 
 router.get("/unsave-post/:postId", isloggedIn, catchAsync(postController.unsavePost));
 
-router.get("/visability-post/:postId", isloggedIn, catchAsync(postController.visabilityPost));
+router.post("/visability-post/:postId", isloggedIn, catchAsync(postController.visabilityPost));
 
 router.post("/new-post", isloggedIn, validatePost, catchAsync(postController.createPost));
 

@@ -1,5 +1,6 @@
 import { postModal } from "./post_system.js";
 import { renderSavedPosts } from "./saved-posts_system.js";
+import { renderHiddenPosts } from "./hidden-posts_system.js";
 import { renderUserPosts } from "./user-posts_system.js";
 
 const ajaxCall = (param, action) => {
@@ -20,6 +21,9 @@ const ajaxCall = (param, action) => {
                     renderSavedPosts(data, $('.actions-container'))
                 }else if (param.includes('user-posts')){
                     renderUserPosts(data, $('.actions-container'))
+                }
+                else if (param.includes('hidden-posts')){
+                    renderHiddenPosts(data, $('.actions-container'))
                 }
             }
         })
