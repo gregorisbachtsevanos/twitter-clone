@@ -46,7 +46,6 @@ const commentPost = () => {
                 body: comment.val()
             })
                 .then((data) => {
-                    console.log(data)
                     loadComment(data)
                     post.find('.comment-counter').html(data.comments);
                     comment.val('')
