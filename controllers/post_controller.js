@@ -103,6 +103,7 @@ module.exports.likePost = async (req, res) => {
 };
 
 module.exports.commentPost = async (req, res) => {
+    
     const post = await Post.findById(req.params.postId);
     const comment = new Comment(req.body);
     comment.userId = res.locals.currentUser.id;
@@ -172,21 +173,17 @@ module.exports.renderHiddenPost = async (req, res) => {
 
 module.exports.renderSavedPost = async (req, res) => {
     const user = await User.findById(res.locals.currentUser.id);
-    var savedPosts = [];
-    for (postId of user.savedPost) {
-        // const post = await Post.findById(postId)
-        // if(post)
-        //     savedPosts.push(post)
-        savedPosts.push(
-            (await Post.findById(postId)
-                .populate("onwer")
-                .populate("commentId"))
-        )
-    }
+    const posts = await Post.find({
+        $and: [{ onwer: res.locals.currentUser.id }, { isHidden: true }],
+    })
+        .populate("onwer")
+        .populate("commentId")
+        .populate({ path: "commentId", populate: "userId" });
+        console.log(posts)
     res.send(
         JSON.stringify({ // in case of load error delete JSON
             msg: "success",
-            posts: savedPosts.reverse(),
+            posts: posts.reverse(),
         })
     );
 };

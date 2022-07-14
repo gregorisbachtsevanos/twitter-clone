@@ -1,4 +1,4 @@
-import { getPosts, getUserPosts } from "./post_system.js";
+import { getPosts, /*getUserPosts*/ } from "./post_system.js";
 import { likePost } from "./like_system.js";
 import { commentPost } from "./comment_system.js";
 import { follow, unfollow } from "./follow_system.js";

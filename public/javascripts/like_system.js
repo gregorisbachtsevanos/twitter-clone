@@ -1,5 +1,5 @@
 const likePost = () => {
-    $("body").on("click", "#like-container", function () {
+    $("body").on("click", ".like-container", function () {
         const post = $(this).closest(".card");
         fetch(`${APP_URL}like-post/${post.data("id")}`, {
             method: "POST",
@@ -12,13 +12,13 @@ const likePost = () => {
             .then((data) => {
                 // console.log(data)
                 post.find(".like-counter").html(data.like);
-                post.find("#like-container").css({
+                post.find(".like-container").css({
                     color: data.color,
                     transform: "scale(1.1)",
                     "font-weight": "700",
                 });
                 setTimeout(() => {
-                    post.find("#like-container").css({
+                    post.find(".like-container").css({
                         transform: "scale(1)",
                         "font-weight": "350",
                     });

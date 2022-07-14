@@ -21,7 +21,7 @@ const renderHiddenPosts = (data, where) => {
                         </p>
                     </div>
                    <div class="dropdown">
-                        <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <button class="btn border-0 btn-sm dropdown-toggle" type="button" class="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
                                 <a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a>
@@ -42,12 +42,12 @@ const renderHiddenPosts = (data, where) => {
                 </div>
                 <div class="comment-section">
                     <div class="card-text">
-                        <span id="like-container" style="color:${
+                        <span class="like-container" style="color:${
                             post.color
                         }">like <small class="like-counter">${
             post.likes
         }</small></span>
-                        <span id="comment-container">comment <small class="comment-counter">${
+                        <span class="comment-container">comment <small class="comment-counter">${
                             post.comments
                         }</small></span>
                     </div>
@@ -59,7 +59,7 @@ const renderHiddenPosts = (data, where) => {
                             ${renderComments(post)}
                         </div>
                         <input type='text' class="form-control comment-input" name="comment" placeholder="comment" required>
-                        <input type='submit' class="btn btn-sm" id="add-comment">
+                        <input type='submit' class="btn btn-sm add-comment">
                     </div>
                 </div>
             </div>
@@ -86,9 +86,9 @@ const renderComments = (post) => {
                     ${
                         USER == comment.userId._id
                             ? /*html*/ `
-                            <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <button class="btn border-0 btn-sm dropdown-toggle" type="button" class="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" id="delete-comment" href="#">Delete</a></li>
+                                <li><a class="dropdown-item delete-comment" href="#">Delete</a></li>
                             </ul>`
                             : /*html*/ ``
                     }
