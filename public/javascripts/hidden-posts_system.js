@@ -23,8 +23,15 @@ const renderHiddenPosts = (data, where) => {
                    <div class="dropdown">
                         <button class="btn border-0 btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
-                            <li><a class="dropdown-item" id="unsave-post" href="#">Unsave</a></li>
+                            <li>
+                                <a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a>
+                            </li>
+                            <li>
+                                <p class="dropdown-item" id="public-post">Public</p>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" id="delete-post" href="#">Delete</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -103,15 +110,15 @@ $("body").on("click", "#hidden_posts", function () {
     ajaxCall("hidden-posts", "GET");
 });
 
-$("body").on("click", "#unsave-post", function () {
+$("body").on("click", "#public-post", function () {
     ($(".actions-container").empty())
     $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
 })
 
-$("body").on("click", "#unsave-post", function () {
-    const post = $(this).closest(".card");
-    // ajaxCall("Save-Post", post.data("id"), "GET");
-    ajaxCall(`unsave-post/${post.data("id")}`, "GET");
-})
+// $("body").on("click", "#public-post", function () {
+//     const post = $(this).closest(".card");
+//     // ajaxCall("Save-Post", post.data("id"), "GET");
+//     ajaxCall(`unsave-post/${post.data("id")}`, "GET");
+// })
 
 export { renderHiddenPosts };
