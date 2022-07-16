@@ -68,6 +68,11 @@
                     >
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="<%= currentUser.username %>/settings"
+                        >Settings</a
+                    >
+                </li>
+                <li class="nav-item">
                     <form action="/logout?_method=DELETE" method="post">
                         <button
                             class="nav-link btn"

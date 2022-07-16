@@ -39,6 +39,10 @@ router.route('/:username/edit-profile')
 	.get(isloggedIn, isAuth, userController.profileEdit)
 	.patch(isloggedIn, isAuth, userController.profileEditLogic)
 
+router.route('/:username/settings')
+	.get(isloggedIn, isAuth, userController.settings)
+	.patch(isloggedIn, isAuth, userController.settingsLogic)
+
 router.post('/:username/follow', isloggedIn, userController.followSystem)
 
 router.post('/:username/unfollow', isloggedIn, userController.unfollowSystem)

@@ -83,6 +83,15 @@ module.exports.profileEditLogic = async (req, res) => {
     res.redirect(`/${user.username}`);
 };
 
+module.exports.settings = async (req, res) => {
+    const user = await getUser(req.params.username);
+    res.render("settings_view", { user });
+};
+
+module.exports.settingsLogic = async (req, res) => {
+    console.log("settingsLogic:", req.body);
+};
+
 module.exports.followSystem = async (req, res) => {
     const currentUser = await getUser(res.locals.currentUser.username);
     const user = await getUser(req.params.username);
