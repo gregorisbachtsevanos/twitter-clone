@@ -7,28 +7,48 @@
         method="POST"
         action="/<%= user.username %>/settings?_method=PATCH"
     >
-        <div class="col-6">
-            <label class="form-label">Password</label>
+        <div class="col-12">
+            <label class="form-label">Profile visability</label>
+            <select value="profile_visibility" class="form-control">
+                <option name="public" class="input-group">Public</option>
+                <option name="private" class="input-group">Private</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Old Password</label>
             <div class="input-group has-validation">
                 <input
                     type="password"
                     class="form-control"
-                    name="password"
+                    name="old_password"
                 />
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-12">
+            <label class="form-label">New Password</label>
+            <div class="input-group has-validation">
+                <input
+                    type="password"
+                    class="form-control"
+                    name="new_password"
+                />
+            </div>
+        </div>
+        <div class="col-12">
             <label class="form-label">Repeat Password</label>
             <div class="input-group has-validation">
                 <input
                     type="password"
                     class="form-control"
-                    name="repeat_password"
+                    name="repeat_new_password"
                 />
             </div>
         </div>
         <div class="col-12">
-            <button class="btn btn-success w-100" type="submit">Save</button>
+            <button class="btn btn-danger w-100" type="submit">Delete Account</button>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Save</button>
         </div>
     </form>
 </div>
