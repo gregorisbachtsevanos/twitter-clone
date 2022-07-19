@@ -1,5 +1,7 @@
 <%- layout('layout/template_view') %>
-<script>const PAGE = 'INDEX';</script>
+<script>
+    const PAGE = "INDEX";
+</script>
 <form method="POST" action="/new-post" class="form-floating w-50 offset-4">
     <textarea
         class="form-control"
@@ -8,14 +10,61 @@
         name="post"
     ></textarea>
     <label for="floatingTextarea">Post</label>
+    <div class="col-md-6">
+        <a
+            class="btn btn-light btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#uploaderModal"
+            >image</a
+        >
+        <a class="btn btn-light btn-sm">audio</a>
+    </div>
+
+    <div
+        class="col-md-6 modal fade"
+        id="uploaderModal"
+        tabindex="-1"
+        aria-labelledby="uploaderModalLabel"
+        aria-hidden="true"
+        id="image-uploader"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content p-5">
+                <div class="frame">
+                    <div class="center">
+                        <div class="title">
+                            <h1>Drop file to upload</h1>
+                        </div>
+
+                        <div class="dropzone">
+                            <img
+                                src="http://100dayscss.com/codepen/upload.svg"
+                                class="upload-icon"
+                            />
+                            <input type="file" class="upload-input" />
+                        </div>
+
+                        <button type="button" class="btn" name="uploadbutton">
+                            Upload file
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button class="btn btn-sm btn-primary">Post</button>
 </form>
 
-<div class="posts-container w-50 offset-4 mt-5">
-
-</div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-   
-    </div>
+<div class="posts-container w-50 offset-4 mt-5"></div>
+<div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog"></div>
 </div>
