@@ -70,4 +70,4 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500).render("partials/error_view", { err });
 });
 
-module.exports = app;
+export default app;
