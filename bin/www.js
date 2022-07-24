@@ -5,9 +5,9 @@
  */
 
 import app from '../app.js';
-import debug from 'debug'
+import debugLib from 'debug'
 import http from 'http';
-debug = debugLib('twitter:server');
+const debug = debugLib('twitter:server');
 
 // var app = require('../app');
 // var debug = require('debug')('twitter:server');

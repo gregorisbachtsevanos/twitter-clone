@@ -1,25 +1,29 @@
-process.env.NODE_ENV !== "production" ? require("dotenv").config() : void 0;
+import * as dotenv from 'dotenv'
+process.env.NODE_ENV !== "production" ? dotenv.config() : void 0;
 // aGr6omr05bbCvHWZ Baloo Bhai 2, aventa
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const session = require("express-session");
-const ejsMate = require("ejs-mate")
-const passport = require('passport');
-const localStrategy = require('passport-local');
-const postRouter = require("./routes/post_router");
-const usersRouter = require("./routes/users_router");
-const { cookie } = require("express/lib/response");
-const methodOverride = require("method-override")
-const ExpressError = require("./utils/ExpressError");
-const User = require('./models/user_model')
+import createError from "http-errors"
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import session from 'express-session'
+import ejsMate from 'ejs-mate';
+import passport from 'passport';
+import localStrategy from 'passport-local';
+import postRouter from './routes/post_router.js'
+import usersRouter from './routes/users_router.js'
+import methodOverride from "method-override";
+import ExpressError from './utils/ExpressError.js'
+import User from "./models/user_model.js"
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const appUrl = process.env.APP_URL
-require("./config/dbConfig");
-const { sessionConfig } = require("./config/sessionConfig");
+import "./config/dbConfig.js"
+import sessionConfig from  "./config/sessionConfig.js"
 
 // view engine setup
 app.engine('ejs', ejsMate)

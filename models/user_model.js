@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const passportMongoose = require("passport-local-mongoose");
+import mongoose from "mongoose";
+import validator from 'validator'
+import passportMongoose from "passport-local-mongoose"
 
 const userSchema = new mongoose.Schema(
     {
@@ -116,4 +116,4 @@ const userSchema = new mongoose.Schema(
 
 userSchema.plugin(passportMongoose);
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi"
 
 const userSchema = Joi.object({
     firstname: Joi.string().required(),
@@ -18,4 +18,4 @@ const postSchema = Joi.object({
     repost: Joi.any(),
 })
 
-module.exports = { userSchema, postSchema }
+export default  { userSchema, postSchema }

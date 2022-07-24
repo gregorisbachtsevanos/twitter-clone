@@ -1,13 +1,12 @@
-var express = require("express");
-var router = express.Router();
-const ExpressError = require("../utils/ExpressError");
-const userController = require('../controllers/user_controller')
-const { userSchema } = require("../middleware/schemaValidation")
-const passport = require("passport");
-const catchAsync = require("../utils/catchAsync")
-const { isloggedIn } = require("../middleware/isLoggedIn")
-const { isAuth } = require("../middleware/isAuth");
-const { Router } = require("express");
+import express from 'express';
+import ExpressError from '../utils/ExpressError.js'
+import userController from '../controllers/user_controller.js'
+import userSchema from '../middleware/schemaValidation.js'
+import passport from 'passport';
+import catchAsync from '../utils/catchAsync.js';
+import isloggedIn from '../middleware/isLoggedIn.js'
+import isAuth from '../middleware/isAuth.js';
+const router = express.Router();
 
 // check for form errors before take action
 const validateUser = (req, res, next) => {
@@ -51,4 +50,4 @@ router.post('/search', isloggedIn, userController.search)
     
 router.delete('/logout', userController.logout)
 
-module.exports = router;
+export default  router;
