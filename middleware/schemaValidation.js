@@ -18,4 +18,4 @@ const postSchema = Joi.object({
     repost: Joi.any(),
 })
 
-export default  { userSchema, postSchema }
+export default { userSchema, postSchema }

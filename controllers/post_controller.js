@@ -13,7 +13,7 @@ const loadPosts = async (req, res) => {
             const user = await User.findOne({ username: req.query.user });
             posts = posts.filter((post) => post.onwer.id == user.id);
         }
-        for (post of posts) {
+        for (let post of posts) {
             post.color = post.likeUsers.includes(res.locals.currentUser.id)
                 ? "red"
                 : "black";
@@ -41,12 +41,12 @@ const loadPosts = async (req, res) => {
 const loadTrending = async (req, res) => {
     const numberOfDaysToLookBack = req.query.days ? req.query.days : 7; // check for custom days filter
     const posts = await Post.find({
-        createdAt: {
-            $gte: new Date(
-                new Date().getTime() -
-                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
-            ),
-        },
+        // createdAt: {
+        //     $gte: new Date(
+        //         new Date().getTime() -
+        //             numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+        //     ),
+        // },
     })
         .populate("onwer")
         .populate("repost")
@@ -82,6 +82,7 @@ const renderIndex = (req, res) => {
 const createPost = async (req, res) => {
     // const user = await User.findById(req.user.id);
     const post = new Post(req.body);
+    // return console.log(post)
     post.onwer = res.locals.currentUser.id;
     post.save();
     res.redirect(res.locals.appUrl);

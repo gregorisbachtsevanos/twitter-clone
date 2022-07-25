@@ -2,20 +2,31 @@ import express from 'express';
 import postController from '../controllers/post_controller.js'
 import isloggedIn from '../middleware/isLoggedIn.js'
 import catchAsync from '../utils/catchAsync.js';
-import postSchema from '../middleware/schemaValidation.js'
+import validation from '../middleware/schemaValidation.js'
 import ExpressError from '../utils/ExpressError.js'
+import formidable from 'formidable'
 
 const router = express.Router();
 
 // check for form errors before take action
 const validatePost = (req, res, next) => {
-    const { error } = postSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
-    }
+    const form = formidable({ multiples: true })
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        // console.log(fields)
+        const {error} = validation.postSchema.validate(fields);
+        if (error) {
+            console.log(error);
+            const msg = error.details.map((el) => el.message).join(",");
+            throw new ExpressError(msg, 400);
+        } else {
+            console.log("SUCCESS");
+            next();
+        }
+    });
 };
 
 router.get("/", isloggedIn, postController.renderIndex);

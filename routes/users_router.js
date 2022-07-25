@@ -1,7 +1,7 @@
 import express from 'express';
 import ExpressError from '../utils/ExpressError.js'
 import userController from '../controllers/user_controller.js'
-import userSchema from '../middleware/schemaValidation.js'
+import validation from '../middleware/schemaValidation.js'
 import passport from 'passport';
 import catchAsync from '../utils/catchAsync.js';
 import isloggedIn from '../middleware/isLoggedIn.js'
@@ -10,7 +10,7 @@ const router = express.Router();
 
 // check for form errors before take action
 const validateUser = (req, res, next) => {
-    const { error } = userSchema.validate(req.body)
+    const { error } = validation.userSchema.validate(req.body)
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
