@@ -81,11 +81,13 @@ const renderIndex = (req, res) => {
 };
 
 const createPost = async (req, res, next) => {
+    console.log(req.body);
     const form = formidable({
         multiples: true,
         uploadDir: "public/uploads/images",
         keepExtensions: true,
         maxFieldsSize: 10 * 1024 * 1024, //10MB
+        minFileSize: 1,
     });
     form.parse(req, (err, fields, files) => {
         if (err) return next(err);

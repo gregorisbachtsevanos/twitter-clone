@@ -12,23 +12,23 @@ const ajaxCall = (param, action) => {
             "Content-Type": "application/json",
         },
     })
-        // .then((response) => response.json())
-        // .then((data) => {
-        //     console.log(data)
-        //     if(PAGE == 'INDEX'){
-        //         postModal(data)
-        //     }else if(PAGE == 'PROFILE'){
-        //         if(param.includes('saved-posts')){
-        //             renderSavedPosts(data, $('.actions-container'))
-        //         }else if (param.includes('user-posts')){
-        //             renderUserPosts(data, $('.actions-container'))
-        //         }
-        //         else if (param.includes('hidden-posts')){
-        //             renderHiddenPosts(data, $('.actions-container'))
-        //         }
-        //     }
-        // })
-        // .catch((er) => console.log(er));
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            if(PAGE == 'INDEX'){
+                postModal(data)
+            }else if(PAGE == 'PROFILE'){
+                if(param.includes('saved-posts')){
+                    renderSavedPosts(data, $('.actions-container'))
+                }else if (param.includes('user-posts')){
+                    renderUserPosts(data, $('.actions-container'))
+                }
+                else if (param.includes('hidden-posts')){
+                    renderHiddenPosts(data, $('.actions-container'))
+                }
+            }
+        })
+        .catch((er) => console.log(er));
 };
 
 export { ajaxCall };
