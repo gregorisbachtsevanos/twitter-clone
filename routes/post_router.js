@@ -19,11 +19,10 @@ const validatePost = (req, res, next) => {
         // console.log(fields)
         const {error} = validation.postSchema.validate(fields);
         if (error) {
-            console.log(error);
             const msg = error.details.map((el) => el.message).join(",");
             throw new ExpressError(msg, 400);
         } else {
-            console.log("SUCCESS");
+            // console.log("SUCCESS");
             next();
         }
     });
@@ -85,7 +84,7 @@ router.post(
 router.post(
     "/new-post",
     isloggedIn,
-    validatePost,
+    // validatePost,
     catchAsync(postController.createPost)
 );
 

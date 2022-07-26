@@ -1,6 +1,7 @@
 import Post from "../models/post_model.js";
 import User from "../models/user_model.js";
 import Comment from "../models/comment_model.js";
+import formidable from "formidable";
 
 const loadPosts = async (req, res) => {
     let posts = await Post.find()
@@ -79,23 +80,38 @@ const renderIndex = (req, res) => {
     res.render("index_view");
 };
 
-const createPost = async (req, res) => {
-    // const user = await User.findById(req.user.id);
-    const post = new Post(req.body);
-    // return console.log(post)
-    post.onwer = res.locals.currentUser.id;
-    post.save();
-    res.redirect(res.locals.appUrl);
+const createPost = async (req, res, next) => {
+    const form = formidable({
+        multiples: true,
+        uploadDir: "public/uploads/images",
+        keepExtensions: true,
+        maxFieldsSize: 10 * 1024 * 1024, //10MB
+    });
+    form.parse(req, (err, fields, files) => {
+        if (err) return next(err);
+        // return console.log(files.file.originalFilename)
+        // const user = await User.findById(req.user.id);
+        const post = new Post({
+            post: fields.post,
+            image: files.file.newFilename,
+        });
+        // return console.log(post)
+        post.onwer = res.locals.currentUser.id;
+        post.save();
+        res.redirect(res.locals.appUrl);
+    });
 };
 
 const likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
-    post.likeUsers.includes(res.locals.currentUser.id)
-        ? ((post.likeUsers = post.likeUsers.filter(
-              (likeUser) => likeUser != res.locals.currentUser.id
-          )),
-          (color = "black"))
-        : (post.likeUsers.push(res.locals.currentUser.id), (color = "red"));
+    var color = '';
+    if(post.likeUsers.includes(res.locals.currentUser.id)){
+        post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id);
+        color = "black";
+    } else {
+        post.likeUsers.push(res.locals.currentUser.id);
+        color = "red";
+    }
     post.likes = post.likeUsers.length;
     post.color = color;
     post.save();
@@ -240,5 +256,5 @@ export default {
     renderSavedPost,
     renderUserPosts,
     deleteComment,
-    deletePost
+    deletePost,
 };
