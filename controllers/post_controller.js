@@ -89,13 +89,10 @@ const createPost = async (req, res, next) => {
     });
     form.parse(req, (err, fields, files) => {
         if (err) return next(err);
-        // return console.log(files.file.originalFilename)
-        // const user = await User.findById(req.user.id);
-        const post = new Post({
-            post: fields.post,
-            image: files.file.newFilename,
-        });
-        // return console.log(post)
+        var data = {}
+        if(files.file.originalFilename != '')  data.image = files.file.newFilename
+        if(fields.post != '') data.post = fields.post
+        const post = new Post(data);
         post.onwer = res.locals.currentUser.id;
         post.save();
         res.redirect(res.locals.appUrl);

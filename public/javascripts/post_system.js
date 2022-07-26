@@ -264,7 +264,7 @@ $("body").on("click", "#delete-post", function (e) {
     const post = $(this).closest(".card");
     if (confirm("Are you sure, you want to delete this post?")) {
         post.remove();
-        ajaxCall("delete-post", post.data("id"), "DELETE");
+        ajaxCall(`delete-post/${post.data("id")}`, "DELETE");
     }
 });
 

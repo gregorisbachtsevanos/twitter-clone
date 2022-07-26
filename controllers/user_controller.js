@@ -58,10 +58,11 @@ const loginLogic = async (req, res) => {
 const profilePage = async (req, res) => {
     const user = await getUser(req.params.username);
     if (user) var posts = await Post.find({ onwer: user.id });
+    // console.log(user.id)
     if (user.id != res.locals.currentUser.id) {
         const currentUser = await getUser(res.locals.currentUser.username);
         var u = currentUser.following.map((id) => id == user.id);
-        btn = u[0] ? "unfollow" : "follow";
+        let  btn = u[0] ? "unfollow" : "follow";
         return res.render("profile_view", { user, posts, btn });
     }
     // var encryptedId = btoa(user.id)}

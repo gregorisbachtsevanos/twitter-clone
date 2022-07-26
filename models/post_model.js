@@ -12,15 +12,13 @@ const postSchema = new mongoose.Schema(
         },
         post: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
         },
         repost: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
-        isSaved: Boolean,
-        isHidden: Boolean,
         likeUsers: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
@@ -41,6 +39,10 @@ const postSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        isSaved: Boolean,
+        isHidden: Boolean,
+        hasHastag: Boolean,
+        hasMention: Boolean,
     },
     {
         timestamps: true,
