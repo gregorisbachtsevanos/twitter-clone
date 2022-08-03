@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-module.exports.homepage = async(req, res) => {
+export default homepage = async(req, res) => {
     res.render('index_view')
 }

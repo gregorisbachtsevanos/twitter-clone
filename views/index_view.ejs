@@ -2,7 +2,7 @@
 <script>
     const PAGE = "INDEX";
 </script>
-<form method="POST" action="/new-post" class="form-floating w-50 offset-4">
+<form method="POST" action="/new-post" enctype="multipart/form-data" class="form-floating w-50 offset-4">
     <textarea
         class="form-control"
         placeholder="Leave a comment here"
@@ -11,16 +11,17 @@
     ></textarea>
     <label for="floatingTextarea">Post</label>
     <div class="col-md-6">
-        <a
+        <input class="form-control btn btn-light btn-sm" name="file" type="file" multiple>
+        <!-- <a
             class="btn btn-light btn-sm"
             data-bs-toggle="modal"
             data-bs-target="#uploaderModal"
             >image</a
-        >
+        > -->
         <a class="btn btn-light btn-sm">audio</a>
     </div>
 
-    <div
+    <!-- <div
         class="col-md-6 modal fade"
         id="uploaderModal"
         tabindex="-1"
@@ -51,7 +52,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <button class="btn btn-sm btn-primary">Post</button>
 </form>

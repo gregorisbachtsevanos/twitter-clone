@@ -1,9 +1,10 @@
-const Post = require("../models/post_model");
-const User = require("../models/user_model");
-const Comment = require("../models/comment_model");
-// const { getUser } = require("./user_controller");
+import Post from "../models/post_model.js";
+import User from "../models/user_model.js";
+import Comment from "../models/comment_model.js";
+import formidable from "formidable";
+import multer from "multer";
 
-module.exports.loadPosts = async (req, res) => {
+const loadPosts = async (req, res) => {
     let posts = await Post.find()
         .populate("onwer")
         .populate("repost")
@@ -14,7 +15,7 @@ module.exports.loadPosts = async (req, res) => {
             const user = await User.findOne({ username: req.query.user });
             posts = posts.filter((post) => post.onwer.id == user.id);
         }
-        for (post of posts) {
+        for (let post of posts) {
             post.color = post.likeUsers.includes(res.locals.currentUser.id)
                 ? "red"
                 : "black";
@@ -39,15 +40,15 @@ module.exports.loadPosts = async (req, res) => {
     }
 };
 
-module.exports.loadTrending = async (req, res) => {
+const loadTrending = async (req, res) => {
     const numberOfDaysToLookBack = req.query.days ? req.query.days : 7; // check for custom days filter
     const posts = await Post.find({
-        createdAt: {
-            $gte: new Date(
-                new Date().getTime() -
-                    numberOfDaysToLookBack * 24 * 60 * 60 * 1000
-            ),
-        },
+        // createdAt: {
+        //     $gte: new Date(
+        //         new Date().getTime() -
+        //             numberOfDaysToLookBack * 24 * 60 * 60 * 1000
+        //     ),
+        // },
     })
         .populate("onwer")
         .populate("repost")
@@ -76,34 +77,44 @@ module.exports.loadTrending = async (req, res) => {
     // res.render('trending_view')
 };
 
-module.exports.renderIndex = (req, res) => {
+const renderIndex = (req, res) => {
     res.render("index_view");
 };
 
-module.exports.createPost = async (req, res) => {
-    // const user = await User.findById(req.user.id);
-    const post = new Post(req.body);
-    post.onwer = res.locals.currentUser.id;
-    post.save();
-    res.redirect(res.locals.appUrl);
+const createPost = async (req, res, next) => {
+        var data = {}
+        if(req.files != '') {
+            if(req.files.length > 1){
+
+            }else{
+                data.image = req.files[0].originalname
+            }
+        }
+        if(req.body.post != '') data.post = req.body.post
+        console.log(data)
+        const post = new Post(data);
+        post.onwer = res.locals.currentUser.id;
+        post.save();
+        res.redirect(res.locals.appUrl);
 };
 
-module.exports.likePost = async (req, res) => {
+const likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
-    post.likeUsers.includes(res.locals.currentUser.id)
-        ? ((post.likeUsers = post.likeUsers.filter(
-              (likeUser) => likeUser != res.locals.currentUser.id
-          )),
-          (color = "black"))
-        : (post.likeUsers.push(res.locals.currentUser.id), (color = "red"));
+    var color = '';
+    if(post.likeUsers.includes(res.locals.currentUser.id)){
+        post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id);
+        color = "black";
+    } else {
+        post.likeUsers.push(res.locals.currentUser.id);
+        color = "red";
+    }
     post.likes = post.likeUsers.length;
     post.color = color;
     post.save();
     res.send({ like: post.likes, color });
 };
 
-module.exports.commentPost = async (req, res) => {
-    
+const commentPost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     const comment = new Comment(req.body);
     comment.userId = res.locals.currentUser.id;
@@ -116,36 +127,36 @@ module.exports.commentPost = async (req, res) => {
     res.send({ body: data, comments: post.comments });
 };
 
-module.exports.editPost = async (req, res) => {
+const editPost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     res.render("post-edit_view", { post });
 };
 
-module.exports.editPostLogic = async (req, res) => {
+const editPostLogic = async (req, res) => {
     await Post.findByIdAndUpdate(req.params.postId, req.body).save();
     res.redirect("/");
 };
 
-module.exports.repost = async (req, res) => {
+const repost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     res.render("repost_view", { post });
 };
 
-module.exports.savePost = async (req, res) => {
+const savePost = async (req, res) => {
     const savePost = await Post.findById(req.params.postId);
     const user = await User.findById(res.locals.currentUser.id);
     user.savedPost.push(savePost.id);
     user.save();
 };
 
-module.exports.unsavePost = async (req, res) => {
+const unsavePost = async (req, res) => {
     const unsavePost = await Post.findById(req.params.postId);
     const user = await User.findById(res.locals.currentUser.id);
     user.savedPost = user.savedPost.filter((post) => post != unsavePost.id);
     await user.save();
 };
 
-module.exports.visabilityPost = async (req, res) => {
+const visabilityPost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     if (post.isHidden) {
         post.isHidden = !post.isHidden;
@@ -155,7 +166,7 @@ module.exports.visabilityPost = async (req, res) => {
     await post.save();
 };
 
-module.exports.renderHiddenPost = async (req, res) => {
+const renderHiddenPost = async (req, res) => {
     const posts = await Post.find({
         $and: [{ onwer: res.locals.currentUser.id }, { isHidden: true }],
     })
@@ -171,7 +182,7 @@ module.exports.renderHiddenPost = async (req, res) => {
     );
 };
 
-module.exports.renderSavedPost = async (req, res) => {
+const renderSavedPost = async (req, res) => {
     const user = await User.findById(res.locals.currentUser.id);
     const posts = await Post.find({
         $and: [{ onwer: res.locals.currentUser.id }, { isHidden: true }],
@@ -179,16 +190,17 @@ module.exports.renderSavedPost = async (req, res) => {
         .populate("onwer")
         .populate("commentId")
         .populate({ path: "commentId", populate: "userId" });
-        console.log(posts)
+    console.log(posts);
     res.send(
-        JSON.stringify({ // in case of load error delete JSON
+        JSON.stringify({
+            // in case of load error delete JSON
             msg: "success",
             posts: posts.reverse(),
         })
     );
 };
 
-module.exports.renderUserPosts = async (req, res) => {
+const renderUserPosts = async (req, res) => {
     const user = await getUser(req.params.username);
     const posts = await Post.find({ onwer: user.id })
         .populate("onwer")
@@ -204,7 +216,7 @@ module.exports.renderUserPosts = async (req, res) => {
     );
 };
 
-module.exports.deleteComment = async (req, res) => {
+const deleteComment = async (req, res) => {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
     let post = await Post.findById(comment.postId);
     post.commentId = post.commentId.filter(
@@ -215,9 +227,30 @@ module.exports.deleteComment = async (req, res) => {
     res.send({ comments: post.comments });
 };
 
-module.exports.deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
     await Post.findByIdAndDelete(req.params.postId);
 };
 function getUser(username) {
     return User.findOne({ username });
 }
+
+export default {
+    loadPosts,
+    loadTrending,
+    renderIndex,
+    renderIndex,
+    createPost,
+    likePost,
+    commentPost,
+    editPost,
+    editPostLogic,
+    repost,
+    savePost,
+    unsavePost,
+    visabilityPost,
+    renderHiddenPost,
+    renderSavedPost,
+    renderUserPosts,
+    deleteComment,
+    deletePost,
+};

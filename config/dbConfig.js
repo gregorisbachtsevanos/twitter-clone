@@ -1,5 +1,6 @@
-process.env.NODE_ENV !== "production" ? require("dotenv").config() : void 0;
-const mongoose = require('mongoose')
+import * as dotenv from 'dotenv'
+import mongoose from 'mongoose'
+process.env.NODE_ENV !== "production" ? dotenv.config() : void 0;
 
 const _ = process.env.DB_ACCESS
 

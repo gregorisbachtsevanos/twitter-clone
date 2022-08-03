@@ -1,7 +1,6 @@
-const app = require('express')();
-const session = require('express-session')
+import express from 'express';
+import session from 'express-session'
 
+const app = express();
 
-
-
-module.exports = { passportApp:app, passportUse:passport}
+export default  { passportApp:app, passportUse:passport}

@@ -1,4 +1,4 @@
-module.exports.sessionConfig = {
+const sessionConfig = {
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
@@ -8,3 +8,5 @@ module.exports.sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7,
     },
 }
+
+export default sessionConfig

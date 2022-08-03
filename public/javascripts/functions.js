@@ -14,6 +14,7 @@ const ajaxCall = (param, action) => {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log(data)
             if(PAGE == 'INDEX'){
                 postModal(data)
             }else if(PAGE == 'PROFILE'){
