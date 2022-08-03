@@ -2,6 +2,7 @@ import Post from "../models/post_model.js";
 import User from "../models/user_model.js";
 import Comment from "../models/comment_model.js";
 import formidable from "formidable";
+import multer from "multer";
 
 const loadPosts = async (req, res) => {
     let posts = await Post.find()
@@ -81,24 +82,20 @@ const renderIndex = (req, res) => {
 };
 
 const createPost = async (req, res, next) => {
-    console.log(req.body);
-    const form = formidable({
-        multiples: true,
-        uploadDir: "public/uploads/images",
-        keepExtensions: true,
-        maxFieldsSize: 10 * 1024 * 1024, //10MB
-        minFileSize: 1,
-    });
-    form.parse(req, (err, fields, files) => {
-        if (err) return next(err);
         var data = {}
-        if(files.file.originalFilename != '')  data.image = files.file.newFilename
-        if(fields.post != '') data.post = fields.post
+        if(req.files != '') {
+            if(req.files.length > 1){
+
+            }else{
+                data.image = req.files[0].originalname
+            }
+        }
+        if(req.body.post != '') data.post = req.body.post
+        console.log(data)
         const post = new Post(data);
         post.onwer = res.locals.currentUser.id;
         post.save();
         res.redirect(res.locals.appUrl);
-    });
 };
 
 const likePost = async (req, res) => {

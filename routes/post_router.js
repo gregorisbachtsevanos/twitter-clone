@@ -5,27 +5,31 @@ import catchAsync from '../utils/catchAsync.js';
 import validation from '../middleware/schemaValidation.js'
 import ExpressError from '../utils/ExpressError.js'
 import formidable from 'formidable'
+import multer from "multer";
+import path from "path";
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/uploads/images')
+    },
+    filename: function (req, file, cb) {
+    //   cb(null, file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9))
+      cb(null, (file.originalname))
+    }
+  })
+  
+const upload = multer({storage})
+
 
 const router = express.Router();
 
 // check for form errors before take action
 const validatePost = (req, res, next) => {
-    const form = formidable({ multiples: true })
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-          next(err);
-          return;
-        }
-        // console.log(fields)
-        const {error} = validation.postSchema.validate(fields);
+        const {error} = validation.postSchema.validate(req.body);
         if (error) {
             const msg = error.details.map((el) => el.message).join(",");
             throw new ExpressError(msg, 400);
-        } else {
-            // console.log("SUCCESS");
-            next();
         }
-    });
 };
 
 router.get("/", isloggedIn, postController.renderIndex);
@@ -84,7 +88,8 @@ router.post(
 router.post(
     "/new-post",
     isloggedIn,
-    // validatePost,
+    upload.array('file'),
+    validatePost,
     catchAsync(postController.createPost)
 );
 
