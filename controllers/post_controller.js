@@ -1,7 +1,6 @@
 import Post from "../models/post_model.js";
 import User from "../models/user_model.js";
 import Comment from "../models/comment_model.js";
-import formidable from "formidable";
 import multer from "multer";
 
 const loadPosts = async (req, res) => {
@@ -90,9 +89,15 @@ const createPost = async (req, res, next) => {
                 data.image = req.files[0].originalname
             }
         }
-        if(req.body.post != '') data.post = req.body.post
-        console.log(data)
+        var hastag, mention = false
+        if(req.body.post != '') {
+            if(req.body.post.includes('#')) hastag = true
+            if(req.body.post.includes('@')) mention = true
+            data.post = req.body.post
+        }
         const post = new Post(data);
+        if(hastag) post.hasHastag = true
+        if(mention) post.hasMention = true
         post.onwer = res.locals.currentUser.id;
         post.save();
         res.redirect(res.locals.appUrl);
