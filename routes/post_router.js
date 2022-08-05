@@ -4,7 +4,6 @@ import isloggedIn from '../middleware/isLoggedIn.js'
 import catchAsync from '../utils/catchAsync.js';
 import validation from '../middleware/schemaValidation.js'
 import ExpressError from '../utils/ExpressError.js'
-import formidable from 'formidable'
 import multer from "multer";
 import path from "path";
 
@@ -89,7 +88,7 @@ router.post(
     "/new-post",
     isloggedIn,
     upload.array('file'),
-    validatePost,
+    // validatePost,
     catchAsync(postController.createPost)
 );
 
