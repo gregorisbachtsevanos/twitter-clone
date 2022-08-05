@@ -64,3 +64,20 @@ a {
 	height: 100%;
 	opacity: 0;
 }
+
+.mention{
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+.mention:hover{
+	color: black;
+	text-decoration: none;
+}
+
+.hashtag{
+	font-style: italic;
+	color: rgba(50, 78, 238, 0.834);
+	text-decoration: none;
+}
