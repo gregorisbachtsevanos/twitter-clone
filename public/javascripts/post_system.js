@@ -3,31 +3,8 @@ import { ajaxCall } from "./functions.js";
 const renderPosts = (data, where) => {
     let load = "";
     for (let post of data.posts) {
-        // let body = post.hasHastag ? post.post.indexOf('#') : void(0);
-        if(post.hasHastag){
-                var body = post.hasHastag
-                ? post.post.split(" ")
-                : post.post
-                var i = 0;
-                while (i < body.length){
-                    if(body[i].includes('#')){
-                        body[i] = `<span class="hashtag">${body[i]}</span>`
-                    }
-                    i++
-                }
-        }
-        if(post.hasMention){
-            var body = post.hasMention
-            ? post.post.split(" ")
-            : post.post
-            var i = 0;
-            while (i < body.length){
-                if(body[i].includes('@')){
-                    body[i] = `<a href="${body[i].replace('@', '')}" class="mention">${body[i]}</a>`
-                }
-                i++
-            }
-    }
+        // let body = post.hasHashtag ? post.post.indexOf('#') : void(0);
+        var body = attributeTag(post);
         load = /*html*/ `
             <div class="card card-container m-3 w-100" data-id="${post._id}">
                 <div class="card-header d-flex align-items-center justify-content-between">
@@ -60,7 +37,7 @@ const renderPosts = (data, where) => {
                 <div class="card-body">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="show-post" data-bs-target="#staticBackdrop">Go</button>
                     <h5 class="card-title"></h5>
-                    ${post.post ? /*html*/`<p class="card-text">${post.hasHastag || post.hasMention ? body.join(" ") : post.post}</p>`:''}
+                    ${post.post ? /*html*/`<p class="card-text">${post.hasHashtag || post.hasMention ? body.join(" ") : post.post}</p>`:''}
                     ${post.image ? /*html*/ `<img src="/uploads/images/${post.image}" class="card-img-top">`:''}
                 </div>
                 <div class="comment-section">
@@ -83,11 +60,42 @@ const renderPosts = (data, where) => {
         `;
         $(where).append(load);
     }
+
+    function attributeTag(post) {
+        if (post.hasMention) {
+            var body = post.hasMention
+                ? post.post.split(" ")
+                : post.post;
+            var i = 0;
+            while (i < body.length) {
+                if (body[i].includes('@')) {
+                    body[i] = `<a href="${body[i].replace('@', '')}" class="mention">${body[i]}</a>`;
+                }
+                i++;
+            }
+        }
+        if (post.hasHashtag) {
+            var body = post.hasHashtag
+                ? post.post.split(" ")
+                : post.post;
+            var i = 0;
+            while (i < body.length) {
+                if (body[i].includes('#')) {
+                    body[i] = `<span class="hashtag">${body[i]}</span>`;
+                }
+                i++;
+            }
+        }
+        return body;
+    }
+
+
 };
 
 const renderComments = (post) => {
     let loadComment = "";
     for (const comment of post.commentId) {
+        console.log(comment)
         loadComment += /*html*/ `
         <div class="card w-100" style="font-size: .8rem" data-id="${comment._id
             }">

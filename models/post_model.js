@@ -41,7 +41,7 @@ const postSchema = new mongoose.Schema(
         },
         isSaved: Boolean,
         isHidden: Boolean,
-        hasHastag: Boolean,
+        hasHashtag: Boolean,
         hasMention: Boolean,
     },
     {

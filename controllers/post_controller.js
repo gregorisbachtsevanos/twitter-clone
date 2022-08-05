@@ -89,14 +89,14 @@ const createPost = async (req, res, next) => {
                 data.image = req.files[0].originalname
             }
         }
-        var hastag, mention = false
+        var hashtag, mention = false
         if(req.body.post != '') {
-            if(req.body.post.includes('#')) hastag = true
+            if(req.body.post.includes('#')) hashtag = true
             if(req.body.post.includes('@')) mention = true
             data.post = req.body.post
         }
         const post = new Post(data);
-        if(hastag) post.hasHastag = true
+        if(hashtag) post.hasHashtag = true
         if(mention) post.hasMention = true
         post.onwer = res.locals.currentUser.id;
         post.save();
@@ -126,6 +126,7 @@ const commentPost = async (req, res) => {
     comment.postId = post.id;
     post.commentId.push(comment._id);
     post.comments = post.commentId.length;
+    
     await comment.save();
     await post.save();
     const data = await Comment.findById(comment._id).populate("userId");
