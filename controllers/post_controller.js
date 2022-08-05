@@ -20,6 +20,16 @@ const loadPosts = async (req, res) => {
                 : "black";
             post.isSaved = user.savedPost.includes(post.id) ? true : false;
             post.save();
+            // let body = post.hasHastag
+            //     ? post.post.split(" ")
+            //     : null
+            // console.log(typeof body)
+            // var i = 0;
+            // while (i < 3){
+            //     if(body[i].includes('#')){
+            //         console.log('body[i]')
+            //     }
+            // }
         }
         res.send(
             JSON.stringify({

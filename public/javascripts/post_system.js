@@ -4,7 +4,7 @@ const renderPosts = (data, where) => {
     let load = "";
     for (let post of data.posts) {
         let body = post.hasHastag ? post.post.indexOf('#') : void(0);
-        console.log(body, post.post)
+        // console.log(body, post.post)
         load = /*html*/ `
             <div class="card card-container m-3 w-100" data-id="${post._id}">
                 <div class="card-header d-flex align-items-center justify-content-between">
