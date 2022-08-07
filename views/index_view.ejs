@@ -2,23 +2,33 @@
 <script>
     const PAGE = "INDEX";
 </script>
-<form method="POST" action="/new-post" enctype="multipart/form-data" class="form-floating w-50 offset-4">
+<form
+    method="POST"
+    action="/new-post"
+    enctype="multipart/form-data"
+    class="form-floating w-50 offset-4"
+>
     <textarea
         class="form-control"
         placeholder="Leave a comment here"
         id="floatingTextarea"
         name="post"
     ></textarea>
+    <div class="mention-result"></div>
     <label for="floatingTextarea">Post</label>
-    <div class="col-md-6">
-        <input class="form-control btn btn-light btn-sm" name="file" type="file" multiple>
-        <!-- <a
-            class="btn btn-light btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#uploaderModal"
-            >image</a
-        > -->
-        <a class="btn btn-light btn-sm">audio</a>
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-light btn-sm">audio</a>
+            <div>
+                <input
+                    class="form-control btn btn-light btn-sm w-75"
+                    name="file"
+                    type="file"
+                    multiple
+                />
+            </div>
+            <!-- <a class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a> -->
+        </div>
     </div>
 
     <!-- <div
@@ -69,4 +79,3 @@
 >
     <div class="modal-dialog"></div>
 </div>
-

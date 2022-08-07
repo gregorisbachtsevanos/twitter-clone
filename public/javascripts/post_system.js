@@ -95,7 +95,6 @@ const renderPosts = (data, where) => {
 const renderComments = (post) => {
     let loadComment = "";
     for (const comment of post.commentId) {
-        console.log(comment)
         loadComment += /*html*/ `
         <div class="card w-100" style="font-size: .8rem" data-id="${comment._id
             }">

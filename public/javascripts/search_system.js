@@ -1,14 +1,27 @@
 const searchForm = () => {
     $('#searchModal #searchInput').on('keyup', function (e) {
         $('.search-result').empty();
-        searchUser($(this).val())
+        searchUser($(this).val(), '.search-result')
         $('.btn-close').click(() => $(this).val(''))
         if(e.which == 27)
             $(this).val('')
     })
 }
 
-const searchResults = (data) => {
+const mentionSearch = () => {
+    $('#floatingTextarea').on('keyup', function (e) {
+        console.log($(this).val())
+        if(e.which == 50){
+            // $('.mention-result').empty();
+            searchUser($(this).val(), '.mention-result')
+            // $('.btn-close').click(() => $(this).val(''))
+            // if(e.which == 27)
+            //     $(this).val('')
+        }
+    })
+}
+
+const searchResults = (data, where) => {
     let load = '';
     for(let result of data){
         if(result._id != USER){
@@ -34,15 +47,15 @@ const searchResults = (data) => {
             <hr class="w-100">`;
         }
     }
-    $('.search-result').append(load)
+    $(where).append(load)
 }
 
-const searchUser = (value) => {
+const searchUser = (value, where) => {
     $.post(`${APP_URL}search`, {
         search: value
     })
-    .then(data => searchResults(data.users))
+    .then(data => searchResults(data.users, where))
     .catch(err => console.log(err))
 }
 
-export { searchForm }
+export { searchForm, mentionSearch }
