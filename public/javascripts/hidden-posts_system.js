@@ -36,7 +36,6 @@ const renderHiddenPosts = (data, where) => {
                     </div>
                 </div>
                 <div class="card-body">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="show-post" data-bs-target="#exampleModal">Go</button>
                     <h5 class="card-title"></h5>
                     <p class="card-text">${post.post}</p>
                 </div>

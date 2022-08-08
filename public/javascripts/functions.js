@@ -1,4 +1,3 @@
-import { postModal } from "./post_system.js";
 import { renderSavedPosts } from "./saved-posts_system.js";
 import { renderHiddenPosts } from "./hidden-posts_system.js";
 import { renderUserPosts } from "./user-posts_system.js";
@@ -16,7 +15,6 @@ const ajaxCall = (param, action) => {
         .then((data) => {
             console.log(data)
             if(PAGE == 'INDEX'){
-                postModal(data)
             }else if(PAGE == 'PROFILE'){
                 if(param.includes('saved-posts')){
                     renderSavedPosts(data, $('.actions-container'))

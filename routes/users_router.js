@@ -29,7 +29,7 @@ router.route('/login')
 
 router.get('/trending', isloggedIn, catchAsync(userController.trending))
 
-router.get('/post/:id', userController.showPost)
+router.get('/post/:id', isloggedIn, catchAsync(userController.showPost))
 
 router.route('/:username')
 	.get(isloggedIn, catchAsync(userController.profilePage))

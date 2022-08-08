@@ -9,9 +9,14 @@ import { renderSavedPosts } from "./saved-posts_system.js";
 if (typeof PAGE != "undefined") {
     switch (PAGE) {
         case "INDEX":
-            mentionSearch()
+            mentionSearch();
             searchForm();
             getPosts();
+            likePost();
+            commentPost();
+            break;
+        case "SHOW POST":
+            searchForm();
             likePost();
             commentPost();
             break;

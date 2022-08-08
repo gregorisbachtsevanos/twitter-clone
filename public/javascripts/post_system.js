@@ -34,14 +34,14 @@ const renderPosts = (data, where) => {
                         </ul>
                     </div>
                 </div>
+                <a href="post/${post._id}">Go</a>
                 <div class="card-body">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="show-post" data-bs-target="#exampleModal">Go</button>
                     <h5 class="card-title"></h5>
                     ${post.post ? /*html*/`<p class="card-text">${post.hasHashtag || post.hasMention ? body.join(" ") : post.post}</p>`:''}
                     ${post.image ? /*html*/ `<img src="/uploads/images/${post.image}" class="card-img-top">`:''}
                 </div>
                 <div class="comment-section">
-                    <div class="card-text">
+                    <div class="card-text px-2">
                         <span class="like-container" style="color:${post.color}">like <small class="like-counter">${post.likes}</small></span>
                         <span class="comment-container">comment <small class="comment-counter">${post.comments}</small></span>
                     </div>
@@ -96,8 +96,8 @@ const renderPosts = (data, where) => {
 
 const renderComments = (post) => {
     let loadComment = "";
+    // console.log(post)
     for (const comment of post.commentId) {
-        console.log(comment)
         loadComment += /*html*/ `
         <div class="card w-100" style="font-size: .8rem" data-id="${comment._id
             }">
@@ -127,61 +127,6 @@ const renderComments = (post) => {
         </div>`;
     }
     return loadComment;
-};
-
-const postModal = (data) => {
-    $('.modal-dialog').empty()
-    let load = /*html*/ `
-        <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="card-header d-flex align-items-center justify-content-between" style="z-index:100">
-                <div>${data.onwer.firstname} ${data.onwer.surname}
-                <a href="${data.onwer.username}" class="link-dark" >@${data.onwer.username}</a>
-                <!-- if is re-post-->
-                <p class="fs-6 fw-light">
-                    ${data.repost
-                        ? `posted by ${data.repost.username}`
-                        : ""
-                    }
-                </p>
-            </div>
-            <div class="dropdown">
-                <button class="btn border-0 btn-sm dropdown-toggle" type="button" class="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    ${USER == data.onwer._id
-                        ? /*html*/ `
-                            <li><a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${data._id}">Edit</a></li>
-                            <li><a class="dropdown-item" id="visability-post" href="#">Hide</a></li>
-                            <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
-                        : /*html*/ `
-                            <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${data._id}">Re-post</a></li>
-                            <li><a class="dropdown-item" id="${data.isSaved?'unsave-post':'save-post'}" href="#">${data.isSaved?'Unsave':'Save'}</a></li>`
-                    }
-                </ul>
-            </div>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">${data.post}</p>
-            </div>
-            <div class="comment-section">
-                <div class="card-text">
-                    <span class="like-container" style="color:${data.likes}">like <small class="like-counter">${data.likes}</small></span>
-                    <span class="comment-container">comment <small class="comment-counter">${data.comments}</small></span>
-                </div>
-                <div class="card-footer text-center text-muted">
-                    
-                </div>
-                <div class="add-comment-container" style="display: none;">
-                    <div class="comments">
-                    </div>
-                    <input type='text' class="form-control comment-input" name="comment" placeholder="comment" required>
-                    <input type='submit' class="add-comment btn btn-sm">
-                </div>
-            </div>
-        </div>`
-    ;
-    $('.modal-dialog').append(load)
 };
 
 // get all posts
@@ -284,12 +229,6 @@ $("body").on("click", "#private-post", function () {
     // })
 })
 
-// show post modal
-$("body").on("click", "#show-post", function () {
-    const post = $(this).closest(".card");
-    ajaxCall(`post/${post.data("id")}`, "GET");
-});
-
 // delete post (for the currentUser)
 $("body").on("click", "#delete-post", function (e) {
     e.preventDefault();
@@ -300,4 +239,4 @@ $("body").on("click", "#delete-post", function (e) {
     }
 });
 
-export { getPosts, /*getUserPosts,*/ ajaxCall, postModal };
+export { getPosts, /*getUserPosts,*/ ajaxCall };

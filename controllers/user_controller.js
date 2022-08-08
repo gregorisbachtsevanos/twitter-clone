@@ -104,9 +104,11 @@ const followSystem = async (req, res) => {
 };
 
 const showPost = async (req, res) => {
-    const post = await Post.findById(req.params.id).populate("onwer");
-    console.log(post);
-    res.send(post);
+    const post = await Post.findById(req.params.id).populate("onwer")
+    .populate("repost")
+    .populate({ path: "commentId", populate: "userId" });
+    console.log(post.commentId);
+    res.render("show-post_view", { post });
 };
 
 const unfollowSystem = async (req, res) => {
@@ -175,7 +177,6 @@ export default {
     register,
     registerLogic,
     login,
-    loginLogic,
     loginLogic,
     profilePage,
     profileEdit,
