@@ -13,9 +13,8 @@ const ajaxCall = (param, action) => {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
-            if(PAGE == 'INDEX'){
-            }else if(PAGE == 'PROFILE'){
+            // console.log(data)
+            if(PAGE == 'PROFILE'){
                 if(param.includes('saved-posts')){
                     renderSavedPosts(data, $('.actions-container'))
                 }else if (param.includes('user-posts')){

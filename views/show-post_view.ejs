@@ -103,7 +103,7 @@
         <% if(post.commentId.length > 0) { %>
             <div class="d-flex justify-content-center"><p>&#8628;</p></div>
         <% } %> 
-        <div class="comments">
+        <div class="comments card-container w-75 m-auto">
             <% if(post.commentId.length > 0) { %>
                 <% post.commentId.forEach(comment => { %>
                 <div
@@ -157,13 +157,13 @@
                 <% }) %>
             <% } %> 
         </div>
-        <div class="card">
+        <div class="w-75 m-auto comment-container" data-id="<%=post._id%>">
             <input
-            type="text"
-            class="form-control comment-input"
-            name="comment"
-            placeholder="comment"
-            required
+                type="text"
+                class="form-control comment-input"
+                name="comment"
+                placeholder="comment"
+                required
             />
             <input type="submit" class="btn btn-sm add-comment" />
         </div>
