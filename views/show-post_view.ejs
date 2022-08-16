@@ -10,7 +10,7 @@
         >
             <div>
                 <%= post.onwer.firstname %> <%= post.onwer.surname %>
-                <a href="<%=post.onwer.username%>" class="link-dark"
+                <a href="/<%=post.onwer.username%>" class="link-dark"
                     >@<%= post.onwer.username%></a
                 >
                 <p class="fs-6 fw-light">
@@ -39,7 +39,7 @@
                     <li>
                         <p
                             class="dropdown-item"
-                            id="<%post.isHidden ? 'public-post' : 'private-post'%>"
+                            id="<%=post.isHidden ? 'public-post' : 'private-post'%>"
                         >
                             <%=post.isHidden ? 'Public' : 'Private' %>
                         </p>
@@ -170,7 +170,9 @@
     </div>
 </div>
 
-<script>
+<script type="module">
+import { ajaxCall } from "./functions.js";
+
     // save - unsave post (not for the currentUser)
 $("body").on("click", "#save-post", function () {
     $(this).closest(".dropdown-menu").find("#save-post").attr('id', 'unsave-post').html('Unsave');
@@ -192,23 +194,23 @@ $("body").on("click", "#unsave-post", function () {
 })
 
 // change visability (for the currentUser)
-$("body").on("click", "#visability-post", function () {
-    console.log($(this).data('value'))
-        if($(this).data('value') == 'public'){
-            $(this).removeAttr('data-value')
-            $(this).attr('data-value', 'private')
-            $(this).html('Private')
-        }else{
-            $(this).removeAttr('data-value')
-            $(this).attr('data-value', 'public')
-            $(this).html('Public')
-        }
-})
+// $("body").on("click", "#visability-post", function () {
+//     console.log($(this).data('value'))
+//         if($(this).data('value') == 'public'){
+//             $(this).removeAttr('data-value')
+//             $(this).attr('data-value', 'private')
+//             $(this).html('Private')
+//         }else{
+//             $(this).removeAttr('data-value')
+//             $(this).attr('data-value', 'public')
+//             $(this).html('Public')
+//         }
+// })
 
-$("body").on("click", "#visability-post", function () {
-    const post = $(this).closest(".card");
-    ajaxCall(`visability-post/${post.data("id")}`, "GET");
-});
+// $("body").on("click", "#visability-post", function () {
+//     const post = $(this).closest(".card");
+//     ajaxCall(`visability-post/${post.data("id")}`, "GET");
+// });
 
 $("body").on("click", "#public-post", function () {
     $(this).closest(".dropdown-menu").find("#public-post").attr('id', 'private-post').html('Private');
@@ -224,6 +226,7 @@ $("body").on("click", "#private-post", function () {
 })
 
 $("body").on("click", "#private-post", function () {
+    alert()
     const post = $(this).closest(".card");
     ajaxCall(`visability-post/${post.data("id")}`, "POST");
 })

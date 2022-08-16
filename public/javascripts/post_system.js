@@ -178,24 +178,24 @@ $("body").on("click", "#unsave-post", function () {
 })
 
 // change visability (for the currentUser)
-$("body").on("click", "#visability-post", function () {
-    console.log($(this).data('value'))
-        if($(this).data('value') == 'public'){
-            $(this).removeAttr('data-value')
-            $(this).attr('data-value', 'private')
-            $(this).html('Private')
-        }else{
-            $(this).removeAttr('data-value')
-            $(this).attr('data-value', 'public')
-            $(this).html('Public')
-        }
-    // $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
-})
+// $("body").on("click", "#visability-post", function () {
+//     console.log($(this).data('value'))
+//         if($(this).data('value') == 'public'){
+//             $(this).removeAttr('data-value')
+//             $(this).attr('data-value', 'private')
+//             $(this).html('Private')
+//         }else{
+//             $(this).removeAttr('data-value')
+//             $(this).attr('data-value', 'public')
+//             $(this).html('Public')
+//         }
+//     // $(this).closest(".dropdown-menu").find("#unsave-post").attr('id', 'save-post').html('Save');
+// })
 
-$("body").on("click", "#visability-post", function () {
-    const post = $(this).closest(".card");
-    ajaxCall(`visability-post/${post.data("id")}`, "GET");
-});
+// $("body").on("click", "#visability-post", function () {
+//     const post = $(this).closest(".card");
+//     ajaxCall(`visability-post/${post.data("id")}`, "GET");
+// });
 
 $("body").on("click", "#public-post", function () {
     $(this).closest(".dropdown-menu").find("#public-post").attr('id', 'private-post').html('Private');
