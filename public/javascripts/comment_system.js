@@ -54,6 +54,8 @@ const commentPost = () => {
                         loadComment(data)
                     }else if(PAGE == "SHOW POST"){
                         commentTemplate(data.body)
+                        $('.comment-counter').html(parseInt($('.comment-counter').html()) + 1)
+                        console.log($('.comment-counter').html())
                     }
                     post.find('.comment-counter').html(data.comments);
                     comment.val('')
