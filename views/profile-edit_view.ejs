@@ -55,6 +55,12 @@
                 />
             </div>
         </div>
+        <div class="col-12">
+            <label class="form-label">Bio</label>
+            <div class="input-group has-validation">
+                <textarea type="text" class="form-control" name="bio" value="<%= user.extra_info. bio %>"></textarea>
+            </div>
+        </div>
         <div class="col-6">
             <label class="form-label">Phone</label>
             <div class="input-group has-validation">
@@ -62,9 +68,9 @@
             </div>
         </div>
         <div class="col-6">
-            <label class="form-label">Bio</label>
+            <label class="form-label">Website</label>
             <div class="input-group has-validation">
-                <textarea type="text" class="form-control" name="bio" value="<%= user.extra_info. bio %>"></textarea>
+                <input type="text" class="form-control" name="website" value="<%= user.extra_info.website %>"/>
             </div>
         </div>
         <div class="col-6">
@@ -92,9 +98,9 @@
             </div>
         </div>
         <div class="col-6">
-            <label class="form-label">Website</label>
+            <label class="form-label">Tik Tok</label>
             <div class="input-group has-validation">
-                <input type="text" class="form-control" name="website" value="<%= user.extra_info.website %>"/>
+                <input type="text" class="form-control" name="tiktok" value="<%= user.extra_info.tiktok %>"/>
             </div>
         </div>
         <div class="col-6">
@@ -113,26 +119,6 @@
             <label class="form-label">Upwork</label>
             <div class="input-group has-validation">
                 <input type="text" class="form-control" name="upwork" value="<%= user.extra_info.upwork %>"/>
-            </div>
-        </div>
-        <div class="col-6">
-            <label class="form-label">Password</label>
-            <div class="input-group has-validation">
-                <input
-                    type="password"
-                    class="form-control"
-                    name="password"
-                />
-            </div>
-        </div>
-        <div class="col-6">
-            <label class="form-label">Repeat Password</label>
-            <div class="input-group has-validation">
-                <input
-                    type="password"
-                    class="form-control"
-                    name="repeat_password"
-                />
             </div>
         </div>
         <div class="col-12">

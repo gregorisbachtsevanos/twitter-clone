@@ -95,6 +95,10 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 trim: true,
             },
+            tiktok: {
+                type: String,
+                trim: true,
+            },
             youtube: {
                 type: String,
                 trim: true,
