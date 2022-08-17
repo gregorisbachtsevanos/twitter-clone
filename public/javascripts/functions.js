@@ -3,10 +3,8 @@ import { renderHiddenPosts } from "./hidden-posts_system.js";
 import { renderUserPosts } from "./user-posts_system.js";
 
 const profileImage = (avatar, username) => {
-    var pic = ''
     if (avatar){
-        /*html*/
-        pic =`<img
+        return /*html*/ `<img
             class="card-img-top rounded-circle"
             src="/images/avatars/avatarImage.png"
             alt="avatar"
@@ -14,12 +12,10 @@ const profileImage = (avatar, username) => {
             width="100%"
         />`
     } else {
-        /*html*/
-        pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
+        return /*html*/ `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
             ${ username.charAt(0).toUpperCase() }
         </p>`
     }
-    return pic;
 }
 
 $('.avatar-container').html(profileImage(USER_AVATAR, USER_USERNAME ))
