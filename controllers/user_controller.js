@@ -63,8 +63,6 @@ const registerLogic = async (req, res, next) => {
 };
 
 const login = (req, res) => {
-    console.log(ip.address());
-
     res.render("login_view");
 };
 
