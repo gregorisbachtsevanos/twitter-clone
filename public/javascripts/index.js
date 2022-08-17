@@ -4,7 +4,6 @@ import { commentPost } from "./comment_system.js";
 import { follow, unfollow } from "./follow_system.js";
 import { getTrandingPosts } from "./trending_system.js";
 import { searchForm, mentionSearch } from "./search_system.js";
-import { renderSavedPosts } from "./saved-posts_system.js";
 
 if (typeof PAGE != "undefined") {
     switch (PAGE) {

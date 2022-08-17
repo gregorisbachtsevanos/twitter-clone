@@ -1,6 +1,9 @@
+import ip from "ip";
+import detectBrowser from "detect-browser";
 import User from "../models/user_model.js";
 import Post from "../models/post_model.js";
-import userSchema from '../middleware/schemaValidation.js'
+import userSchema from "../middleware/schemaValidation.js";
+import si from "systeminformation";
 
 const register = (req, res) => {
     if (!req.user) {
@@ -30,10 +33,20 @@ const registerLogic = async (req, res, next) => {
                 username,
                 email,
             });
-            (user.extra_info.year_of_birth = year_of_birth),
-                (user.extra_info.month_of_birth = month_of_birth),
-                (user.extra_info.day_of_birth = day_of_birth),
-                (user.extra_info.gender = gender);
+            //
+            user.extra_info.year_of_birth = year_of_birth,
+            user.extra_info.month_of_birth = month_of_birth,
+            user.extra_info.day_of_birth = day_of_birth,
+            user.extra_info.gender = gender;
+            si.cpu().then((data) => {
+                const { family, vendor, brand, manufacturer } = data;
+                // return (family, vendor, brand, manufacturer);
+                user.extra_info.device.manufacturer = manufacturer;
+                user.extra_info.device.brand = brand;
+                user.extra_info.device.vendor = vendor;
+                user.extra_info.device.family = family; 
+            });
+            // if error add:(), in every line
             const newUser = await User.register(user, password);
             req.login(newUser, (err) => {
                 if (err) return next(err);
@@ -48,6 +61,8 @@ const registerLogic = async (req, res, next) => {
 };
 
 const login = (req, res) => {
+    console.log(ip.address());
+
     res.render("login_view");
 };
 
@@ -62,7 +77,7 @@ const profilePage = async (req, res) => {
     if (user.id != res.locals.currentUser.id) {
         const currentUser = await getUser(res.locals.currentUser.username);
         var u = currentUser.following.map((id) => id == user.id);
-        let  btn = u[0] ? "unfollow" : "follow";
+        let btn = u[0] ? "unfollow" : "follow";
         return res.render("profile_view", { user, posts, btn });
     }
     // var encryptedId = btoa(user.id)}
@@ -104,9 +119,10 @@ const followSystem = async (req, res) => {
 };
 
 const showPost = async (req, res) => {
-    const post = await Post.findById(req.params.id).populate("onwer")
-    .populate("repost")
-    .populate({ path: "commentId", populate: "userId" });
+    const post = await Post.findById(req.params.id)
+        .populate("onwer")
+        .populate("repost")
+        .populate({ path: "commentId", populate: "userId" });
     console.log(post.commentId);
     res.render("show-post_view", { post });
 };
@@ -188,5 +204,5 @@ export default {
     unfollowSystem,
     trending,
     search,
-    logout
+    logout,
 };

@@ -17,7 +17,6 @@ import methodOverride from "method-override";
 import ExpressError from './utils/ExpressError.js'
 import User from "./models/user_model.js"
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
 
 const app = express();

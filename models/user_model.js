@@ -107,6 +107,32 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 trim: true,
             },
+            ipAddress: {
+                type: String,
+                trim: true,
+            },
+            device: {
+                manufacturer: {
+                    type: String,
+                    trim: true,
+                }, //'Apple'
+                brand: {
+                    type: String,
+                    trim: true,
+                }, //'M1'
+                vendor: {
+                    type: String,
+                    trim: true,
+                }, //'Apple'
+                family: {
+                    type: String,
+                    trim: true,
+                }, //'458787763'
+            },
+            browser: {
+                type: String,
+                trim: true,
+            }
         }
     },
     {
