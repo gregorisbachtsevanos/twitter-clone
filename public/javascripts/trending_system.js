@@ -6,7 +6,7 @@ const renderTrending = (data, where) => {
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div>
                         ${post.onwer.firstname} ${post.onwer.surname}
-                        <a href="${post.onwer.username}" class="link-dark" >@${post.onwer.username}</a>
+                        <a href="/${post.onwer.username}" class="link-dark" >@${post.onwer.username}</a>
                         <p class="fs-6 fw-light">
                             ${post.repost
                                 ? `posted by ${post.repost.username}`
@@ -29,6 +29,7 @@ const renderTrending = (data, where) => {
                         </ul>
                     </div>
                 </div>
+                <a href="post/${post._id}">Go</a>
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">${post.post}</p>

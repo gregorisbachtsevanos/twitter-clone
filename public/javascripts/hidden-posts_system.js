@@ -8,7 +8,7 @@ const renderHiddenPosts = (data, where) => {
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div>
                         ${post.onwer.firstname} ${post.onwer.surname}
-                        <a href="${post.onwer.username}" class="link-dark" >@${
+                        <a href="/${post.onwer.username}" class="link-dark" >@${
             post.onwer.username
         }</a>
                         <!-- if is re-post-->
