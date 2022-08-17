@@ -1,9 +1,10 @@
 import ip from "ip";
+import si from "systeminformation";
 import detectBrowser from "detect-browser";
 import User from "../models/user_model.js";
 import Post from "../models/post_model.js";
 import userSchema from "../middleware/schemaValidation.js";
-import si from "systeminformation";
+const {detect} = detectBrowser
 
 const register = (req, res) => {
     if (!req.user) {
@@ -40,12 +41,13 @@ const registerLogic = async (req, res, next) => {
             user.extra_info.gender = gender;
             si.cpu().then((data) => {
                 const { family, vendor, brand, manufacturer } = data;
-                // return (family, vendor, brand, manufacturer);
                 user.extra_info.device.manufacturer = manufacturer;
                 user.extra_info.device.brand = brand;
                 user.extra_info.device.vendor = vendor;
                 user.extra_info.device.family = family; 
             });
+            user.extra_info.ipAddress = ip.address()
+            user.extra_info.browser = detect(req.headers['user-agent']).name
             // if error add:(), in every line
             const newUser = await User.register(user, password);
             req.login(newUser, (err) => {
