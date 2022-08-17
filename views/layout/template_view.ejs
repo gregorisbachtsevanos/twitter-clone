@@ -32,7 +32,11 @@
             <% if (!currentUser) { %>
                 <%- include('../partials/navbar_view') %>
             <% } else { %>
-                <script>const USER = `<%= currentUser._id %>`;</script>
+                <script>
+                    const USER = `<%= currentUser._id %>`;
+                    const USER_AVATAR = `<%= currentUser.extra_info.avatar %>`;
+                    const USER_USERNAME = `<%= currentUser.username %>`;
+                </script>
                 <div class="col-2"></div> <%- include('../partials/navbar2_view') %></div>
             <% } %>
 

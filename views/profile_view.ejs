@@ -2,8 +2,11 @@
     <script>
         const PAGE = "PROFILE";
     </script>
-    <div class="w-75 offset-2 mt-5">
-        <div class="card" style="width: 18rem">
+    <div class="w-100 mt-5 offset-1">
+        <div class="card w-25 m-auto">
+            <div class="avatar-container border-0 d-flex justify-content-center align-items-center">
+                <!-- <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/117862276/original/4c876fafd6d41f6b2cc05142195cb404348b7505/create-an-avatar-for-your-profile-photo.png" class="card-img-top rounded-circle" alt="..."> -->
+            </div>
             <div class="card-body">
                 <h5 class="card-title">
                     <%= user.firstname %>
@@ -22,7 +25,7 @@
                         <% } %>
             </div>
         </div>
-        <div class="w-25">
+        <div class="w-25 m-auto">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -42,5 +45,29 @@
             </nav>
         </div>
 
-        <div class="actions-container w-50 offset-4 mt-5"></div>
+        <div class="actions-container w-50 offset-2 mt-5"></div>
     </div>
+    
+<script>
+    // const profileImage = (avatar, username) => {
+    //     console.log(avatar)
+    //     var pic = ''
+    //     if (avatar){
+    //         /*html*/
+    //         pic =`<img
+    //             class="card-img-top rounded-circle"
+    //             src="/images/avatars/avatarImage.png"
+    //             alt="avatar"
+    //             height="100%"
+    //             width="100%"
+    //         />`
+    //     } else {
+    //         /*html*/
+    //         pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
+    //              ${username.charAt(0).toUpperCase() }
+    //         </p>`
+    //     }
+    //     return pic;
+    // }
+    // $('.avatar-container').html(profileImage('<%=// currentUser.extra_info.avatar %>', '<%=// currentUser.username %>'))
+</script>

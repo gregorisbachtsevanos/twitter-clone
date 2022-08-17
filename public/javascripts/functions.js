@@ -2,6 +2,29 @@ import { renderSavedPosts } from "./saved-posts_system.js";
 import { renderHiddenPosts } from "./hidden-posts_system.js";
 import { renderUserPosts } from "./user-posts_system.js";
 
+const profileImage = (avatar, username) => {
+    var pic = ''
+    if (avatar){
+        /*html*/
+        pic =`<img
+            class="card-img-top rounded-circle"
+            src="/images/avatars/avatarImage.png"
+            alt="avatar"
+            height="100%"
+            width="100%"
+        />`
+    } else {
+        /*html*/
+        pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
+            ${ username.charAt(0).toUpperCase() }
+        </p>`
+    }
+    return pic;
+}
+
+$('.avatar-container').html(profileImage(USER_AVATAR, USER_USERNAME ))
+
+
 const ajaxCall = (param, action) => {
     // console.log(param);
     fetch(`${APP_URL}${param}`, {
