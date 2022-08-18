@@ -6,10 +6,9 @@ const profileImage = (avatar, username) => {
     if (avatar){
         return /*html*/ `<img
             class="card-img-top rounded-circle"
-            src="/images/avatars/avatarImage.png"
+            src="/uploads/images/${USER_AVATAR}"
             alt="avatar"
-            height="100%"
-            width="100%"
+            style="width:220px;height:220px;"
         />`
     } else {
         return /*html*/ `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">

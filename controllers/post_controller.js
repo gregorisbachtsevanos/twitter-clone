@@ -4,6 +4,7 @@ import Comment from "../models/comment_model.js";
 import multer from "multer";
 
 const loadPosts = async (req, res) => {
+    console.log(req.path) // /load-posts
     let posts = await Post.find()
         .populate("onwer")
         .populate("repost")

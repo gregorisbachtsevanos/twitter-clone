@@ -1,34 +1,20 @@
-import express from 'express';
-import postController from '../controllers/post_controller.js'
-import isloggedIn from '../middleware/isLoggedIn.js'
-import catchAsync from '../utils/catchAsync.js';
-import validation from '../middleware/schemaValidation.js'
-import ExpressError from '../utils/ExpressError.js'
-import multer from "multer";
+import express from "express";
+import postController from "../controllers/post_controller.js";
+import isloggedIn from "../middleware/isLoggedIn.js";
+import catchAsync from "../utils/catchAsync.js";
+import validation from "../middleware/schemaValidation.js";
+import ExpressError from "../utils/ExpressError.js";
 import path from "path";
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/uploads/images')
-    },
-    filename: function (req, file, cb) {
-    //   cb(null, file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9))
-      cb(null, (file.originalname))
-    }
-  })
-  
-const upload = multer({storage})
-
-
+import upload from "../middleware/image_uploader.js";
 const router = express.Router();
 
 // check for form errors before take action
 const validatePost = (req, res, next) => {
-        const {error} = validation.postSchema.validate(req.body);
-        if (error) {
-            const msg = error.details.map((el) => el.message).join(",");
-            throw new ExpressError(msg, 400);
-        }
+    const { error } = validation.postSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(msg, 400);
+    }
 };
 
 router.get("/", isloggedIn, postController.renderIndex);
@@ -87,8 +73,8 @@ router.post(
 router.post(
     "/new-post",
     isloggedIn,
-    upload.array('file'),
-    // validatePost,
+    upload.array("file"),
+    // vaidatePost,
     catchAsync(postController.createPost)
 );
 

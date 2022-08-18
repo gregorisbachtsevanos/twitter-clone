@@ -4,7 +4,7 @@ import detectBrowser from "detect-browser";
 import User from "../models/user_model.js";
 import Post from "../models/post_model.js";
 import userSchema from "../middleware/schemaValidation.js";
-const {detect} = detectBrowser
+const { detect } = detectBrowser
 
 const register = (req, res) => {
     if (!req.user) {
@@ -85,11 +85,13 @@ const profilePage = async (req, res) => {
 };
 
 const profileEdit = async (req, res) => {
+    console.log(req.path) // /gregoris/edit-profile
     const user = await getUser(req.params.username);
     res.render("profile-edit_view", { user });
 };
 
 const profileEditLogic = async (req, res) => {
+    // return console.log(req.file)
     var body = {};
     var extra_info = {};
     updateUser(req, body, extra_info);
@@ -98,6 +100,14 @@ const profileEditLogic = async (req, res) => {
     user.save();
     res.redirect(`/${user.username}`);
 };
+
+const avatarUpload = async (req, res) => {
+    const user = await getUser(req.params.username);
+    user.extra_info.avatar = req.file.originalname
+    // return console.log(user)
+    await user.save()
+    res.redirect(`/${user.username}`);
+}
 
 const settings = async (req, res) => {
     const user = await getUser(req.params.username);
@@ -172,8 +182,8 @@ function updateUser(req, body, extra_info) {
     if (req.body.surname != "") body.surname = req.body.surname;
     if (req.body.username != "") body.username = req.body.username;
     if (req.body.email != "") body.email = req.body.email;
-    if (req.body.phone != "") body.extra_info.phone = req.body.phone;
-    if (req.body.bio != "") body.extra_info.bio = req.body.bio;
+    if (req.body.phone != "") extra_info.phone = req.body.phone;
+    if (req.body.bio != "") extra_info.bio = req.body.bio;
     if (req.body.facebook != "") extra_info.facebook = req.body.facebook;
     if (req.body.instagram != "") extra_info.instagram = req.body.instagram;
     if (req.body.twitter != "") extra_info.twitter = req.body.twitter;
@@ -197,6 +207,7 @@ export default {
     profilePage,
     profileEdit,
     profileEditLogic,
+    avatarUpload,
     settings,
     settingsLogic,
     followSystem,

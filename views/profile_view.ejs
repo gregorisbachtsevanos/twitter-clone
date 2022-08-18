@@ -7,6 +7,46 @@
             <div class="avatar-container border-0 d-flex justify-content-center align-items-center">
                 <!-- <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/117862276/original/4c876fafd6d41f6b2cc05142195cb404348b7505/create-an-avatar-for-your-profile-photo.png" class="card-img-top rounded-circle" alt="..."> -->
             </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a>
+            </div>
+            <!-- Avatar uploader modal -->
+            <div
+                class="col-md-6 modal fade"
+                id="uploaderModal"
+                tabindex="-1"
+                aria-labelledby="uploaderModalLabel"
+                aria-hidden="true"
+                id="image-uploader"
+            >
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    action="/<%= user.username %>?_method=PATCH"class="modal-dialog" style="margin-top:10%"
+                >
+                    <div class="modal-content p-5" style="background-color: transparent;border: none;">
+                        <div class="frame">
+                            <div class="center">
+                                <!-- <div class="title">
+                                    <h1>Drop file to upload</h1>
+                                </div> -->
+                                <div class="dropzone">
+                                    <img
+                                        src="http://100dayscss.com/codepen/upload.svg"
+                                        class="upload-icon"
+                                    />
+                                    <input type="file" name="avatar"/> <!-- class="upload-input" -->
+                                </div>
+
+                                <button class="btn" >
+                                    Upload file
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title">
                     <%= user.firstname %>
