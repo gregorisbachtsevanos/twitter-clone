@@ -2,14 +2,27 @@
     <script>
         const PAGE = "PROFILE";
     </script>
-    <div class="w-100 mt-5 offset-1">
-        <div class="card w-25 m-auto">
+    <div class="w-100 mt-5 offset-2">
+        <div class="card border-0 w-25 m-auto">
             <div class="avatar-container border-0 d-flex justify-content-center align-items-center">
-                <!-- <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/117862276/original/4c876fafd6d41f6b2cc05142195cb404348b7505/create-an-avatar-for-your-profile-photo.png" class="card-img-top rounded-circle" alt="..."> -->
+                <% if(user.extra_info.avatar) {%>
+                <img
+                    class="card-img-top rounded-circle"
+                    src="/uploads/images/<%= user.extra_info.avatar %>"
+                    alt="avatar"
+                    style="width:220px;height:220px;"
+                />
+                <% } else { %>
+                    <p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
+                       <%= user.username.charAt(0).toUpperCase() %>
+                    </p>
+                <% } %> 
             </div>
-            <div class="d-flex justify-content-center">
-                <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a>
-            </div>
+            <% if (currentUser.id==user.id) { %>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a>
+                </div>
+            <% } %> 
             <!-- Avatar uploader modal -->
             <div
                 class="col-md-6 modal fade"

@@ -2,13 +2,13 @@ import { renderSavedPosts } from "./saved-posts_system.js";
 import { renderHiddenPosts } from "./hidden-posts_system.js";
 import { renderUserPosts } from "./user-posts_system.js";
 
-const profileImage = (avatar, username) => {
+const profileImage = (avatar, username, size) => {
     if (avatar){
         return /*html*/ `<img
             class="card-img-top rounded-circle"
             src="/uploads/images/${USER_AVATAR}"
             alt="avatar"
-            style="width:220px;height:220px;"
+            style="width:${size};height:${size};"
         />`
     } else {
         return /*html*/ `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
@@ -17,7 +17,9 @@ const profileImage = (avatar, username) => {
     }
 }
 
-$('.avatar-container').html(profileImage(USER_AVATAR, USER_USERNAME ))
+// nav-item
+// $('.avatar-container').html(profileImage(USER_AVATAR, USER_USERNAME, '220px' ))
+$('.avatar-container-nav').html(profileImage(USER_AVATAR, USER_USERNAME, '100px' ))
 
 
 const ajaxCall = (param, action) => {
