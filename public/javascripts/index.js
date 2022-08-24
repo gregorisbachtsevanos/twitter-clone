@@ -9,26 +9,6 @@ import { searchForm, mentionSearch } from "./search_system.js";
 if (typeof PAGE != "undefined") {
     // profileImage(currentUser.extra_info.avatar)
     // profileImage()
-    const profileImage = (avatar, username) => {
-        console.log(avatar)
-        var pic = ''
-        if (avatar){
-            /*html*/
-            pic =`<img
-                class="card-img-top rounded-circle"
-                src="/images/avatars/avatarImage.png"
-                alt="avatar"
-                height="100%"
-                width="100%"
-            />`
-        } else {
-            /*html*/
-            pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
-                 ${username.charAt(0).toUpperCase() }
-            </p>`
-        }
-        return pic;
-    }
     switch (PAGE) {
         case "INDEX":
             mentionSearch();
