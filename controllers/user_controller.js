@@ -8,7 +8,7 @@ const { detect } = detectBrowser
 
 const register = (req, res) => {
     if (!req.user) {
-        return res.render("register_view");
+        return res.status(200).render("register_view");
     }
     console.log("Error: User has not been provided");
 };
@@ -36,15 +36,15 @@ const registerLogic = async (req, res, next) => {
             });
             //
             user.extra_info.year_of_birth = year_of_birth,
-            user.extra_info.month_of_birth = month_of_birth,
-            user.extra_info.day_of_birth = day_of_birth,
-            user.extra_info.gender = gender;
+                user.extra_info.month_of_birth = month_of_birth,
+                user.extra_info.day_of_birth = day_of_birth,
+                user.extra_info.gender = gender;
             si.cpu().then((data) => {
                 const { family, vendor, brand, manufacturer } = data;
                 user.extra_info.device.manufacturer = manufacturer;
                 user.extra_info.device.brand = brand;
                 user.extra_info.device.vendor = vendor;
-                user.extra_info.device.family = family; 
+                user.extra_info.device.family = family;
             });
             user.extra_info.ipAddress = ip.address()
             user.extra_info.browser = detect(req.headers['user-agent']).name
@@ -63,7 +63,7 @@ const registerLogic = async (req, res, next) => {
 };
 
 const login = (req, res) => {
-    res.render("login_view");
+    res.status(200).render("login_view");
 };
 
 const loginLogic = async (req, res) => {
@@ -78,7 +78,7 @@ const profilePage = async (req, res) => {
         const currentUser = await getUser(res.locals.currentUser.username);
         var u = currentUser.following.map((id) => id == user.id);
         let btn = u[0] ? "unfollow" : "follow";
-        return res.render("profile_view", { user, posts, btn });
+        return res.status(200).render("profile_view", { user, posts, btn });
     }
     // var encryptedId = btoa(user.id)}
     res.render("profile_view", { user, posts });
@@ -87,7 +87,7 @@ const profilePage = async (req, res) => {
 const profileEdit = async (req, res) => {
     console.log(req.path) // /gregoris/edit-profile
     const user = await getUser(req.params.username);
-    res.render("profile-edit_view", { user });
+    res.status(200).render("profile-edit_view", { user });
 };
 
 const profileEditLogic = async (req, res) => {
@@ -111,7 +111,7 @@ const avatarUpload = async (req, res) => {
 
 const settings = async (req, res) => {
     const user = await getUser(req.params.username);
-    res.render("settings_view", { user });
+    res.status(200).render("settings_view", { user });
 };
 
 const settingsLogic = async (req, res) => {
@@ -134,7 +134,7 @@ const showPost = async (req, res) => {
         .populate("repost")
         .populate({ path: "commentId", populate: "userId" });
     console.log(post.commentId);
-    res.render("show-post_view", { post });
+    res.status(200).render("show-post_view", { post });
 };
 
 const unfollowSystem = async (req, res) => {
@@ -150,7 +150,7 @@ const unfollowSystem = async (req, res) => {
 };
 
 const trending = (req, res) => {
-    res.render("trending_view");
+    res.status(200).render("trending_view");
 };
 
 const search = async (req, res) => {

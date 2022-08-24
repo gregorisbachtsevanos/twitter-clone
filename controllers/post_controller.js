@@ -78,7 +78,7 @@ const loadTrending = async (req, res) => {
 };
 
 const renderIndex = (req, res) => {
-    res.render("index_view");
+    res.status(200).render("index_view");
 };
 
 const createPost = async (req, res, next) => {
@@ -136,7 +136,7 @@ const commentPost = async (req, res) => {
 
 const editPost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
-    res.render("post-edit_view", { post });
+    res.status(200).render("post-edit_view", { post });
 };
 
 const editPostLogic = async (req, res) => {
@@ -146,7 +146,7 @@ const editPostLogic = async (req, res) => {
 
 const repost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
-    res.render("repost_view", { post });
+    res.status(200).render("repost_view", { post });
 };
 
 const savePost = async (req, res) => {
