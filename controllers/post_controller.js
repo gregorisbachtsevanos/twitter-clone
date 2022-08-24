@@ -82,32 +82,32 @@ const renderIndex = (req, res) => {
 };
 
 const createPost = async (req, res, next) => {
-        var data = {}
-        if(req.files != '') {
-            if(req.files.length > 1){
+    var data = {}
+    if (req.files != '') {
+        if (req.files.length > 1) {
 
-            }else{
-                data.image = req.files[0].originalname
-            }
+        } else {
+            data.image = req.files[0].originalname
         }
-        var hashtag, mention = false
-        if(req.body.post != '') {
-            if(req.body.post.includes('#')) hashtag = true
-            if(req.body.post.includes('@')) mention = true
-            data.post = req.body.post
-        }
-        const post = new Post(data);
-        if(hashtag) post.hasHashtag = true
-        if(mention) post.hasMention = true
-        post.onwer = res.locals.currentUser.id;
-        post.save();
-        res.redirect(res.locals.appUrl);
+    }
+    var hashtag, mention = false
+    if (req.body.post != '') {
+        if (req.body.post.includes('#')) hashtag = true
+        if (req.body.post.includes('@')) mention = true
+        data.post = req.body.post
+    }
+    const post = new Post(data);
+    if (hashtag) post.hasHashtag = true
+    if (mention) post.hasMention = true
+    post.onwer = res.locals.currentUser.id;
+    post.save();
+    res.redirect(res.locals.appUrl);
 };
 
 const likePost = async (req, res) => {
     const post = await Post.findById(req.params.postId);
     var color = '';
-    if(post.likeUsers.includes(res.locals.currentUser.id)){
+    if (post.likeUsers.includes(res.locals.currentUser.id)) {
         post.likeUsers = post.likeUsers.filter((likeUser) => likeUser != res.locals.currentUser.id);
         color = "black";
     } else {
@@ -127,7 +127,7 @@ const commentPost = async (req, res) => {
     comment.postId = post.id;
     post.commentId.push(comment._id);
     post.comments = post.commentId.length;
-    
+
     await comment.save();
     await post.save();
     const data = await Comment.findById(comment._id).populate("userId");
@@ -153,13 +153,17 @@ const savePost = async (req, res) => {
     const savePost = await Post.findById(req.params.postId);
     const user = await User.findById(res.locals.currentUser.id);
     user.savedPost.push(savePost.id);
-    user.save();
+    savePost.isSaved = true;
+    await savePost.save();
+    await user.save();
 };
 
 const unsavePost = async (req, res) => {
     const unsavePost = await Post.findById(req.params.postId);
     const user = await User.findById(res.locals.currentUser.id);
     user.savedPost = user.savedPost.filter((post) => post != unsavePost.id);
+    unsavePost.isSaved = false;
+    await unsavePost.save();
     await user.save();
 };
 

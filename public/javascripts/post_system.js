@@ -14,31 +14,31 @@ const renderPosts = (data, where) => {
                         <!-- if is re-post-->
                         <p class="fs-6 fw-light">
                             ${post.repost
-                                ? `posted by ${post.repost.username}`
-                                : ""
-                            }
+                ? `posted by ${post.repost.username}`
+                : ""
+            }
                         </p>
                     </div>
                    <div class="dropdown">
                         <button class="btn border-0 btn-sm dropdown-toggle" type="button" class="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             ${USER == post.onwer._id
-                                ? /*html*/ `
+                ? /*html*/ `
                                     <li><a class="dropdown-item" id="edit-post" href="${APP_URL}edit-post/${post._id}">Edit</a></li>
-                                    <li><p class="dropdown-item" id="${post.isHidden ? 'public-post' : 'private-post'}">${post.isHidden ? 'Public' : 'Private' }</p></li>
+                                    <li><p class="dropdown-item" id="${post.isHidden ? 'public-post' : 'private-post'}">${post.isHidden ? 'Public' : 'Private'}</p></li>
                                     <li><a class="dropdown-item" id="delete-post" href="#">Delete</a></li>`
-                                : /*html*/ `
+                : /*html*/ `
                                     <li><a class="dropdown-item" id="repost" href="${APP_URL}repost/${post._id}">Re-post</a></li>
                                     <li><a class="dropdown-item" id="${post.isSaved ? 'unsave-post' : 'save-post'}" href="#">${post.isSaved ? 'Unsave' : 'Save'}</a></li>`
-                                }
+            }
                         </ul>
                     </div>
                 </div>
                 <a href="post/${post._id}">Go</a>
                 <div class="card-body">
                     <h5 class="card-title"></h5>
-                    ${post.post ? /*html*/`<p class="card-text">${post.hasHashtag || post.hasMention ? body.join(" ") : post.post}</p>`:''}
-                    ${post.image ? /*html*/ `<img src="/uploads/images/${post.image}" class="card-img-top">`:''}
+                    ${post.post ? /*html*/`<p class="card-text">${post.hasHashtag || post.hasMention ? body.join(" ") : post.post}</p>` : ''}
+                    ${post.image ? /*html*/ `<img src="/uploads/images/${post.image}" class="card-img-top">` : ''}
                 </div>
                 <div class="comment-section">
                     <div class="card-text px-2">
@@ -109,12 +109,12 @@ const renderComments = (post) => {
                 </div>
                 <div class="dropdown">
                     ${USER == comment.userId._id
-                        ? /*html*/ `
+                ? /*html*/ `
                             <button class="btn border-0 btn-sm dropdown-toggle" type="button" class="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item delete-comment" href="#">Delete</a></li>
                             </ul>`
-                        : /*html*/ ``
+                : /*html*/ ``
             }
                 </div>
             </div>
@@ -145,16 +145,16 @@ const getPosts = () => {
 
 // get uses's post
 // const getUserPosts = (userUrl) => {
-    // fetch(`${APP_URL}load-posts?user=${userUrl}`, {
-    //     type: "GET",
-    // })
-    //     .then((res) => res.json())
-    //     .then((data) =>
-    //         data.posts.length > 0
-    //             ? renderPosts(data, ".actions-container")
-    //             : ((($(".actions-container").empty()))($(".actions-container").html(data.posts)))
-    //     )
-    //     .catch((er) => console.log(er));
+// fetch(`${APP_URL}load-posts?user=${userUrl}`, {
+//     type: "GET",
+// })
+//     .then((res) => res.json())
+//     .then((data) =>
+//         data.posts.length > 0
+//             ? renderPosts(data, ".actions-container")
+//             : ((($(".actions-container").empty()))($(".actions-container").html(data.posts)))
+//     )
+//     .catch((er) => console.log(er));
 // };
 
 // save - unsave post (not for the currentUser)
