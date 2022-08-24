@@ -22,7 +22,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const appUrl = process.env.APP_URL
 import "./config/dbConfig.js"
-import sessionConfig from  "./config/sessionConfig.js"
+import sessionConfig from "./config/sessionConfig.js"
 
 // view engine setup
 app.engine('ejs', ejsMate)
@@ -68,7 +68,7 @@ app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
-
+    console.error(err);
     // render the error page
     res.status(err.status || 500).render("partials/error_view", { err });
 });

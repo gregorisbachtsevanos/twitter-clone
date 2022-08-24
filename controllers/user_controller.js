@@ -74,14 +74,14 @@ const profilePage = async (req, res) => {
     const user = await getUser(req.params.username);
     if (user) var posts = await Post.find({ onwer: user.id });
     // console.log(user.id)
-    if (user.id != res.locals.currentUser.id) {
+    if (user && user.id != res.locals.currentUser.id) {
         const currentUser = await getUser(res.locals.currentUser.username);
         var u = currentUser.following.map((id) => id == user.id);
         let btn = u[0] ? "unfollow" : "follow";
         return res.status(200).render("profile_view", { user, posts, btn });
     }
-    // var encryptedId = btoa(user.id)}
-    res.render("profile_view", { user, posts });
+    // var encryptedId = btoa(user.id)
+    res.status(200).render("profile_view", { user, posts });
 };
 
 const profileEdit = async (req, res) => {
@@ -161,6 +161,11 @@ const search = async (req, res) => {
     res.send({ users });
 };
 
+const messages = async (req, res) => {
+    console.log("messages controller");
+    res.render('messages_view')
+}
+
 const logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
@@ -215,5 +220,6 @@ export default {
     unfollowSystem,
     trending,
     search,
+    messages,
     logout,
 };
