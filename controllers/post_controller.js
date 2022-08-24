@@ -195,12 +195,11 @@ const renderHiddenPost = async (req, res) => {
 
 const renderSavedPost = async (req, res) => {
     const user = await User.findById(res.locals.currentUser.id);
-    const posts = await Post.find({
-        $and: [{ onwer: res.locals.currentUser.id }, { isHidden: true }],
-    })
+    const posts = await Post.find({ isSaved: true })
         .populate("onwer")
         .populate("commentId")
         .populate({ path: "commentId", populate: "userId" });
+    console.log(posts)
     res.send(
         JSON.stringify({
             // in case of load error delete JSON
