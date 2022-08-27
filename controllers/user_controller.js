@@ -162,8 +162,11 @@ const search = async (req, res) => {
 };
 
 const messages = async (req, res) => {
-    console.log("messages controller");
     res.render('messages_view')
+}
+
+const newMessage = async (req, res) => {
+    res.render('new-message_view')
 }
 
 const logout = (req, res) => {
@@ -221,5 +224,6 @@ export default {
     trending,
     search,
     messages,
+    newMessage,
     logout,
 };

@@ -35,6 +35,8 @@ router
 
 router.get("/messages", isloggedIn, catchAsync(userController.messages));
 
+router.get("/messages/new", isloggedIn, catchAsync(userController.newMessage));
+
 router.get("/trending", isloggedIn, catchAsync(userController.trending));
 
 router.get("/post/:id", isloggedIn, catchAsync(userController.showPost));
