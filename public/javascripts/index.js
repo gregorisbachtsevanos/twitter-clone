@@ -8,24 +8,24 @@ import { searchForm, mentionSearch } from "./search_system.js";
 
 if (typeof PAGE != "undefined") {
     // profileImage(currentUser.extra_info.avatar)
+    if (PAGE != 'LOGIN' || PAGE != 'REGISTER') {
+        searchForm();
+    }
     // profileImage()
     switch (PAGE) {
         case "INDEX":
             mentionSearch();
-            searchForm();
             getPosts();
             likePost();
             commentPost();
             break;
         case "SHOW POST":
-            searchForm();
             likePost();
             commentPost();
             break;
         case "PROFILE":
             let userUrl = window.location.href.split("/");
             userUrl = userUrl[userUrl.length - 1];
-            searchForm();
             // getUserPosts(userUrl);
             // renderSavedPosts();
             likePost();
@@ -34,9 +34,20 @@ if (typeof PAGE != "undefined") {
             unfollow();
             break;
         case "TRENDING":
-            searchForm();
             getTrandingPosts();
             commentPost();
+            break;
+        case "SETTINGS":
+
+            break;
+        case "MESSAGES":
+
+            break;
+        case "NEW MESSAGE":
+
+            break;
+        case "NOTIFICATIONS":
+
             break;
     }
 }

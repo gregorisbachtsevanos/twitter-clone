@@ -162,11 +162,11 @@ const search = async (req, res) => {
 };
 
 const messages = async (req, res) => {
-    res.render('messages_view')
+    res.status(200).render('messages_view')
 }
 
 const newMessage = async (req, res) => {
-    res.render('new-message_view')
+    res.status(200).render('new-message_view')
 }
 
 const logout = (req, res) => {
