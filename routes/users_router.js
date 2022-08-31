@@ -33,13 +33,17 @@ router
         catchAsync(userController.loginLogic)
     );
 
-router.get("/messages", isloggedIn, catchAsync(userController.messages));
+router.get("/messages", isloggedIn, catchAsync(userController.messagesPage));
 
-router.get("/messages/new", isloggedIn, catchAsync(userController.newMessage));
+router.route("/messages/new")
+    .get(isloggedIn, catchAsync(userController.createChatPage))
+    .post(isloggedIn, catchAsync(userController.createChatLogin));
 
 router.get("/trending", isloggedIn, catchAsync(userController.trending));
 
 router.get("/post/:id", isloggedIn, catchAsync(userController.showPost));
+
+router.post("/search", isloggedIn, userController.search);
 
 router
     .route("/:username")
@@ -70,8 +74,6 @@ router
 router.post("/:username/follow", isloggedIn, userController.followSystem);
 
 router.post("/:username/unfollow", isloggedIn, userController.unfollowSystem);
-
-router.post("/search", isloggedIn, userController.search);
 
 router.delete("/logout", userController.logout);
 

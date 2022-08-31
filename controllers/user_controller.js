@@ -3,6 +3,7 @@ import si from "systeminformation";
 import detectBrowser from "detect-browser";
 import User from "../models/user_model.js";
 import Post from "../models/post_model.js";
+import Chat from "../models/chat_model.js";
 import userSchema from "../middleware/schemaValidation.js";
 const { detect } = detectBrowser
 
@@ -161,12 +162,31 @@ const search = async (req, res) => {
     res.send({ users });
 };
 
-const messages = async (req, res) => {
+const messagesPage = async (req, res) => {
     res.status(200).render('messages_view')
 }
 
-const newMessage = async (req, res) => {
+const createChatPage = async (req, res) => {
     res.status(200).render('new-message_view')
+}
+
+const createChatLogin = async (req, res) => {
+    const users = JSON.parse(req.body.users);
+    users.push(res.locals.currentUser.username);
+    var groupUserId = []
+    for (let user of users) {
+        let u = await User.findOne({ username: user })
+        groupUserId.push(u.id)
+    }
+    const chatData = {
+        users: groupUserId,
+        isGroup: true
+    }
+
+    const chat = new Chat(chatData);
+    await chat.save();
+    console.log(chat);
+    res.status(200).send('chat')
 }
 
 const logout = (req, res) => {
@@ -223,7 +243,8 @@ export default {
     unfollowSystem,
     trending,
     search,
-    messages,
-    newMessage,
+    messagesPage,
+    createChatPage,
+    createChatLogin,
     logout,
 };

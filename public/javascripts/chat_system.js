@@ -2,8 +2,8 @@ import { searchUser } from './search_system.js'
 var selectedUsers = [];
 
 $("body").on("click", ".select-chat-user", function (e) {
-    let name = $(this).parent().find('.fullname').text()
-    selectedUsers.push(name)
+    let user = $(this).parent().find('.fullname').data('username')
+    selectedUsers.push(user)
     console.log(selectedUsers)
     selectedUsersDisplay()
     $('#searchInputChat').val('').focus()
@@ -33,5 +33,15 @@ const selectedUsersDisplay = () => {
     $(".appended-users").remove()
     $("#searchForChatUsers").prepend(`<span class="appended-users border border-3 rounded p-1">${selectedUsers.join(' ')}</span`)
 }
+
+$('#add-chat-user').click(() => {
+    const data = JSON.stringify(selectedUsers)
+    $.post(`${APP_URL}messages/new`, {
+        users: data
+    })
+        .then((res) => {
+            window.location.href = `${APP_URL}messages`
+        })
+})
 
 export { selectedUsers, selectUsers }

@@ -91,11 +91,13 @@ const searchResults = (data, where, forChat) => {
                     </p>`
                     }
                     </a>
-                    <span class="fullname">${result.firstname} ${result.surname}</span>
-                    ${forChat ? `<span class="select-chat-user">@${result.username}</span>` : `<a href="${result.username}" class="link-dark" >@${result.username}</a>`}
+                    <span class="fullname" data-username="${result.username}">${result.firstname} ${result.surname}</span>
+                    ${forChat
+                        ? `<span class="select-chat-user">@${result.username}</span>`
+                        : `<a href="${result.username}" class="link-dark" >@${result.username}</a>`}
                     
-            </div>
-            <hr class="w-100">`;
+            </div >
+    <hr class="w-100">`;
             }
         }
     }
