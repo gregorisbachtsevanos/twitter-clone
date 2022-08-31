@@ -4,7 +4,8 @@ import { likePost } from "./like_system.js";
 import { commentPost } from "./comment_system.js";
 import { follow, unfollow } from "./follow_system.js";
 import { getTrandingPosts } from "./trending_system.js";
-import { searchForm, mentionSearch, selectUsers } from "./search_system.js";
+import { searchForm, mentionSearch } from "./search_system.js";
+import { selectUsers } from "./chat_system.js";
 
 if (typeof PAGE != "undefined") {
     // profileImage(currentUser.extra_info.avatar)
