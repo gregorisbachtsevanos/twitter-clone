@@ -2,17 +2,19 @@
 <script>
 	const PAGE = "NEW MESSAGE";
 </script>
-<div class="w-50 offset-4">
+<div class="w-75 offset-3">
 	<h1>New Message</h1>
 	<div class="row">
-		<div class="col-12 card-body d-flex align-items-center" id="searchM">
+		<div class="col-12 card-body d-flex align-items-center">
 			<label for="">To:</label>
-			<input
-				type="search"
-				placeholder="Type the name of the person"
-				class="form-control"
-				id="searchInputChat"
-			/>
+			<div id="searchForChatUsers" class="w-100">
+				<input
+					type="search"
+					placeholder="Type the name of the person"
+					class="form-control border border-0 w-100 my-2"
+					id="searchInputChat"
+				/>
+			</div>
 		</div>
 		<div class="col-12 d-flex justify-content-center mt-3">
 			<button
