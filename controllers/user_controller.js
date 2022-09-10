@@ -163,15 +163,24 @@ const search = async (req, res) => {
 };
 
 const messagesPage = async (req, res) => {
-    res.status(200).render('messages_view')
+    const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
+    // chatList.users.filter(user => user.id != req.currentUser._id)
+    res.status(200).render('messages_view', { chatList })
+}
+
+const loadChatList = async (req, res) => {
+    const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
+    // chatList.users.filter(user => user.id != req.currentUser._id)
+    res.send(chatList)
 }
 
 const createChatPage = async (req, res) => {
     res.status(200).render('new-message_view')
 }
 
-const createChatLogin = async (req, res) => {
+const createChatLogic = async (req, res) => {
     const users = JSON.parse(req.body.users);
+    // return console.log(users)
     users.push(res.locals.currentUser.username);
     var groupUserId = []
     for (let user of users) {
@@ -186,7 +195,7 @@ const createChatLogin = async (req, res) => {
     const chat = new Chat(chatData);
     await chat.save();
     console.log(chat);
-    res.status(200).send('chat')
+    res.status(200).send(chat)
 }
 
 const logout = (req, res) => {
@@ -244,7 +253,8 @@ export default {
     trending,
     search,
     messagesPage,
+    loadChatList,
     createChatPage,
-    createChatLogin,
+    createChatLogic,
     logout,
 };

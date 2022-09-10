@@ -34,10 +34,11 @@ router
     );
 
 router.get("/messages", isloggedIn, catchAsync(userController.messagesPage));
+router.get("/chatList", isloggedIn, catchAsync(userController.loadChatList));
 
 router.route("/messages/new")
     .get(isloggedIn, catchAsync(userController.createChatPage))
-    .post(isloggedIn, catchAsync(userController.createChatLogin));
+    .post(isloggedIn, catchAsync(userController.createChatLogic));
 
 router.get("/trending", isloggedIn, catchAsync(userController.trending));
 
