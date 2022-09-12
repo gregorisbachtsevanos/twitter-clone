@@ -165,12 +165,12 @@ const search = async (req, res) => {
 const messagesPage = async (req, res) => {
     const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
     // chatList.users.filter(user => user.id != req.currentUser._id)
-    res.status(200).render('messages_view', { chatList })
+    res.status(200).render('messages_view')
 }
 
 const loadChatList = async (req, res) => {
-    const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
-    // chatList.users.filter(user => user.id != req.currentUser._id)
+    let chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
+    chatList = chatList.filter(user => user.id != res.locals.currentUser._id)
     res.send(chatList)
 }
 

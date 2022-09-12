@@ -47,10 +47,10 @@ const renderChat = (chatList) => {
         loadChat += /*html*/
             `<div class="card">
                 <div class="card-title">
-                    ${getUsersChat(chat, chat.users)}
+                    ${getUsersChat(chat.users)}
                 </div>
                 <div class="card-body">
-                    <span>${chat._id}</span>
+                    <span>Last Message</span>
                 </div>
             </div>
         `
@@ -58,17 +58,11 @@ const renderChat = (chatList) => {
     return loadChat
 }
 
-const getUsersChat = (chat, usersChat) => {
-    let loadUsers = '';
-    for (let user of usersChat) {
-        loadUsers += /*html*/
-            `<a
-                href="/messages/${chat._id}"
-                class="text-dark text-decoration-none"
-            >${user.firstname}</a
-            >`
-    }
-    return loadUsers
+const getUsersChat = (usersChat) => {
+    usersChat = usersChat.filter(user => user._id !== USER)
+    let restUsers = usersChat.map(user => user.firstname + ' ' + user.surname)
+    let nameUsers = restUsers.join(', ')
+    return nameUsers
 }
 
 const getChatList = () => {
@@ -90,7 +84,7 @@ $('#add-chat-user').click(() => {
         users: data
     })
         .then((res) => {
-            window.location.href = `${APP_URL} messages`
+            window.location.href = `${APP_URL}messages`
         })
 })
 
