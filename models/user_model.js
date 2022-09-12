@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema(
                 }
             },
         },
-        followers:[{
+        followers: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }],
-        following:[{
+        following: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }],
@@ -38,17 +38,21 @@ const userSchema = new mongoose.Schema(
             ref: 'Post'
         }],
         extra_info: {
+            ipAddress: {
+                type: String,
+                trim: true,
+            },
             avatar: {
                 type: String,
                 trim: true,
             },
-            phone:{
+            phone: {
                 type: Number,
                 trim: true,
                 min: 10,
                 max: 10,
             },
-            bio:{
+            bio: {
                 type: String,
                 trim: true,
                 maxLength: 120
@@ -108,10 +112,6 @@ const userSchema = new mongoose.Schema(
                 trim: true,
             },
             upwork: {
-                type: String,
-                trim: true,
-            },
-            ipAddress: {
                 type: String,
                 trim: true,
             },

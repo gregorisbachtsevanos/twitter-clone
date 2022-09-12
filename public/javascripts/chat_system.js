@@ -46,7 +46,8 @@ const renderChat = (chatList) => {
     for (let chat of chatList) {
         loadChat += /*html*/
             `<div class="card">
-                <div class="card-title">
+                <div class="card-title d-flex align-items-baseline">
+                    ${getUsersChatImg(chat.users)}
                     ${getUsersChat(chat.users)}
                 </div>
                 <div class="card-body">
@@ -62,7 +63,14 @@ const getUsersChat = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
     let restUsers = usersChat.map(user => user.firstname + ' ' + user.surname)
     let nameUsers = restUsers.join(', ')
-    return nameUsers
+    return `<span class="ms-1">${nameUsers}</span>`
+}
+
+const getUsersChatImg = (usersChat) => {
+    usersChat = usersChat.filter(user => user._id !== USER)
+    return usersChat[0].extra_info.avatar
+        ? `<img src="${usersChat[0].extra_info.avatar}" alt="avatar" />`
+        : `<p style="height:2rem;width:2rem;font-size:1rem"class="d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">${usersChat[0].surname.charAt(0).toUpperCase()}</p>`
 }
 
 const getChatList = () => {
