@@ -46,12 +46,12 @@ const renderChat = (chatList) => {
     for (let chat of chatList) {
         loadChat += /*html*/
             `<div class="card">
-                <div class="card-title d-flex align-items-baseline">
-                    ${getUsersChatImg(chat.users)}
+                <div class="card-title d-flex align-items-baseline chat-image ellipsis">
+                    <p class="chat-image-container">${getUsersChatImg(chat.users)}</p>
                     ${getUsersChat(chat.users)}
                 </div>
-                <div class="card-body">
-                    <span>Last Message</span>
+                <div class="card-body ellipsis  w-50">
+                    <span class="ellipsis">Last Message</span>
                 </div>
             </div>
         `
@@ -63,14 +63,20 @@ const getUsersChat = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
     let restUsers = usersChat.map(user => user.firstname + ' ' + user.surname)
     let nameUsers = restUsers.join(', ')
-    return `<span class="ms-1">${nameUsers}</span>`
+    return `<span class="ms-1 ellipsis w-75">${nameUsers}</span>`
 }
 
 const getUsersChatImg = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
-    return usersChat[0].extra_info.avatar
-        ? `<img src="${usersChat[0].extra_info.avatar}" alt="avatar" />`
-        : `<p style="height:2rem;width:2rem;font-size:1rem"class="d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">${usersChat[0].surname.charAt(0).toUpperCase()}</p>`
+    var chatImg = ''
+    for (let i = 0; i <= 1; i++) {
+        if (usersChat[i]) {
+            chatImg += usersChat[i].extra_info.avatar
+                ? `<img src="${usersChat[i].extra_info.avatar}" alt="avatar" />`
+                : `<span style="height:1.5rem;width:1.5rem;font-size:.7rem"class="position-absolute d-flex justify-content-center align-items-center border-white border rounded-circle bg-dark text-white avatar">${usersChat[i].firstname.charAt(3).toUpperCase()}</span>`;
+        }
+    }
+    return chatImg
 }
 
 const getChatList = () => {
