@@ -34,7 +34,7 @@ router
     );
 
 router.get("/messages", isloggedIn, catchAsync(userController.messagesPage));
-// router.get("/messages/:id", isloggedIn, catchAsync(userController.messagesPage));
+// router.get("/chat/:id", isloggedIn, catchAsync(userController.messagesPage));
 
 router.get("/chatList", isloggedIn, catchAsync(userController.loadChatList));
 

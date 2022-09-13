@@ -45,7 +45,7 @@ const renderChat = (chatList) => {
     let loadChat = '';
     for (let chat of chatList) {
         loadChat += /*html*/
-            `<a class="card text-decoration-none text-dark" href='/messages/${chat._id}'>
+            `<a class="card text-decoration-none text-dark" href='/chat/${chat._id}'>
                 <div class="card-title d-flex align-items-baseline chat-image ellipsis">
                     <p class="chat-image-container">${getUsersChatImg(chat.users)}</p>
                     ${getUsersChat(chat.users)}
