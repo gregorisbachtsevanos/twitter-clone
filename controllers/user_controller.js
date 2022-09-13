@@ -198,6 +198,23 @@ const createChatLogic = async (req, res) => {
     res.status(200).send(chat)
 }
 
+const chatPage = async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    const chat = await Chat.findById(id).populate('users')
+    // const chat = await Chat.find({
+    //     $and: [
+    //         { id },
+    //         {
+    //             users: {
+    //                 $elemMatch: { $eq: res.locals.currentUser._id }
+    //             }
+    //         }
+    //     ]
+    // }).populate('users')
+    res.status(200).render('chat_view', { chat })
+}
+
 const logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
@@ -256,5 +273,6 @@ export default {
     loadChatList,
     createChatPage,
     createChatLogic,
+    chatPage,
     logout,
 };
