@@ -50,9 +50,12 @@ app.use((req, res, next) => {
     next()
 })
 
+import UserApi from './controllers/api/user_controller_api.js'
+
 // routes
 app.use("/", postRouter);
 app.use("/", usersRouter);
+app.use("/controllers/api/user_controller_api", UserApi);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

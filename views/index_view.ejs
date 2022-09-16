@@ -1,36 +1,36 @@
 <%- layout('layout/template_view') %>
 <script>
-    const PAGE = "INDEX";
+	const PAGE = "INDEX";
 </script>
 <form
-    method="POST"
-    action="/new-post"
-    enctype="multipart/form-data"
-    class="form-floating w-50 offset-4"
+	method="POST"
+	action="/new-post"
+	enctype="multipart/form-data"
+	class="form-floating w-50 offset-4"
 >
-    <textarea
-        class="form-control"
-        placeholder="Leave a comment here"
-        id="floatingTextarea"
-        name="post"
-    ></textarea>
-    <div class="mention-result"></div>
-    <label for="floatingTextarea">Post</label>
-    <div class="col-md-8">
-        <div class="d-flex justify-content-between">
-            <div>
-                <input
-                    class="form-control btn btn-light btn-sm w-75"
-                    name="file"
-                    type="file"
-                    multiple
-                />
-            </div>
-            <!-- <a class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a> -->
-        </div>
-    </div>
+	<textarea
+		class="form-control"
+		placeholder="Leave a comment here"
+		id="floatingTextarea"
+		name="post"
+	></textarea>
+	<div class="mention-result"></div>
+	<label for="floatingTextarea">Post</label>
+	<div class="col-md-8">
+		<div class="d-flex justify-content-between">
+			<div>
+				<input
+					class="form-control btn btn-light btn-sm w-75"
+					name="file"
+					type="file"
+					multiple
+				/>
+			</div>
+			<!-- <a class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a> -->
+		</div>
+	</div>
 
-    <!-- <div
+	<!-- <div
         class="col-md-6 modal fade"
         id="uploaderModal"
         tabindex="-1"
@@ -63,7 +63,8 @@
         </div>
     </div> -->
 
-    <button class="btn btn-sm btn-primary">Post</button>
+	<button class="btn btn-sm btn-primary">Post</button>
+	<button id="api_click">Api click</button>
 </form>
 
 <div class="posts-container w-50 offset-4 mt-5"></div>

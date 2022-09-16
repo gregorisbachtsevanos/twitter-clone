@@ -52,4 +52,12 @@ if (typeof PAGE != "undefined") {
 
             break;
     }
+
+    // test api 
+    $('body').on('click', '#api_click', (e) => {
+        e.preventDefault();
+        $.get('/controllers/api/user_controller_api', (data) => {
+            console.log(data);
+        })
+    })
 }
