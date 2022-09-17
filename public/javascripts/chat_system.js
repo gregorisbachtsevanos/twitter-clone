@@ -68,13 +68,15 @@ const getUsersChat = (usersChat) => {
 
 const getUsersChatImg = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
-    var chatImg = ''
-    for (let i = 0; i <= 1; i++) {
-        if (usersChat[i]) {
-            chatImg += usersChat[i].extra_info.avatar
-                ? `<img src="${usersChat[i].extra_info.avatar}" alt="avatar" />`
-                : `<span style="height:1.5rem;width:1.5rem;font-size:.7rem"class="position-absolute d-flex justify-content-center align-items-center border-white border rounded-circle bg-dark text-white avatar">${usersChat[i].firstname.charAt(3).toUpperCase()}</span>`;
-        }
+    var size = usersChat.length > 1 ? '1.5rem' : '2rem'
+    var chatImg = usersChat[0].extra_info.avatar
+        ? `<img src="${usersChat[0].extra_info.avatar}" alt="avatar" />`
+        : `<span style="height:${size};width:${size};font-size:.7rem"class="position-absolute d-flex justify-content-center align-items-center border-white border rounded-circle bg-dark text-white avatar">${usersChat[0].firstname.charAt(3).toUpperCase()}</span>`;
+    if (usersChat[1]) {
+        chatImg += usersChat[1].extra_info.avatar
+            ? `<img src="${usersChat[1].extra_info.avatar}" alt="avatar" />`
+            : `<span style="height:1.5rem;width:1.5rem;font-size:.7rem"class="position-absolute d-flex justify-content-center align-items-center border-white border rounded-circle bg-dark text-white avatar">${usersChat[1].firstname.charAt(3).toUpperCase()}</span>`;
+        chatImg += `<span class="position-absolute avatar more-users">+${usersChat.length - 2}</span>`
     }
     return chatImg
 }
