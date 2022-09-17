@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import ip from "ip";
 import si from "systeminformation";
 import detectBrowser from "detect-browser";
@@ -163,13 +164,13 @@ const search = async (req, res) => {
 };
 
 const messagesPage = async (req, res) => {
-    const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
+    // const chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users').sort({ updatedAt: -1 })
     // chatList.users.filter(user => user.id != req.currentUser._id)
     res.status(200).render('messages_view')
 }
 
 const loadChatList = async (req, res) => {
-    let chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users')
+    let chatList = await Chat.find({ users: { $elemMatch: { $eq: res.locals.currentUser._id } } }).populate('users').sort({ updatedAt: -1 })
     chatList = chatList.filter(user => user.id != res.locals.currentUser._id)
     res.send(chatList)
 }
@@ -200,8 +201,7 @@ const createChatLogic = async (req, res) => {
 
 const chatPage = async (req, res) => {
     const { id } = req.params
-    console.log(id)
-    const chat = await Chat.findById(id).populate('users')
+    var chat = await Chat.findById(id).populate('users')
     // const chat = await Chat.find({
     //     $and: [
     //         { id },
@@ -212,6 +212,12 @@ const chatPage = async (req, res) => {
     //         }
     //     ]
     // }).populate('users')
+    if (chat == null) {
+        var foundUser = await User.findById(id)
+        if (foundUser != null) {
+            chat = await getChatByUserId(foundUser._id, res.locals.currentUser.id)
+        }
+    }
     res.status(200).render('chat_view', { chat })
 }
 
@@ -250,6 +256,26 @@ function updateUser(req, body, extra_info) {
 
 function getUser(username) {
     return User.findOne({ username });
+}
+
+function getChatByUserId(userLoggedInId, otherUserId) {
+    return Chat.findOneAndUpdate({
+        isGroup: false,
+        users: {
+            $size: 2,
+            $all: [
+                { $elemMatch: { $eq: mongoose.Types.ObjectId(userLoggedInId) } },
+                { $elemMatch: { $eq: mongoose.Types.ObjectId(otherUserId) } }
+            ]
+        }
+    }, {
+        $setOnInsert: {
+            users: [userLoggedInId, otherUserId]
+        }
+    }, {
+        new: true,
+        upsert: true
+    }).populate('users')
 }
 
 export default {

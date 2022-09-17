@@ -1,128 +1,151 @@
 <%- layout('layout/template_view') %>
-    <script>
-        const PAGE = "PROFILE";
-    </script>
-    <div class="w-100 mt-5 offset-2">
-        <div class="card border-0 w-25 m-auto">
-            <div class="avatar-container border-0 d-flex justify-content-center align-items-center">
-                <% if(user.extra_info.avatar) {%>
-                <img
-                    class="card-img-top rounded-circle"
-                    src="/uploads/images/<%= user.extra_info.avatar %>"
-                    alt="avatar"
-                    style="width:220px;height:220px;"
-                />
-                <% } else { %>
-                    <p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
-                       <%= user.username.charAt(0).toUpperCase() %>
-                    </p>
-                <% } %> 
-            </div>
-            <% if (currentUser.id==user.id) { %>
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#uploaderModal" >image</a>
-                </div>
-            <% } %> 
-            <!-- Avatar uploader modal -->
-            <div
-                class="col-md-6 modal fade"
-                id="uploaderModal"
-                tabindex="-1"
-                aria-labelledby="uploaderModalLabel"
-                aria-hidden="true"
-                id="image-uploader"
-            >
-                <form
-                    method="POST"
-                    enctype="multipart/form-data"
-                    action="/<%= user.username %>?_method=PATCH"class="modal-dialog" style="margin-top:10%"
-                >
-                    <div class="modal-content p-5" style="background-color: transparent;border: none;">
-                        <div class="frame">
-                            <div class="center">
-                                <!-- <div class="title">
+<script>
+	const PAGE = "PROFILE";
+</script>
+<div class="w-100 mt-5 offset-2">
+	<div class="card border-0 w-25 m-auto">
+		<div
+			class="avatar-container border-0 d-flex justify-content-center align-items-center"
+		>
+			<% if(user.extra_info.avatar) {%>
+			<img
+				class="card-img-top rounded-circle"
+				src="/uploads/images/<%= user.extra_info.avatar %>"
+				alt="avatar"
+				style="width: 220px; height: 220px"
+			/>
+			<% } else { %>
+			<p
+				style="height: 10rem; width: 10rem; font-size: 4.5rem"
+				class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white"
+			>
+				<%= user.username.charAt(0).toUpperCase() %>
+			</p>
+			<% } %>
+		</div>
+		<% if (currentUser.id==user.id) { %>
+		<div class="d-flex justify-content-center">
+			<a
+				class="btn btn-sm btn-white"
+				data-bs-toggle="modal"
+				data-bs-target="#uploaderModal"
+				>image</a
+			>
+		</div>
+		<% } %>
+		<!-- Avatar uploader modal -->
+		<div
+			class="col-md-6 modal fade"
+			id="uploaderModal"
+			tabindex="-1"
+			aria-labelledby="uploaderModalLabel"
+			aria-hidden="true"
+			id="image-uploader"
+		>
+			<form
+				method="POST"
+				enctype="multipart/form-data"
+				action="/<%= user.username %>?_method=PATCH"
+				class="modal-dialog"
+				style="margin-top: 10%"
+			>
+				<div
+					class="modal-content p-5"
+					style="background-color: transparent; border: none"
+				>
+					<div class="frame">
+						<div class="center">
+							<!-- <div class="title">
                                     <h1>Drop file to upload</h1>
                                 </div> -->
-                                <div class="dropzone">
-                                    <img
-                                        src="http://100dayscss.com/codepen/upload.svg"
-                                        class="upload-icon"
-                                    />
-                                    <input type="file" name="avatar"/> <!-- class="upload-input" -->
-                                </div>
+							<div class="dropzone">
+								<img
+									src="http://100dayscss.com/codepen/upload.svg"
+									class="upload-icon"
+								/>
+								<input type="file" name="avatar" />
+								<!-- class="upload-input" -->
+							</div>
 
-                                <button class="btn" >
-                                    Upload file
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+							<button class="btn">Upload file</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 
-            <div class="card-body d-flex justify-content-center flex-column">
-                <div class="d-flex justify-content-end">
-                    <% if (currentUser.id==user.id) { %>
-                        <a href="<%= currentUser.username %>/edit-profile" class="btn btn-sm btn-white">Edit</a>
-                    <% } else { %>
-                        <a href="#" data-username="<%= user.username %>" class="btn btn-warning <%= btn %>-btn">
-                            <%= btn %>
-                        </a>
-                        <a href="" class="btn btn-warning">Message</a>
-                    <% } %>
-                </div>
-                <h5 class="card-title">
-                    <%= user.firstname %>
-                        <%= user.surname %>
-                </h5>
-                <p class="card-text">
-                    <%= user.extra_info.bio %>
-                </p>
-            </div>
-        </div>
-        <div class="w-25 m-auto">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <div class="container-fluid">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item p-1 mx-1 border rounded" id="user_posts">
-                            Posts
-                        </li>
-                        <% if (currentUser.id==user.id) { %>
-                            <li class="nav-item p-1 mx-1 border rounded" id="save_posts">
-                                Save Posts
-                            </li>
-                            <li class="nav-item p-1 mx-1 border rounded" id="hidden_posts">
-                                Hidden Posts
-                            </li>
-                        <% } %> 
-                    </ul>
-                </div>
-            </nav>
-        </div>
+		<div class="card-body d-flex justify-content-center flex-column">
+			<div class="d-flex justify-content-end">
+				<% if (currentUser.id==user.id) { %>
+				<a
+					href="<%= currentUser.username %>/edit-profile"
+					class="btn btn-sm btn-white"
+					>Edit</a
+				>
+				<% } else { %>
+				<a
+					href="#"
+					data-username="<%= user.username %>"
+					class="btn btn-warning <%= btn %>-btn"
+				>
+					<%= btn %>
+				</a>
+				<button
+					id="personal-chat-user"
+					class="btn btn-warning"
+					data-id="<%=user.id%>"
+				>
+					Message
+				</button>
+				<% } %>
+			</div>
+			<h5 class="card-title"><%= user.firstname %> <%= user.surname %></h5>
+			<p class="card-text"><%= user.extra_info.bio %></p>
+		</div>
+	</div>
+	<div class="w-25 m-auto">
+		<nav class="navbar navbar-expand-lg bg-light">
+			<div class="container-fluid">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item p-1 mx-1 border rounded" id="user_posts">
+						Posts
+					</li>
+					<% if (currentUser.id==user.id) { %>
+					<li class="nav-item p-1 mx-1 border rounded" id="save_posts">
+						Save Posts
+					</li>
+					<li class="nav-item p-1 mx-1 border rounded" id="hidden_posts">
+						Hidden Posts
+					</li>
+					<% } %>
+				</ul>
+			</div>
+		</nav>
+	</div>
 
-        <div class="actions-container w-50 offset-2 mt-5"></div>
-    </div>
-    
+	<div class="actions-container w-50 offset-2 mt-5"></div>
+</div>
+
 <script>
-    // const profileImage = (avatar, username) => {
-    //     console.log(avatar)
-    //     var pic = ''
-    //     if (avatar){
-    //         /*html*/
-    //         pic =`<img
-    //             class="card-img-top rounded-circle"
-    //             src="/images/avatars/avatarImage.png"
-    //             alt="avatar"
-    //             height="100%"
-    //             width="100%"
-    //         />`
-    //     } else {
-    //         /*html*/
-    //         pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
-    //              ${username.charAt(0).toUpperCase() }
-    //         </p>`
-    //     }
-    //     return pic;
-    // }
-    // $('.avatar-container').html(profileImage('<%=// currentUser.extra_info.avatar %>', '<%=// currentUser.username %>'))
+	// const profileImage = (avatar, username) => {
+	//     console.log(avatar)
+	//     var pic = ''
+	//     if (avatar){
+	//         /*html*/
+	//         pic =`<img
+	//             class="card-img-top rounded-circle"
+	//             src="/images/avatars/avatarImage.png"
+	//             alt="avatar"
+	//             height="100%"
+	//             width="100%"
+	//         />`
+	//     } else {
+	//         /*html*/
+	//         pic = `<p style="height:10rem;width:10rem;font-size:4.5rem" class="mt-2 d-flex justify-content-center align-items-center border rounded-circle bg-dark text-white">
+	//              ${username.charAt(0).toUpperCase() }
+	//         </p>`
+	//     }
+	//     return pic;
+	// }
+	// $('.avatar-container').html(profileImage('<%=// currentUser.extra_info.avatar %>', '<%=// currentUser.username %>'))
 </script>

@@ -102,4 +102,13 @@ $('#add-chat-user').click(() => {
         })
 })
 
+$('#personal-chat-user').click((e) => {
+    const id = $(e.target).data('id')
+    $.get(`${APP_URL}chat/${id}`)
+        .then((res) => {
+            window.location.href = `${APP_URL}chat/${id}`
+        })
+})
+
+
 export { selectedUsers, selectUsers, getChatList }

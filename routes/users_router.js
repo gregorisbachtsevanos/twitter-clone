@@ -33,12 +33,16 @@ router
         catchAsync(userController.loginLogic)
     );
 
+// render all chat page
 router.get("/messages", isloggedIn, catchAsync(userController.messagesPage));
 
-router.get("/chat/:id", isloggedIn, catchAsync(userController.chatPage));
-
+// get all chats api
 router.get("/chatList", isloggedIn, catchAsync(userController.loadChatList));
 
+// get chat by id
+router.get("/chat/:id", isloggedIn, catchAsync(userController.chatPage));
+
+// make a new chat
 router.route("/messages/new")
     .get(isloggedIn, catchAsync(userController.createChatPage))
     .post(isloggedIn, catchAsync(userController.createChatLogic));
