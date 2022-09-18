@@ -39,8 +39,10 @@ router.get("/messages", isloggedIn, catchAsync(userController.messagesPage));
 // get all chats api
 router.get("/chatList", isloggedIn, catchAsync(userController.loadChatList));
 
-// get chat by id
-router.get("/chat/:id", isloggedIn, catchAsync(userController.chatPage));
+
+router.route("/chat/:chatId")
+    .get(isloggedIn, catchAsync(userController.chatPage)) // get chat by id
+    .patch(isloggedIn, catchAsync(userController.changeChatName)); // change chat name
 
 // make a new chat
 router.route("/messages/new")

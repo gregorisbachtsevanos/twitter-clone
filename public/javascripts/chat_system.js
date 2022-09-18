@@ -48,7 +48,10 @@ const renderChat = (chatList) => {
             `<a class="card text-decoration-none text-dark" href='/chat/${chat._id}'>
                 <div class="card-title d-flex align-items-baseline chat-image ellipsis">
                     <p class="chat-image-container">${getUsersChatImg(chat.users)}</p>
-                    ${getUsersChat(chat.users)}
+                    ${!chat.chatName
+                ? getUsersChat(chat.users)
+                : chat.chatName
+            }
                 </div>
                 <div class="card-body ellipsis  w-50">
                     <span class="ellipsis">Last Message</span>
@@ -108,7 +111,7 @@ $('#personal-chat-user').click((e) => {
     const id = $(e.target).data('id')
     $.get(`${APP_URL}chat/${id}`)
         .then((res) => {
-            window.location.href = `${APP_URL}chat/${id}`
+            window.location.href = `${APP_URL}chat/${id}` // id error(we have the user id, we need the chat id)
         })
 })
 

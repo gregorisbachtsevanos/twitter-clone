@@ -200,7 +200,7 @@ const createChatLogic = async (req, res) => {
 }
 
 const chatPage = async (req, res) => {
-    const { id } = req.params
+    const id = req.params.chatId
     var chat = await Chat.findById(id).populate('users')
     // const chat = await Chat.find({
     //     $and: [
@@ -219,6 +219,13 @@ const chatPage = async (req, res) => {
         }
     }
     res.status(200).render('chat_view', { chat })
+}
+
+const changeChatName = async (req, res) => {
+    const chat = await Chat.findById(req.params.chatId)
+    chat.chatName = req.body.chat_name
+    chat.save()
+    res.redirect(`/chat/${req.params.chatId}`)
 }
 
 const logout = (req, res) => {
@@ -300,5 +307,6 @@ export default {
     createChatPage,
     createChatLogic,
     chatPage,
+    changeChatName,
     logout,
 };
