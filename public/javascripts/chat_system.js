@@ -1,6 +1,7 @@
 import { searchUser } from './search_system.js'
 var selectedUsers = [];
 
+//  make new chat, select users for it
 $("body").on("click", ".select-chat-user", function (e) {
     let user = $(this).parent().find('.fullname').data('username')
     selectedUsers.push(user)
@@ -10,6 +11,11 @@ $("body").on("click", ".select-chat-user", function (e) {
     $('.search-result').empty()
     $('#add-chat-user').prop('disabled', false)
 })
+
+const selectedUsersDisplay = () => {
+    $(".appended-users").remove()
+    $("#searchForChatUsers").prepend(`<span class="appended-users border border-3 rounded p-1">${selectedUsers.join(' ')}</span`)
+}
 
 const selectUsers = () => {
     $('#searchInputChat').on('keydown', function (e) {
@@ -29,11 +35,7 @@ const selectUsers = () => {
     })
 }
 
-const selectedUsersDisplay = () => {
-    $(".appended-users").remove()
-    $("#searchForChatUsers").prepend(`<span class="appended-users border border-3 rounded p-1">${selectedUsers.join(' ')}</span`)
-}
-
+// check if the chat list is empty
 const renderChatList = (chatList, where) => {
     var load = chatList.length == 0
         ? /*html*/`<span>Nothing to show.</span>`
@@ -41,6 +43,7 @@ const renderChatList = (chatList, where) => {
     $(where).append(load);
 }
 
+// render the chat list
 const renderChat = (chatList) => {
     let loadChat = '';
     for (let chat of chatList) {
@@ -48,7 +51,7 @@ const renderChat = (chatList) => {
             `<a class="card text-decoration-none text-dark" href='/chat/${chat._id}'>
                 <div class="card-title d-flex align-items-baseline chat-image ellipsis">
                     <p class="chat-image-container">${getUsersChatImg(chat.users)}</p>
-                    ${!chat.chatName
+                        ${!chat.chatName
                 ? getUsersChat(chat.users)
                 : chat.chatName
             }
@@ -62,6 +65,7 @@ const renderChat = (chatList) => {
     return loadChat
 }
 
+// get user's name for chat list on messages page
 const getUsersChat = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
     let restUsers = usersChat.map(user => user.firstname + ' ' + user.surname)
@@ -69,6 +73,7 @@ const getUsersChat = (usersChat) => {
     return `<span class="ms-1 ellipsis w-75">${nameUsers}</span>`
 }
 
+// get user's image for chat list on messages page
 const getUsersChatImg = (usersChat) => {
     usersChat = usersChat.filter(user => user._id !== USER)
     var size = usersChat.length > 1 ? '1.5rem' : '2rem'
@@ -84,6 +89,7 @@ const getUsersChatImg = (usersChat) => {
     return chatImg
 }
 
+// get all chats using ajax request
 const getChatList = () => {
     fetch(`${APP_URL}chatList`, {
         type: "GET",
