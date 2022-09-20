@@ -1,4 +1,5 @@
 import { searchUser } from './search_system.js'
+import { ajaxCall } from './functions.js';
 var selectedUsers = [];
 
 //  make new chat, select users for it
@@ -121,5 +122,22 @@ $('#personal-chat-user').click((e) => {
         })
 })
 
+// send mesage
+$('.send_msg').click((e) => {
+    e.preventDefault();
+    const msg = $('.msg_value').val().trim()
+    const chatId = $('.msg_value').parent().data('id')
+    msg != ''
+        ? sendMessage(msg, chatId)
+        : alert("Message cannot be empty")
+    $('.msg_value').val('').focus()
+})
+
+const sendMessage = (msg, chatId) => {
+    $.post(`${APP_URL}chat/message-send`, {
+        message: msg,
+        chatId
+    })
+}
 
 export { selectedUsers, selectUsers, getChatList }

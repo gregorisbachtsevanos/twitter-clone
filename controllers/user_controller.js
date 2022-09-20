@@ -5,6 +5,7 @@ import detectBrowser from "detect-browser";
 import User from "../models/user_model.js";
 import Post from "../models/post_model.js";
 import Chat from "../models/chat_model.js";
+import Message from "../models/messages_model.js";
 import userSchema from "../middleware/schemaValidation.js";
 const { detect } = detectBrowser
 
@@ -228,6 +229,14 @@ const changeChatName = async (req, res) => {
     res.redirect(`/chat/${req.params.chatId}`)
 }
 
+const sendMesage = async (req, res) => {
+    const { message, chatId } = req.body
+    const senderId = res.locals.currentUser._id
+    const msg = new Message({ message, chatId, senderId })
+    await msg.save()
+    res.redirect(`/chat/${req.body.chatId}`)
+}
+
 const logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
@@ -308,5 +317,6 @@ export default {
     createChatLogic,
     chatPage,
     changeChatName,
+    sendMesage,
     logout,
 };

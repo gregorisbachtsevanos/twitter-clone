@@ -23,14 +23,14 @@
 		</form>
 	</div>
 	<div class="messages-container pt-5 mt-5">
-		<div class="d-flex">
+		<form class="d-flex" data-id="<%= chat._id %>">
 			<input
-				name="chat_message"
-				class="input-group p-1"
+				name="chat_msg"
+				class="input-group p-1 msg_value"
 				placeholder="Type a message..."
 				required
 			/>
-			<button class="btn btn-sm btn-success">send</button>
-		</div>
+			<button class="btn btn-sm btn-success send_msg">send</button>
+		</form>
 	</div>
 </div>

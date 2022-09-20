@@ -44,6 +44,9 @@ router.route("/chat/:chatId")
     .get(isloggedIn, catchAsync(userController.chatPage)) // get chat by id
     .patch(isloggedIn, catchAsync(userController.changeChatName)); // change chat name
 
+// send message
+router.post("/chat/message-send", userController.sendMesage)
+
 // make a new chat
 router.route("/messages/new")
     .get(isloggedIn, catchAsync(userController.createChatPage))

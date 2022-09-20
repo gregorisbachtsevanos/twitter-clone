@@ -50,7 +50,7 @@ app.use((req, res, next) => {
     next()
 })
 
-import UserApi from './controllers/api/user_controller_api.js'
+import UserApi from './controllers/api/user_api.js'
 
 // routes
 app.use("/", postRouter);
