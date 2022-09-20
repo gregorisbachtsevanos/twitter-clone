@@ -234,7 +234,7 @@ const sendMesage = async (req, res) => {
     const senderId = res.locals.currentUser._id
     const msg = new Message({ message, chatId, senderId })
     await msg.save()
-    res.redirect(`/chat/${req.body.chatId}`)
+    res.redirect(`/chat/${req.params.chatId}`)
 }
 
 const logout = (req, res) => {

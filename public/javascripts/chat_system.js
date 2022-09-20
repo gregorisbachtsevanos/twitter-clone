@@ -104,6 +104,7 @@ const getChatList = () => {
         .catch((er) => console.log(er));
 };
 
+//  add new chat 
 $('#add-chat-user').click(() => {
     const data = JSON.stringify(selectedUsers)
     $.post(`${APP_URL}messages/new`, {
