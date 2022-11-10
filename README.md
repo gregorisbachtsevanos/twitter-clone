@@ -1,7 +1,7 @@
 Node.js base social media web application!!!
 
 
-# Set Up 
+## Set Up 
 
 ```
 npm install
