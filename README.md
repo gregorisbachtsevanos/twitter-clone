@@ -1,4 +1,4 @@
-Node.js base social media web application!!!
+Node.js base social media web application!
 
 
 ## Set Up 
