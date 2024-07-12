@@ -1,20 +1,6 @@
 # Twitter Clone
-Twitter Clone is a social media application built with Node.js, Express.js, and EJS. It allows users to create accounts, post tweets, follow other users, and view a feed of tweets.
+### Twitter Clone is a social media application built with Node.js, Express.js, and EJS. It allows users to create accounts, post tweets, follow other users, and view a feed of tweets.
 
-Table of Contents\
-Features\
-Installation\
-Usage\
-Project Structure\
-Contributing\
-License\
-Features\
-User authentication (sign up, login, logout)\
-Create, read, update, and delete tweets\
-Follow and unfollow users\
-View a feed of tweets from followed users\
-Responsive design\
-Installation\
 To get started with the Twitter Clone, follow these steps:
 
 Clone the repository and cd into the project
