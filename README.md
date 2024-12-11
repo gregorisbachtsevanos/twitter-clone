@@ -3,7 +3,11 @@
 
 To get started with the Twitter Clone, follow these steps:
 
-Clone the repository and cd into the project
+Clone the repository
+```
+https://github.com/gregorisbachtsevanos/twitter-clone.git
+```
+cd into the project
 ```
 cd twitter-clone
 ```
