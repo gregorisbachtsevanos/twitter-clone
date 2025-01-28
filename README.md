@@ -11,7 +11,7 @@ cd into the project
 ```
 cd twitter-clone
 ```
-Install dependencies:
+Install dependencies
 
 ```
 npm install
